@@ -1,0 +1,21 @@
+site_name: 'LangTorch Documentation'
+theme:
+  name: material # Mkdocs Material is the base theme
+  logo: 'ltf3.png'
+  favicon: 'favicon.png'
+extra_css:
+  - 'css/custom.css'
+
+nav:
+    - Home: index.md
+    - Getting Started:
+        - Introduction: getting-started/introduction.md
+        - Installation: getting-started/installation.md
+    - Conceptual Guide:
+        - Text objects: guides/t.md
+        - TextTensors: guides/tt.md
+        - TextModules: guides/tm.md
+    - Reference:
+        - Text: reference/t.md
+
+
