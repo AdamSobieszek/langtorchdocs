@@ -1,7 +1,7 @@
 site_name: 'LangTorch Documentation'
 theme:
   name: material # Mkdocs Material is the base theme
-  logo: 'ltf3.png'
+  logo: 'ltf4.png'
   favicon: 'favicon.png'
 extra_css:
   - 'css/custom.css'
