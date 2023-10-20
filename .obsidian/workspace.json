@@ -140,6 +140,8 @@
   },
   "active": "f2b858d38c571910",
   "lastOpenFiles": [
+    "readthedocs.yml~",
+    "readthedocs.yml",
     "site/search/search_index.json",
     "site/search",
     "site/reference/t/index.html",
@@ -149,8 +151,6 @@
     "site/guides/tm/index.html",
     "site/guides/t/index.html",
     "site/guides/tt",
-    "site/guides/tm",
-    "site/guides/t",
     "site/ltf4.png",
     "site/ltf3.png",
     "site/ltf2.png",
