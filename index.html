@@ -576,14 +576,15 @@
 <h1 id="introducing-langtorch-a-paradigm-shift-in-llm-app-development">🔥Introducing LangTorch: A Paradigm Shift in LLM App Development</h1>
 <p><strong>Why Choose LangTorch?</strong>
  -</p>
-<p>While existing frameworks focus on wrappers for connecting language models to other services <strong>LangTorch</strong> offers let's developers think of LLM applications in the same intuitive way they understand PyTorch arrays and neural network architectures. The result? Faster, more efficient, and intricate LLM application development. All core LangTorch components subclass their PyTorch counterparts, allowing developers to apply their existing skills to building novel LLM app architectures.</p>
+<p>While existing frameworks focus on wrappers for connecting language models to other services <strong>LangTorch</strong> offers lets developers think of LLM applications in the same intuitive way they understand PyTorch arrays and neural network architectures. The result? Faster, more efficient, and intricate LLM application development. </p>
 <h2 id="unique-features-of-langtorch"><strong>Unique Features of LangTorch</strong></h2>
+<p>All core LangTorch components subclass their PyTorch counterparts, allowing developers to apply their existing skills to building novel LLM app architectures.</p>
 <ul>
 <li>
-<p><strong>TextTensors as Datastructures</strong>: Beyond just linking data, LangTorch's <code>TextTensor</code> unifies prompt templates, completion dictionaries, and chat histories under a single, powerful datastructure. Mimicking the functionalities of <code>torch.Tensor</code>, TextTensors hold arrays of structured Text data. Instead of magical methods to memorize, LangTorch defines simple rules for operations like addition and multiplication, enabling all kinds of text formatting and transformations, which lets developers think about what they want to build, instead of how the classes were named.</p>
+<p><strong>TextTensors</strong>: unify prompt templates, completion dictionaries, and chat histories under a single, powerful datastructure. Mimicking the functionalities of <code>torch.Tensor</code>, TextTensors hold arrays of structured Text data. Instead of magical methods to memorize, LangTorch defines simple rules for operations like addition and multiplication, enabling all kinds of text formatting and transformations, which lets developers think about what they want to build, instead of how the classes were named.</p>
 </li>
 <li>
-<p><strong>TextModules as Building Blocks</strong>: LangTorch uses <code>TextModules</code>, a subclass of <code>torch.nn.Module</code>, that can perform all operations you may need in an LLM chain. As Modules operate on Tensors all operations are easily parallelizable and integrate seamlessly with PyTorch or Transformers Models and APIs. Building LLM apps with TextModules offers a similar experience to working with neural networks, but on a higher level of abstraction: Tree Summarization can be seen as a convolutional TextModule, Retrieval Augmented Generation as a Query-Key-Value Transformer-like Module.</p>
+<p><strong>TextModules</strong>: are the building blocks. A subclass of <code>torch.nn.Module</code>, TextModules can perform all operations you may need in an LLM chain. As Modules operate on Tensors all operations are easily parallelizable and integrate seamlessly with PyTorch, Transformers Models and APIs. Chaining TextModules offers both low-level control and a higher level of abstraction: Tree Summarization can be seen as a convolutional TextModule, Retrieval Augmented Generation as a Query-Key-Value Transformer-like Module.</p>
 </li>
 </ul>
 <h2 id="how-does-langtorch-stand-out">🧯 <strong>How Does LangTorch Stand Out?</strong></h2>
