@@ -9,11 +9,11 @@
       
       
       
-        <link rel="prev" href="../../guides/tm/">
+        <link rel="prev" href="../../guides/integration/">
       
       
       
-      <link rel="icon" href="../../favicon.png">
+      <link rel="icon" href="../../langtorch_white3.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
     
     
@@ -83,7 +83,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="LangTorch Documentation" class="md-header__button md-logo" aria-label="LangTorch Documentation" data-md-component="logo">
       
-  <img src="../../ltf3.png" alt="logo">
+  <img src="../../langtorch2.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -174,7 +174,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="LangTorch Documentation" class="md-nav__button md-logo" aria-label="LangTorch Documentation" data-md-component="logo">
       
-  <img src="../../ltf3.png" alt="logo">
+  <img src="../../langtorch2.png" alt="logo">
 
     </a>
     LangTorch Documentation
@@ -192,61 +192,6 @@
         
   
   <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Getting Started
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            Getting Started
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started/introduction/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
     Introduction
   </span>
   
@@ -255,31 +200,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/installation/" class="md-nav__link">
+      <a href="../../quickstart.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Installation
+    Quickstart tutorial
   </span>
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -306,7 +242,7 @@
             
   
   <span class="md-ellipsis">
-    Conceptual Guide
+    Conceptual Guides
   </span>
   
 
@@ -316,7 +252,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Conceptual Guide
+            Conceptual Guides
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -326,11 +262,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/t/" class="md-nav__link">
+      <a href="../../guides/text/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Text objects
+    Manipulating Text
   </span>
   
 
@@ -346,7 +282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/tt/" class="md-nav__link">
+      <a href="../../guides/texttensor/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -366,11 +302,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/tm/" class="md-nav__link">
+      <a href="../../guides/textmodule/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     TextModules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Integrating LangTorch and other packages
   </span>
   
 
@@ -707,32 +683,32 @@
 <li>The class provides multiple ways of creating instances, either through direct invocation or using patterns. That will be in the next chapter.</li>
 <li>The <code>Text</code> class can be initialised in multiple ways. This section focuses on constructing Text from strings, lists and dictionaries. A more convenient way is to use a sepcial f-string-like sytnax which can parse most Text’s from a signle string. This is explained in the next chapter.</li>
 </ul>
-<pre><code class="language-python"># Creating a Text object with (key,  value) syntax:
-text_obj = Text((&quot;greeting&quot;, &quot;Hello&quot;), (&quot;object&quot;, &quot;world&quot;))
-prompt = TextTensor([&quot;{object} says: {greating}&quot;}])
-print(text_obj)  # Outputs: Helloworld
-print(prompt*text_obj)  # Outputs: world says: Hello
+<div class="highlight"><pre><span></span><code><span class="c1"># Creating a Text object with (key,  value) syntax:</span>
+<span class="n">text_obj</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">))</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">{object}</span><span class="s2"> says: </span><span class="si">{greating}</span><span class="s2">&quot;</span><span class="p">}])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text_obj</span><span class="p">)</span>  <span class="c1"># Outputs: Helloworld</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prompt</span><span class="o">*</span><span class="n">text_obj</span><span class="p">)</span>  <span class="c1"># Outputs: world says: Hello</span>
 
-# Tho get substrings of the Text, the content attribute holds sub-Texts:
-print(text_obj.content)  # Outputs: [Text((&quot;greeting&quot;, &quot;Hello&quot;)), Text((&quot;object&quot;, &quot;world&quot;))]
+<span class="c1"># Tho get substrings of the Text, the content attribute holds sub-Texts:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text_obj</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>  <span class="c1"># Outputs: [Text((&quot;greeting&quot;, &quot;Hello&quot;)), Text((&quot;object&quot;, &quot;world&quot;))]</span>
 
-# Accessing the items (key-value pairs) of a Text object:
-items = text_obj.items()
-print(items)  # Outputs: [(&quot;greeting&quot;, &quot;Hello&quot;), (&quot;object&quot;, &quot;world&quot;)]
-</code></pre>
+<span class="c1"># Accessing the items (key-value pairs) of a Text object:</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">text_obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>  <span class="c1"># Outputs: [(&quot;greeting&quot;, &quot;Hello&quot;), (&quot;object&quot;, &quot;world&quot;)]</span>
+</code></pre></div>
 <h2 id="2-operations-on-text"><strong>2. Operations on Text:</strong></h2>
 <h3 id="addition-operation"><strong>Addition Operation:</strong></h3>
 <p>The addition operation on <code>Text</code> and <code>TextTensors</code> simply concatenates them.</p>
-<pre><code class="language-python"># Concatenating two Text objects:
-text1 = Text((&quot;greeting&quot;, &quot;Hello&quot;))
-text2 = Text((&quot;object&quot;, &quot;world&quot;), &quot;!&quot;)
-result_text = text1 + text2
-print(result_text)  # Outputs: Helloworld!
+<div class="highlight"><pre><span></span><code><span class="c1"># Concatenating two Text objects:</span>
+<span class="n">text1</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">))</span>
+<span class="n">text2</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">),</span> <span class="s2">&quot;!&quot;</span><span class="p">)</span>
+<span class="n">result_text</span> <span class="o">=</span> <span class="n">text1</span> <span class="o">+</span> <span class="n">text2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result_text</span><span class="p">)</span>  <span class="c1"># Outputs: Helloworld!</span>
 
-# Mixing str2 and Text:
-mix_result = str1 + text2
-print(mix_result)  # Outputs: Helloworld!
-</code></pre>
+<span class="c1"># Mixing str2 and Text:</span>
+<span class="n">mix_result</span> <span class="o">=</span> <span class="n">str1</span> <span class="o">+</span> <span class="n">text2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mix_result</span><span class="p">)</span>  <span class="c1"># Outputs: Helloworld!</span>
+</code></pre></div>
 <h3 id="multiplication-operation"><strong>Multiplication Operation:</strong></h3>
 <p>The heart of this system is the multiplication operation, defined in the <code>__mul__</code> method of both classes. Here's how it works:</p>
 <h3 id="single-key-text-multiplication">Single-key Text <strong>Multiplication:</strong></h3>
@@ -745,8 +721,8 @@ print(mix_result)  # Outputs: Helloworld!
 <li>
 <p>If the content of the first <code>str2</code> matches the key of the second it acts as a format operation.
 For example:</p>
-<p><code>python
- Text(("","key")) * Text("key","value") == Text(("", "value"))</code></p>
+<div class="highlight"><pre><span></span><code> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;key&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">))</span>
+</code></pre></div>
 <p>You can interpret the whole operation like a multiplication of rational numbers:</p>
 <p>$$</p>
 <p>\frac{\text{'It works'}}{\text{'a key'}}\circ\frac{\text{ ' like this'}}{\text{'a key'}} = \frac{\text{'It works like this'}}{\text{'a key'}}\ \text{and}\</p>
@@ -769,20 +745,20 @@ $$</p>
 </ul>
 <h3 id="inverse-operation"><strong>Inverse Operation:</strong></h3>
 <p>The inverse of a Text is obtained by swapping the key and content. To get the inverse of a Text you can either use the <code>inv()</code> method or the power operation <code>**-1</code>. The Text multiplied by its inverse is the empty string (<code>Text.identity</code>), as shown below.</p>
-<pre><code class="language-python"># For Text:
-text_obj = Text((&quot;Hello&quot;, &quot;greeting&quot;), (&quot;world&quot;, &quot;object&quot;))
-# text_obj.inv() == text_obj**-1 == Text((&quot;greeting&quot;, &quot;Hello&quot;), 
-#                                                                                (&quot;object&quot;, &quot;world&quot;))
+<div class="highlight"><pre><span></span><code><span class="c1"># For Text:</span>
+<span class="n">text_obj</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;greeting&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;object&quot;</span><span class="p">))</span>
+<span class="c1"># text_obj.inv() == text_obj**-1 == Text((&quot;greeting&quot;, &quot;Hello&quot;), </span>
+<span class="c1">#                                                                                (&quot;object&quot;, &quot;world&quot;))</span>
 
-# We have:
-# text_obj*(text_obj**-1) == Text.identity == &quot;&quot;
-</code></pre>
+<span class="c1"># We have:</span>
+<span class="c1"># text_obj*(text_obj**-1) == Text.identity == &quot;&quot;</span>
+</code></pre></div>
 <h2 id="4-additional-points"><strong>4. Additional Points:</strong></h2>
 <ul>
 <li>
 <p>The <code>Text</code> class has a a special value <code>Text.identity</code>: an empty string with no key. This value is characterised by being it being the identity element of multiplication and  <code>Text.identity == 1</code> is defined to be true to make that connection, as:</p>
-<p><code>python
-some_text * 1 == some_text * Text.identity</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">some_text</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">some_text</span> <span class="o">*</span> <span class="n">Text</span><span class="o">.</span><span class="n">identity</span>
+</code></pre></div>
 </li>
 </ul>
 

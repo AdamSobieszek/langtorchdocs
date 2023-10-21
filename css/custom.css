@@ -1,10 +1,10 @@
 .md-header__button.md-logo img, .md-header__button.md-logo svg{
-    width: 1.9rem;
-    height: 1.9rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 .md-header__title{
     font-size: 1.18rem;
-    padding-top: .35rem;  /* Adjust this value as needed */
+    /*padding-top: .35rem;  !* Adjust this value as needed *!*/
 }
 
 .md-header {
@@ -12,23 +12,39 @@
     color: black !important; /* This changes the text color in the header to black for visibility */
 }
 
-/*.md-grid {*/
-/*  max-width: 100%;*/
-/*  @media (min-width: 1220px) {*/
-/*    .md-main__inner {*/
-/*      margin-top: 0;*/
-/*      .md-sidebar {*/
-/*        height: auto;*/
-/*        .md-sidebar--primary {*/
-/*          border-right: 1px solid var(--md-default-fg-color--lightest);*/
-/*          .md-nav {*/
-/*            font-size: 16px;*/
-/*          }*/
-/*        }*/
-/*      }*/
-/*    }*/
-/*  }*/
-/*}*/
+.md-grid {
+  max-width: 100%;
+  @media (min-width: 1220px) {
+    .md-main__inner {
+      margin-top: 0;
+      .md-sidebar {
+        height: auto;
+        .md-sidebar--primary {
+          border-right: 0px solid var(--md-default-fg-color--lightest);
+          .md-nav {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+/* Hide the navigation title */
+.md-nav__title .__drawer{
+    display: none;
+}
+
+/* Set the font weight of the sidebar entries to medium bold */
+.md-nav__link {
+    font-weight: 700; /* Medium bold weight */
+}
+/* Set the font color to black for base level nav entries without subentries */
+
+
+/* Set the font weight of subentries to 400 */
+.md-nav__item .md-nav__item .md-nav__link {
+    font-weight: 500;
+}
 
 body {
   --md-text-link-color: #8CD7F7;
@@ -57,7 +73,7 @@ body {
 
 /* Change link color */
 a {
-    color: #FF8C00 !important;  /* DarkOrange */
+    color: rgba(255, 137, 0, 0.92) !important;  /* DarkOrange */
 }
 
 /* Change color of code blocks */
