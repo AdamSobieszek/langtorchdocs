@@ -588,11 +588,20 @@
 </ul>
 <h2 id="how-does-langtorch-stand-out">🧯 <strong>How Does LangTorch Stand Out?</strong></h2>
 <ul>
+<li><strong>Intuitive Architecture</strong>: While other platforms might offer modular components or connectors, LangTorch's architecture is designed to mirror neural network paradigms. This makes transitioning from conventional AI development to LLM applications smooth and intuitive.</li>
+</ul>
+<pre><code class="language-python">chain = torch.nn.Sequential(
+    TextModule(&quot;Calculate this equation:\n&quot;),
+    langtorch.methods.CoT,
+    GPT4
+    TextModule(&quot;Is this reasoning correct?\n&quot;, activation = GPT4)
+)
+
+chain(TextTensor([&quot;170*32 =&quot;, &quot;4*20 =&quot;, &quot;123*45/10 =&quot;, &quot;2**10*5 =&quot;]))
+</code></pre>
+<ul>
 <li>
-<p><strong>Intuitive Architecture</strong>: While other platforms might offer modular components or connectors, LangTorch's architecture is designed to mirror neural network paradigms. This makes transitioning from conventional AI development to LLM applications smooth and intuitive.</p>
-</li>
-<li>
-<p><strong>Deep Integration</strong>: Instead of merely "calling out" to an LLM, LangTorch allows for deeper integration, making LLMs a true part of your application's architecture.</p>
+<p><strong>Deep Integration</strong>: Each retriever, chain, chat or agent, can be implemented in LangTorch using PyTorch design patterns, such as classes with a forward method, that integrate both tensor data (e.g. embeddings) and textual data (e.g. prompt templates).</p>
 </li>
 <li>
 <p><strong>Flexible and Scalable</strong>: From simple tasks to complex LLM chains, LangTorch scales seamlessly, accommodating both beginners and expert developers.</p>
