@@ -3,8 +3,11 @@
     height: 1.5rem;
 }
 .md-header__title{
-    font-size: 1.18rem;
+    font-size: 0rem;
     /*padding-top: .35rem;  !* Adjust this value as needed *!*/
+}
+.md-nav__title{
+    font-size: 0rem;
 }
 
 .md-header {
@@ -83,6 +86,7 @@ a {
     background-color: white !important;
     color: black !important;  /* Adjust text color as needed */
 }
+/* Existing styles */
 
 /* Primary color for many elements */
 .md-primary {
@@ -109,4 +113,17 @@ a {
 /* Change color of the blockquote borders */
 .md-typeset blockquote {
     border-left-color: #FF4500 !important;  /* OrangeRed */
+}
+
+/* New styles */
+
+/* Change color of active nav item for better visibility */
+.md-nav--primary .md-nav__item--active > .md-nav__link {
+    background-color: rgba(255, 255, 255, 0.2) !important;  /* Lighter background */
+    color: #000 !important;  /* Black text */
+}
+
+/* Change color of standalone nav items with no subnotes */
+.md-nav--primary .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
+    color: black !important;  /* Black text */
 }
