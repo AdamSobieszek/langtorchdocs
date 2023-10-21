@@ -47,17 +47,42 @@
 }
 
 body {
-  --md-text-link-color: #8CD7F7;
+  --md-text-link-color: #FF6347 ;
 }
 
 .md-nav__link:hover {
-  color: #8CD7F7;
+  color: #FF4500;
 }
 
 .md-nav__link--active {
-  color: #8CD7F7;
+    color: #FF6347;
 }
 
+/* Change color of the active nav item */
+.md-nav--primary .md-nav__item--active > .md-nav__link {
+    color: rgba(255, 137, 0, 0.92) !important;  /* DarkOrange */
+}
+
+/* Existing styles */
+/* Change link color */
+a {
+    color: rgba(255, 137, 0, 0.92) !important;  /* DarkOrange */
+}
+
+/* Change color of code blocks */
+.codehilite .hll {
+    background-color: #FF6347 !important;  /* Tomato */
+}
+
+/* Change color of the blockquote borders */
+.md-typeset blockquote {
+    border-left-color: #FF4500 !important;  /* OrangeRed */
+}
+/* Change background color to white for the nav title */
+.md-nav--primary .md-nav__title[for=__drawer] {
+    background-color: white !important;
+    color: black !important;  /* Adjust text color as needed */
+}
 
 /* Primary color for many elements */
 .md-primary {
