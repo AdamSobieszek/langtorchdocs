@@ -41,6 +41,8 @@
       
     
     
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
       <link rel="stylesheet" href="css/custom.css">
     
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -65,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#langtorch-the-llm-package-that-writes-itself" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -83,7 +85,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="LangTorch documentation" class="md-header__button md-logo" aria-label="LangTorch documentation" data-md-component="logo">
       
-  <img src="langtorch2.png" alt="logo">
+  <img src="langtorch_banner.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -174,7 +176,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="." title="LangTorch documentation" class="md-nav__button md-logo" aria-label="LangTorch documentation" data-md-component="logo">
       
-  <img src="langtorch2.png" alt="logo">
+  <img src="langtorch_banner.png" alt="logo">
 
     </a>
     LangTorch documentation
@@ -232,13 +234,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-choose-langtorch" class="md-nav__link">
-    Why Choose LangTorch?
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#the-langtorch-framework" class="md-nav__link">
@@ -473,11 +468,51 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/t/" class="md-nav__link">
+      <a href="reference/text/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Text
+    Text Class
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/texttensor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TextTensor Class
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/textmodule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TextModule Class
   </span>
   
 
@@ -521,13 +556,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-choose-langtorch" class="md-nav__link">
-    Why Choose LangTorch?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#the-langtorch-framework" class="md-nav__link">
     The LangTorch Framework
   </a>
@@ -563,22 +591,27 @@
                   
 
 
-<h1 id="langtorch-the-llm-package-that-writes-itself"><img src="./langtorch2.png" width="60" height="60" alt="LangTorch Logo" style="vertical-align: middle;"> LangTorch: The LLM package that writes itself</h1>
-<h2 id="why-choose-langtorch"><strong>Why Choose LangTorch?</strong></h2>
-<p><strong>LangTorch</strong> is a framework that simplifies complex LLM application development by leveraging familiar PyTorch concepts.</p>
-<p>While existing frameworks focus on wrappers for connecting language models to other services, LangTorch aims to change the way you approach building LLM applications by introducing <strong>a unified framework centered around text tensors and modules</strong>. The result? Faster, more efficient, and intricate LLM application development.</p>
+<h1 id="_1"><img src="./langtorch_banner2.png" height="60" alt="LangTorch Logo" style="vertical-align: middle;"></h1>
+<p><strong>LangTorch</strong> is a framework that simplifies development of complex language model applications by leveraging familiar PyTorch concepts.</p>
+<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach building LLM applications by introducing <strong>a unified framework for working with texts, chats, markup languages, tokens, embeddings and code interpreters</strong> with seamless parallelization and PyTorch integration. The result? Less code, faster development and more intricate LLM applications.</p>
 <h2 id="the-langtorch-framework"><strong>The LangTorch Framework</strong></h2>
-<p>The proposed framework is so intuitive that <strong>LLMs can write LangTorch code on their own</strong> from only a short description. In effect LangTorch lets LLMs program themselves, which opens a completely new realm for agentic LLM applications. To achieve this design, core LangTorch components subclass their PyTorch counterparts, which also empowers developers to apply their existing skills to building novel LLM app architectures.</p>
+<p>LangTorch components are designed to hold and manipulate text data in a way that is so intuitive that <strong>LLMs can write LangTorch code on their own</strong> from only a short description. In effect LangTorch lets LLMs program themselves, which opens a new realm for agentic LLM applications. To achieve this design, textual LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures.</p>
 <ul>
 <li>
-<p><strong>TextTensors</strong> unify prompt templates, completion dictionaries, chat histories and indexes under a single, powerful data structure. Inheriting functionalities from <code>torch.Tensor</code>, TextTensors hold arrays of structured Text data. </p>
+<p>LangTorch starts by introducing structured <strong>Text</strong> objects, that can effectible represent and manipulate prompt templates, chat histories, document stores, dictionaries, markup languages and code.  </p>
 </li>
 <li>
-<p><strong>TextModules</strong> are the compositional building blocks. A subclass of <code>torch.nn.Module</code>, TextModules can perform all operations you may need in an LLM chain and more. </p>
+<p><strong>TextTensors</strong> inheriting functionalities from <code>torch.Tensor</code>, but holding as entries the structured text. TextTensors allow us to structure text information geometrically, as well as manage multi-repres the same text data it in multiple forms (automatically acting as texts when printed, as embeddings when calculating cosine similarity and as tokens when passed to a local LLM). </p>
+</li>
+<li>
+<p><strong>TextModules</strong> are the compositional building blocks. A subclass of <code>torch.nn.Module</code>, TextModules can perform all operations you may need in an LLM chain e.g. formatting, parallel LLM api calls, batched local LLM inference, embeddings, information retrieval and so on.</p>
+</li>
+<li>
+<p><strong>Prompt Optimization</strong> is for the first time enabled directly with autograd. LangTorch operations save a computational graph that can be traversed backward to update gradient text values or dynamically undo and repeat calls. With a dataset of examples such gradient text values can inform and optimizer on how it should update the prompts in the chain.</p>
 </li>
 </ul>
 <h2 id="what-makes-langtorch-unique"><strong>What Makes LangTorch Unique?</strong></h2>
-<p>Instead of magical methods to memorize, LangTorch defines simple rules for <code>TextTensor</code> operations like addition and multiplication, enabling all kinds of text formatting and transformations. This lets developers think about what they want to build, instead of how the classes were named. </p>
+<p>Instead of many wrapper classes to memorize, LangTorch defines simple rules for <code>TextTensor</code> operations like addition and multiplication, that in turn enable all kinds of text transformations and formatting. This lets developers think about what they want to build, instead of how the classes were named. For example creating a prompt template and filling its values can both be done with just TextTensors, which can be multiplied to transform texts with values of other texts:</p>
 <div class="highlight"><pre><span></span><code><span class="n">template</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;Explain </span><span class="si">{theory}</span><span class="s2"> in terms of </span><span class="si">{framework}</span><span class="s2">&quot;</span><span class="p">],</span>  
                        <span class="p">[</span><span class="s2">&quot;Argue how </span><span class="si">{framework}</span><span class="s2"> can prove </span><span class="si">{theory}</span><span class="s2">&quot;</span><span class="p">]])</span>  
 
@@ -589,26 +622,26 @@
 <span class="c1">#           [Argue how thermodynamics can prove active inference]]</span>
 </code></pre></div>
 <p>As <code>TextModules</code> operate on tensor data, all operations are easily parallelizable and integrate seamlessly with PyTorch, Transformers Models and APIs. Chaining TextModules offers both low-level control and a higher level of architectural abstraction.</p>
-<ul>
-<li>LangTorch's <strong>intuitive architecture</strong> allows for smooth transitioning from conventional AI development, making prompt engineering, templating and LLM calls all work with torch constructs like <code>nn.Sequential</code>:</li>
-</ul>
+<p>If you have used PyTorch you can use this knowledge when writting LangTorch where prompt engineering, templating and LLM calls all work when used with torch constructs like <code>nn.Sequential</code>. Here is a complete example LangTorch module, that can be executed in parallel on any text input, while preserving shape and maintaining a computational graph for a backward pass. </p>
 <div class="highlight"><pre><span></span><code><span class="n">chain</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
     <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Calculate this equation:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
     <span class="n">langtorch</span><span class="o">.</span><span class="n">methods</span><span class="o">.</span><span class="n">CoT</span><span class="p">,</span>
-    <span class="n">GPT4</span><span class="p">()</span>
-    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Is this reasoning correct?</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">GPT4</span><span class="p">(),</span>
+    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Is this reasoning correct?</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
     <span class="n">GPT4</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">output</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;170*32 =&quot;</span><span class="p">,</span> <span class="s2">&quot;8**3*2000 =&quot;</span><span class="p">,</span> <span class="s2">&quot;123*45/10 =&quot;</span><span class="p">,</span> <span class="s2">&quot;2**10*5 =&quot;</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># Outputs: (4,)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;170+32 =&quot;</span><span class="p">,</span> <span class="s2">&quot;8+3+2000 =&quot;</span> <span class="p">],</span> 
+                           <span class="p">[</span><span class="s2">&quot;170*32 =&quot;</span><span class="p">,</span> <span class="s2">&quot;8**3*2000 =&quot;</span><span class="p">]])</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># Outputs: (2,2)</span>
 </code></pre></div>
 <ul>
 <li>
 <p><strong>Deep Integration</strong>: Each retriever, chain, chat or agent, can be implemented in LangTorch using PyTorch design patterns, such as classes with a forward method, that integrate both tensor data (e.g. embeddings) and textual data (e.g. prompt templates).</p>
 </li>
 <li>
-<p><strong>Flexible and Scalable</strong>: From simple tasks to complex LLM chains, LangTorch scales seamlessly, accommodating both beginners and expert developers.</p>
+<p><strong>Caching Results and Maintaining Context</strong>: When running your LangTorch app you can use a persistent context. This let's you cache the results of LLM calls and store all TextTensors and pending API requests in a yaml session file. This saves a lot of costs, allows the state to persist between runs, makes apps robust to crushes and creates a persistent context that can be accessed from anywhere in the code to inject content from your file system.</p>
 </li>
 </ul>
 <h2 id="dive-in-and-get-started"><strong>Dive In and Get Started</strong></h2>

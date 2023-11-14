@@ -43,6 +43,8 @@
       
     
     
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
       <link rel="stylesheet" href="../../css/custom.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -85,7 +87,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="LangTorch documentation" class="md-header__button md-logo" aria-label="LangTorch documentation" data-md-component="logo">
       
-  <img src="../../langtorch2.png" alt="logo">
+  <img src="../../langtorch_banner.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -176,7 +178,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="LangTorch documentation" class="md-nav__button md-logo" aria-label="LangTorch documentation" data-md-component="logo">
       
-  <img src="../../langtorch2.png" alt="logo">
+  <img src="../../langtorch_banner.png" alt="logo">
 
     </a>
     LangTorch documentation
@@ -531,11 +533,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/t/" class="md-nav__link">
+      <a href="../../reference/text/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Text
+    Text Class
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/texttensor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TextTensor Class
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/textmodule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TextModule Class
   </span>
   
 
@@ -683,7 +725,7 @@
 <ul>
 <li>Represents a sequence of "named strings". It acts as a regular string instance, but provides additional methods to manipulate the named strings within.</li>
 <li>The class provides multiple ways of creating instances, either through direct invocation or using patterns. That will be in the next chapter.</li>
-<li>The <code>Text</code> class can be initialised in multiple ways. This section focuses on constructing Text from strings, lists and dictionaries. A more convenient way is to use a sepcial f-string-like sytnax which can parse most Text’s from a signle string. This is explained in the next chapter.</li>
+<li>The <code>Text</code> class can be initialized in multiple ways. This section focuses on constructing Text from strings, lists and dictionaries. A more convenient way is to use a special f-string-like sytnax which can parse most Text’s from a single string. This is explained in the next chapter.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Creating a Text object with (key,  value) syntax:</span>
 <span class="n">text_obj</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">))</span>
@@ -756,13 +798,6 @@ $$</p>
 <span class="c1"># text_obj*(text_obj**-1) == Text.identity == &quot;&quot;</span>
 </code></pre></div>
 <h2 id="4-additional-points"><strong>4. Additional Points:</strong></h2>
-<ul>
-<li>
-<p>The <code>Text</code> class has a a special value <code>Text.identity</code>: an empty string with no key. This value is characterised by being it being the identity element of multiplication and  <code>Text.identity == 1</code> is defined to be true to make that connection, as:</p>
-<div class="highlight"><pre><span></span><code><span class="n">some_text</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">some_text</span> <span class="o">*</span> <span class="n">Text</span><span class="o">.</span><span class="n">identity</span>
-</code></pre></div>
-</li>
-</ul>
 
 
 
