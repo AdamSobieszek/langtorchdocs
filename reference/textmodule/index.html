@@ -495,13 +495,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    Reference
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#langtorch.TextModule" class="md-nav__link">
     TextModule
   </a>
@@ -558,13 +551,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    Reference
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#langtorch.TextModule" class="md-nav__link">
     TextModule
   </a>
@@ -594,8 +580,6 @@
 
 
 <h1 id="textmodule">TextModule</h1>
-<p>...</p>
-<h2 id="reference">Reference</h2>
 
 
 <div class="doc doc-object doc-class">
@@ -679,9 +663,10 @@ chain of texts transformations and language model inferences. It inherits from <
             <td><code>__init__</code></td>
             <td>
               <div class="doc-md-description">
-                <p>Initializes the <code>TextModule</code> with a prompt
-                                              template, an optional activation function,
-                                              and an optional key for the output tensors.</p>
+                <p>A <code>TextModule</code> may be created from a prompt template (str / TextTensor),
+                                             or a callable to create a nn.Module wrapper for it.
+                                              You can pass an activation (LLM) module,
+                                              and a key that should be added to entries of the output tensors.</p>
               </div>
             </td>
           </tr>
@@ -702,7 +687,7 @@ chain of texts transformations and language model inferences. It inherits from <
 
 
 <p><strong>Examples:</strong></p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">activation</span> <span class="o">=</span> <span class="n">SomeLanguageModelAPI</span><span class="p">()</span>  <span class="c1"># This should be an instance of a class inheriting from torch.nn.Module.</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">activation</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">()</span>  <span class="c1"># This should be an instance of torch.nn.Module.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">text_module</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Summarize the following texts: </span><span class="si">{texts}</span><span class="s2">&quot;</span><span class="p">]),</span>
 <span class="go">                             activation=activation, key=&quot;summary&quot;)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">input_text</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;texts&quot;</span><span class="p">:</span> <span class="s2">&quot;An example input texts.&quot;</span><span class="p">})</span>
@@ -712,8 +697,7 @@ chain of texts transformations and language model inferences. It inherits from <
 
             <details class="quote">
               <summary>Source code in <code>langtorch\tt\to_tt\textmodule.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  8</span>
-<span class="normal">  9</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  9</span>
 <span class="normal"> 10</span>
 <span class="normal"> 11</span>
 <span class="normal"> 12</span>
@@ -838,7 +822,30 @@ chain of texts transformations and language model inferences. It inherits from <
 <span class="normal">131</span>
 <span class="normal">132</span>
 <span class="normal">133</span>
-<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TextModule</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TextModule</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">       A `TextModule` is an abstraction designed to facilitate operations on `TextTensor` objects using a</span>
 <span class="sd">       chain of texts transformations and language model inferences. It inherits from `torch.nn.Module`.</span>
@@ -854,16 +861,17 @@ chain of texts transformations and language model inferences. It inherits from <
 <span class="sd">                      the output `TextTensor`.</span>
 
 <span class="sd">       Methods:</span>
-<span class="sd">           __init__(prompt=[&quot;&quot;], activation=None, key=None): Initializes the `TextModule` with a prompt</span>
-<span class="sd">                                                             template, an optional activation function,</span>
-<span class="sd">                                                             and an optional key for the output tensors.</span>
+<span class="sd">           __init__(prompt=[&quot;&quot;], activation=None, key=None): A `TextModule` may be created from a prompt template (str / TextTensor),</span>
+<span class="sd">                                                            or a callable to create a nn.Module wrapper for it.</span>
+<span class="sd">                                                             You can pass an activation (LLM) module,</span>
+<span class="sd">                                                             and a key that should be added to entries of the output tensors.</span>
 <span class="sd">           forward(input: TextTensor) -&gt; TextTensor: Processes the input `TextTensor` by formatting it</span>
 <span class="sd">                                                     with the module&#39;s content and then passing the</span>
 <span class="sd">                                                     result through the activation function. The output</span>
 <span class="sd">                                                     is then returned with the specified key.</span>
 
 <span class="sd">       Examples:</span>
-<span class="sd">           &gt;&gt;&gt; activation = SomeLanguageModelAPI()  # This should be an instance of a class inheriting from torch.nn.Module.</span>
+<span class="sd">           &gt;&gt;&gt; activation = Activation()  # This should be an instance of torch.nn.Module.</span>
 <span class="sd">           &gt;&gt;&gt; text_module = TextModule(TextTensor([&quot;Summarize the following texts: {texts}&quot;]),</span>
 <span class="sd">                                        activation=activation, key=&quot;summary&quot;)</span>
 <span class="sd">           &gt;&gt;&gt; input_text = TextTensor({&quot;texts&quot;: &quot;An example input texts.&quot;})</span>
@@ -873,12 +881,32 @@ chain of texts transformations and language model inferences. It inherits from <
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">TextTensor</span>
     <span class="n">output_class</span> <span class="o">=</span> <span class="n">TextTensor</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">prompt</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;TextTensor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span>
+                 <span class="n">prompt</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;TextTensor&#39;</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span>
                  <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">memoize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TextModule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">TextTensor</span><span class="p">)</span> <span class="k">else</span> <span class="n">prompt</span>
+
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">TextTensor</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">=</span> <span class="n">prompt</span>
+        <span class="c1"># elif isinstance(prompt, Callable):</span>
+        <span class="c1">#</span>
+        <span class="c1">#     # Create a wrapper module for the callable</span>
+        <span class="c1">#     class CallableWrapper(torch.nn.Module):</span>
+        <span class="c1">#         def __init__(self, callable_func):</span>
+        <span class="c1">#             super(CallableWrapper, self).__init__()</span>
+        <span class="c1">#             self.callable_func = callable_func</span>
+        <span class="c1">#</span>
+        <span class="c1">#         def forward(self, input):</span>
+        <span class="c1">#             result = self.callable_func(input)</span>
+        <span class="c1">#             return TextTensor(result)</span>
+        <span class="c1">#</span>
+        <span class="c1">#     self._prompt = CallableWrapper(prompt)</span>
+
+
         <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">activation</span>  <span class="c1"># An identity function if nothing is passed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">memoize</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_embedding</span> <span class="o">=</span> <span class="kc">None</span>
@@ -907,7 +935,7 @@ chain of texts transformations and language model inferences. It inherits from <
     <span class="nd">@prompt</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">TextModule</span><span class="p">)</span> <span class="k">else</span> <span class="n">prompt</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span>
-                                                                                                      <span class="n">TextTensor</span><span class="p">)</span> <span class="k">else</span> <span class="n">TextTensor</span><span class="p">(</span>
+                                                                                                  <span class="n">TextTensor</span><span class="p">)</span> <span class="k">else</span> <span class="n">TextTensor</span><span class="p">(</span>
             <span class="n">prompt</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
@@ -950,7 +978,8 @@ chain of texts transformations and language model inferences. It inherits from <
         <span class="k">return</span> <span class="n">output</span>
 
     <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TextTensor</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">*</span> <span class="nb">input</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">*</span> <span class="nb">input</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">*</span> <span class="nb">input</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">*</span> <span class="nb">input</span>
+
     <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># This method is used to provide extra information for the print representation of the module</span>
         <span class="nb">repr</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;content=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -1063,34 +1092,34 @@ Subclass this class to use forward hooks that check the input and output types a
 
           <details class="quote">
             <summary>Source code in <code>langtorch\tt\to_tt\textmodule.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
-<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="nb">input</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TextTensor</span><span class="p">:</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="nb">input</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TextTensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            By default, the TextModule forward formats the input using the prompt template tensors using TextTensor multiplication,</span>
 <span class="sd">            then if not None applies an activation function, then if not None a key is set for all entries of the output TextTensor.</span>
