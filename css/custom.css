@@ -14,6 +14,30 @@
     background-color: white !important;
     color: black !important; /* This changes the text color in the header to black for visibility */
 }
+/*.md-header {*/
+/*        box-shadow: 0 0 .2rem #0000001a,0 .2rem .4rem #0003;*/
+/*    transition: transform .25s cubic-bezier(.1,.7,.1,1),box-shadow .25s;*/
+/*    */
+/*}*/
+/*navigation*/
+/* CSS */
+.custom-nav .main-item {
+  font-weight: bold;
+  /* Additional styles for main items */
+}
+
+.custom-nav .sub-items {
+  font-size: smaller;
+  color: grey;
+  /* Additional styles for sub-items */
+}
+
+/* You may want to add :hover or other pseudo-classes for interactivity */
+/* CSS to specifically hide the heading for the __new__ method */
+h77 {
+  display: none;
+}
+
 
 .md-grid {
   max-width: 100%;
@@ -50,15 +74,16 @@
 }
 
 body {
-  --md-text-link-color: #FF6347 ;
+  --md-text-link-color: #f83516;
+  --md-code-hl-name-color: #f83516;
 }
 
 .md-nav__link:hover {
-  color: #FF4500;
+  color:#f83516;
 }
 
 .md-nav__link--active {
-    color: #FF6347;
+    color: #f83516;
 }
 
 /* Change color of the active nav item */
@@ -70,6 +95,7 @@ body {
 /* Change link color */
 a {
     color: rgba(255, 137, 0, 0.92) !important;  /* DarkOrange */
+    font-weight: bold;
 }
 
 /* Change color of code blocks */
@@ -77,10 +103,6 @@ a {
     background-color: #FF6347 !important;  /* Tomato */
 }
 
-/* Change color of the blockquote borders */
-.md-typeset blockquote {
-    border-left-color: #FF4500 !important;  /* OrangeRed */
-}
 /* Change background color to white for the nav title */
 .md-nav--primary .md-nav__title[for=__drawer] {
     background-color: white !important;
@@ -102,19 +124,38 @@ a {
 
 /* Change link color */
 a {
-    color: rgba(255, 137, 0, 0.92) !important;  /* DarkOrange */
+    color: rgb(248, 53, 22) !important;  /* DarkOrange */
 }
 
 /* Change color of code blocks */
 .codehilite .hll {
-    background-color: #FF6347 !important;  /* Tomato */
+    background-color: rgb(248, 53, 22) !important;  /* Tomato */
 }
 
 /* Change color of the blockquote borders */
 .md-typeset blockquote {
-    border-left-color: #FF4500 !important;  /* OrangeRed */
+    border-left-color: #f83516 !important;  /* OrangeRed */
+}
+/* Change color of the blockquote borders */
+.md-typeset code {
+    font-size: .7rem;
 }
 
+.md-content {
+    display: flex; /* Enables flexbox layout */
+    justify-content: center; /* Centers the child elements horizontally */
+    align-items: start; /* Aligns items to the start of the flex container, preventing vertical stretch */
+
+    line-height: 1.375rem;
+    font-weight: 500;
+    font-family: FreightSans, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+.md-content__inner {
+font-size: 0.75rem;
+  max-width: 1000px; /* Your specified maximum width */
+  width: 100%; /* Ensures it doesn't exceed the parent container's width */
+  /* Optionally, if you decide not to use flexbox on .md-content */
+}
 /* New styles */
 
 /* Change color of active nav item for better visibility */
@@ -127,3 +168,194 @@ a {
 .md-nav--primary .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
     color: black !important;  /* Black text */
 }
+.md-nav__list--nested {
+  display: none !important; /* Force hiding nested lists */
+}
+
+.md-nav__toggle {
+  /* Optionally, style the toggle to indicate that it's not expanded */
+  pointer-events: none; /* Disables the ability to click/interact with the toggle */
+}
+.md-nav__link{
+    color: #000000 !important;
+  font-weight: 500;
+}
+.md-nav__item .md-nav__item .md-nav__link {
+    font-weight: 350;
+}
+/* Reset list style and padding for nav-tabs */
+.nav-tabs {
+  border-bottom: 2px solid #ddd; /* Add bottom border to entire nav-tab */
+  list-style-type: none; /* Remove list bullets */
+  padding-left: 0; /* Reset padding */
+  display: flex; /* Ensure tabs are in a row */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+/* Style for individual nav-items */
+.nav-item {
+  margin-bottom: -1px; /* Align with bottom border */
+}
+
+/* General style for nav-links */
+.nav-link {
+  border: 1px solid transparent; /* Reset borders */
+  border-radius: 0.25rem; /* Rounded corners for tabs */
+  padding: 0.5rem 1rem; /* Padding inside tabs */
+  margin-right: 2px; /* Space between tabs */
+  background-color: #f8f9fa; /* Light background color */
+  color: #007bff; /* Text color */
+}
+
+/* Hover effect for nav-links */
+.nav-link:hover {
+  border-color: #e2e6ea #e2e6ea #ddd; /* Border color on hover */
+  background-color: #e9ecef; /* Background color on hover */
+  color: #0056b3; /* Text color on hover */
+}
+
+/* Active and focused nav-link styles */
+.nav-link.active, .nav-link:focus {
+  color: #495057; /* Active/focused text color */
+  background-color: #fff; /* Active/focused background color */
+  border-color: #dee2e6 #dee2e6 #fff; /* Active/focused border color */
+}
+
+/* Remove default focus outline for a cleaner look */
+.nav-link:focus {
+  box-shadow: none;
+}
+
+/* Style adjustments for the tab content */
+.tab-content > .tab-pane {
+  border-top: 2px solid #dee2e6; /* Border top for content */
+  padding-top: 1rem; /* Padding for content inside tab */
+}
+
+
+
+/* Code blocks */
+/* Custom CSS to change background color of code blocks in Material theme */
+/* Custom CSS file */
+.code-ouput code {
+    background-color: rgba(87, 73, 73, 0.02); /* Dark green background */
+    color: #606060;
+}
+
+.highlight span.filename {
+    background-color: rgba(87, 73, 73, 0.09); /* Dark green background */
+
+    padding:  0 14px; /* Tomato */
+    margin-top: -0.2rem;
+}
+/* TABS */
+
+/* Tab style starts here */
+.tabbed-alternate {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 1em 0;
+  border-radius: 0.1rem;
+}
+
+.tabbed-alternate > input {
+  display: none;
+}
+
+.tabbed-labels {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0 -0.1rem #ddd inset;
+  scrollbar-width: none;
+}
+.tabbed-labels::-webkit-scrollbar {
+  display: none;
+}
+.tabbed-labels > label {
+  width: auto;
+  padding: 0.9375em 1.25em 0.78125em;
+  font-weight: 700;
+  font-size: 0.84em;
+  white-space: nowrap;
+  border-bottom: 0.1rem solid transparent;
+  scroll-snap-align: start;
+  border-top-left-radius: 0.1rem;
+  border-top-right-radius: 0.1rem;
+  cursor: pointer;
+  transition: background-color 250ms, color 250ms;
+}
+.tabbed-labels > label:hover {
+  color: red;
+}
+
+.tabbed-labels.tabbed-scroll-left::before {
+  display: inline-block;
+  font-size: 0.9em;
+  position: absolute;
+  top: 0.75em;
+  left: 0;
+  padding-right: 0.64em;
+  color: gray;
+  background: linear-gradient(to right, rgb(255, 255, 255) 75%, rgba(255, 255, 255, 0));
+  content: "\25C0";
+  cursor: pointer;
+}
+
+.tabbed-labels.tabbed-scroll-right::after {
+  display: inline-block;
+  font-size: 0.9em;
+  position: absolute;
+  top: 0.75em;
+  right: 0;
+  padding-left: 0.64em;
+  color: gray;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 25%);
+  content: "\25B6";
+  cursor: pointer;
+}
+
+.tabbed-alternate .tabbed-content {
+  width: 100%;
+}
+.tabbed-alternate input:nth-child(1):checked ~ .tabbed-content > :nth-child(1),
+.tabbed-alternate input:nth-child(2):checked ~ .tabbed-content > :nth-child(2),
+.tabbed-alternate input:nth-child(3):checked ~ .tabbed-content > :nth-child(3) {
+  display: block;
+}
+.tabbed-alternate .tabbed-block {
+  display: none;
+}
+@media print {
+  .tabbed-labels {
+    display: contents;
+  }
+  .tabbed-labels > label:nth-child(1) {
+    order: 1;
+  }
+  .tabbed-labels > label:nth-child(2) {
+    order: 2;
+  }
+  .tabbed-labels > label:nth-child(3) {
+    order: 3;
+  }
+
+  .tabbed-alternate .tabbed-content {
+    display: contents;
+  }
+  .tabbed-alternate .tabbed-block {
+    display: block;
+  }
+  .tabbed-alternate .tabbed-block:nth-child(1) {
+    order: 1;
+  }
+  .tabbed-alternate .tabbed-block:nth-child(2) {
+    order: 2;
+  }
+  .tabbed-alternate .tabbed-block:nth-child(3) {
+    order: 3;
+  }
+}
+/* REFERENCES */
