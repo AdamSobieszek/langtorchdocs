@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#torch-functions" class="md-skip">
+        <a href="#semantic-algebra-vs-tensor-algebra" class="md-skip">
           Skip to content
         </a>
       
@@ -609,8 +609,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -619,9 +617,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#langtorch.functional.stack" class="md-nav__link">
+  <a href="#semantic-algebra-vs-tensor-algebra" class="md-nav__link">
     <span class="md-ellipsis">
-      stack
+      Semantic algebra vs Tensor algebra
     </span>
   </a>
   
@@ -642,22 +640,81 @@
                   
 
 
-<p>LangTorch implements many of the same utility functions one can use in Torch. Many of those operations are also automatically invoked even when using the equivalent function imported from torch. Here are these functions:</p>
-<h1 id="torch-functions">Torch functions</h1>
+  <h1>Index</h1>
 
-
-
-<div class="doc doc-object doc-function">
-
-
-
-
-<a id="langtorch.functional.stack"></a>
-  <div class="doc doc-contents first">
-
-  </div>
-
-</div>
+<p>LangTorch implements many of the same utility functions one can use in Torch. To streamline usage, these are also automatically invoked if one passes TextTensor inputs to the analogous torch function. </p>
+<p>Functions, that take in TextTensors and output TextTensors (note, functions like <code>reshape</code> are also TextTensor methods):</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="">stack</a></td>
+<td>Concatenates a sequence of TextTensors along a new dimension.</td>
+</tr>
+<tr>
+<td><a href="">cat</a></td>
+<td>Concatenates the given sequence of <code>seq</code> TextTensors in the given dimension.</td>
+</tr>
+<tr>
+<td><a href="">reshape</a></td>
+<td>Returns a TextTensor with the same data and number of elements as the input, but with the specified shape.</td>
+</tr>
+<tr>
+<td><a href="">squeeze</a></td>
+<td>Returns a TextTensor with all the dimensions of input of size 1 removed.</td>
+</tr>
+<tr>
+<td><a href="">unsqueeze</a><br></td>
+<td>Returns a TextTensor with a dimension of size one inserted at the specified position.</td>
+</tr>
+<tr>
+<td><a href="">swapaxes</a></td>
+<td>Swaps two axes of the TextTensor.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="semantic-algebra-vs-tensor-algebra">Semantic algebra vs Tensor algebra</h3>
+<p>One of the benefits of representing information geometrically in tensors is that we can have meaningful dimensions, that differentiate e.g. different answers to the same query. In such cases, often we wish to perform some action along this dimension. For the dimension of different answers we may want to synthesize the answers into one better answer, or pick out the best one. </p>
+<p>What LangTorch proposes is that we may think of such operations as taking the (semantic) mean and max value along that dimension. In another use cases the mean may be used to average the embeddings along a dimension. To enable both, the following function operate as numerical operations on embeddings if imported from torch, and as "semantic" functions that call an LLM to perform the analogous operation on texts: </p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="">torch.mean</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="">langtorch.mean</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="">torch.max</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="">langtorch.max</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="">unsqueeze</a><br></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="">swapaxes</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -700,6 +757,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
         <script src="../../css/tabs.js"></script>
       

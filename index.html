@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#the-langtorch-framework" class="md-skip">
           Skip to content
         </a>
       
@@ -199,8 +199,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -229,8 +227,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -242,6 +238,15 @@
   <a href="#the-langtorch-framework" class="md-nav__link">
     <span class="md-ellipsis">
       The LangTorch Framework
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dive-in-and-get-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dive In and Get Started
     </span>
   </a>
   
@@ -652,8 +657,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -665,6 +668,15 @@
   <a href="#the-langtorch-framework" class="md-nav__link">
     <span class="md-ellipsis">
       The LangTorch Framework
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dive-in-and-get-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dive In and Get Started
     </span>
   </a>
   
@@ -685,29 +697,27 @@
                   
 
 
-<h1 id="_1"><div style="text-align: center;"> <img src="./langtorch_banner2.png" alt="LangTorch Logo" style="max-width: 40rem; width: 70%; height: auto; vertical-align: middle;"> </div></h1>
+  <h1>Introduction</h1>
+
 <p><strong>LangTorch</strong> is a framework that simplifies development of complex language model applications by leveraging familiar PyTorch concepts.</p>
-<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach building LLM applications by introducing <strong>a unified framework for working with texts, chats, markup languages, tokens, embeddings and code interpreters</strong> with seamless parallelization and PyTorch integration. The result? Less code, faster development and more intricate LLM applications.</p>
-<h2 id="the-langtorch-framework"><strong>The LangTorch Framework</strong></h2>
-<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces objects that simple rules that enable all kinds of text transformations and formatting. This lets developers think about what they want to build, instead of how the classes were named. </p>
-<p>LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures.</p>
-<p>Where holding numbtorch.Tensors can be a simple rules for <code>TextTensor</code> operations like addition and multiplication, that in turn enable all kinds of text transformations and formatting. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures.</p>
-<p>For example creating a prompt template and filling its values can both be done with just TextTensors, which can be multiplied to transform texts with values of other texts:</p>
-<p>If you have used PyTorch you can use this knowledge when writting LangTorch where prom</p>
-<p>For example creating a prompt template and filling its values can both be done with just TextTensors, which can be multiplied to transform texts with values of other texts:</p>
-<p>If you have used PyTorch you can use this knowledge when writting LangTorch where prompt engineering, templating and LLM calls all work when used with torch constructs like <code>nn.Sequential</code>. Here is a complete example LangTorch module, that can be executed in parallel on any text input, while preserving shape and maintaining a computational graph for a backward pass. </p>
+<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach building LLM applications by introducing <strong>a unified framework for working with texts, chats, markup languages, tokens, embeddings, LLM calls and functions</strong> with seamless parallelization working with OpenAI APIs and PyTorch models. The result? Less code, faster development and more intricate LLM applications.</p>
+<h2 id="the-langtorch-framework">The LangTorch Framework</h2>
+<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces key objects that while governed by few simple rules, enable all kinds of text formatting and transformations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users that want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
 <blockquote>
-<p>The package is in early preview, some features may be unstable or unfinished!</p>
+<p><strong>Note</strong> the package is early in its development and some features may be unstable or unfinished! 
+Use for research rather than production purposes</p>
 </blockquote>
 <div></div>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
       <!-- Column 1 content -->
-<h3 style="margin: 0.8rem 0 0.8rem"><b>TextTensors</b></h3> 
+<h3 style="margin: 0.8rem 0 0.8rem"> <div style="text-align: left; position: relative;">
+  <b style="z-index: 1;">TextTensors</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.4ch">
+</div>
+</h3> 
 
-inheriting functionalities from <b><code>torch.Tensor</code></b>, but holding as entries the structured text. TextTensors allow us to structure text information geometrically, as well as manage multi-repres the same text data it in multiple forms (automatically acting as texts when printed, as embeddings when calculating cosine similarity and as tokens when passed to a local LLM). 
-
+    inherits functionalities from <b><code>torch.Tensor</code></b>, but holds structured text as entries. TextTensors allow us to structure text information geometrically and dynamically inject this data into LLM calls.<br><br>The utility of Tensors, as used in Torch, relies on their ability to calculate simultaneously products of several weights. The corresponding feature in TextTorch allows several prompts to be formatted on several inputs, by defining the product of <code>text1</code> and <code>text2</code> similarly to <code>text1.format(text2)</code>.
 
     </div>
     <div class="col-md-6">
@@ -738,6 +748,7 @@ inheriting functionalities from <b><code>torch.Tensor</code></b>, but holding as
   <div class="row">
     <div class="col-md-6">
       <!-- Column 1 content -->
+<br>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span>
 
 <span class="n">parallel_tasks</span><span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Calculate this equation:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -749,56 +760,11 @@ inheriting functionalities from <b><code>torch.Tensor</code></b>, but holding as
     <div class="col-md-6">
       <!-- Column 2 content -->
 
-<h3 style="margin: 0.8rem 0 0.8rem" id="textmodule"><b>TextModules</b> </h3> 
+<h3 style="margin: 0.8rem 0 0.8rem" id="textmodule"><div style="text-align: left; position: relative;">
+  <b style="z-index: 1;">TextModules</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; z-index: -1; margin-left: 0.5ch; margin-top: 0.4ch">
+</div> </h3> 
 
-are the compositional building blocks. A subclass of <b><code>torch.nn.Module</code></b>, TextModules can perform all operations you may need in an LLM chain e.g. formatting, parallel LLM api calls, batched local LLM inference, embeddings, information retrieval and so on.
-
-    </div>
-  </div>
-</div>
-
-<hr />
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      <!-- Column 1 content -->
-
-<h3 style="margin: 0.8rem 0 0.8rem"><b>Richer text representations</b> </h3> 
-
-Every TextTensor can store 
-Every text entry in LangTorch is structured, which allows texts to also represent completion dictionaries and to be formatted to and constructed from any markup language.    
-that can effectible represent and manipulate prompt templates, chat histories, document stores, dictionaries, markup languages and code.  
-
-    </div>
-    <div class="col-md-6">
-      <!-- Column 2 content -->
-<div class="highlight"><pre><span></span><code>
-</code></pre></div>
-
-    </div>
-  </div>
-</div>
-
-<hr />
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      <!-- Column 1 content -->
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch.CosineSimilarity</span>
-
-<span class="n">tensor1</span> <span class="o">=</span><span class="p">[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]],</span>
-<span class="n">tensor</span> <span class="mi">2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;Nay&quot;</span><span class="p">,</span> <span class="s2">&quot;Si&quot;</span><span class="p">]</span>
-
-<span class="n">torch</span><span class="o">.</span><span class="n">CosineSimilarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor</span><span class="p">)</span>
-</code></pre></div>
-
-    </div>
-    <div class="col-md-6">
-      <!-- Column 2 content -->
-
-<h3 style="margin: 0.8rem 0 0.8rem"><b>Embeddings</b> </h3> 
-
-LangTorch starts by introducing structured *
+are the compositional building blocks. A subclass of <b><code>torch.nn.Module</code></b>, <code>TextModules</code> are reusable "layers", whose weights are <code>TextTensors</code>, and which instead of an activation function can include the activation of an LLM call on the dynamically created text inputs.<br>Instead of many clunky retrievers, chains, chats or agent, all can be defined as TextModules with different forward calls. These can then be easily included as submodules in complex modules that in the forward pass perform any parts of common architectures, like operations on embeddings, retrieval, parallel LLM API calls, batched local LLM inference, actions and so on.
     </div>
   </div>
 </div>
@@ -810,21 +776,29 @@ LangTorch starts by introducing structured *
       <!-- Column 1 content -->
 
 
-<h3 style="margin: 0.8rem 0 0.8rem"><b>Seemless torch integration</b> </h3> 
- Each retriever, chain, chat or agent, can be implemented in LangTorch using PyTorch design patterns, such as classes with a forward method, that integrate both tensor data (e.g. embeddings) and textual data (e.g. prompt templates).
+<h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
+  <b style="z-index: 1;">Supporting PyTorch utilities</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.4ch">
+</div> </h3> 
+LangTorch implements textual versions of many PyTorch utilities. TextTensors can be accessed, reshaped, squeezed, unsqueezed and so on just like torch tensors. Moreover, using regular torch functions they can be summed (text join), stacked, concatenated, used in tensor datasets, and even <b>traced with autograd</b>. In the near future this ability will be used in automatic prompt optimization given a text description of our "loss function".
+
+<b style="color: red">TODO code examples</b>
 
     </div>
     <div class="col-md-6">
       <!-- Column 2 content -->
+      <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Text task dataset and loader</label><label for="__tabbed_1_2">Something else (reshape i spółka?)</label><label for="__tabbed_1_3">Something else 2 (autograd?)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
 
 <span class="c1"># Define the dataset</span>
 <span class="n">input_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">User</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;Is </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2"> positive?&quot;</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;love&quot;</span><span class="p">,</span> <span class="s2">&quot;chair&quot;</span><span class="p">,</span> <span class="s2">&quot;non-negative&quot;</span><span class="p">]])</span> <span class="o">*</span> <span class="n">Assistant</span><span class="p">([</span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">,</span> <span class="s2">&quot;Yes&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">()</span>
-<span class="n">target_data</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">()</span>
+<span class="n">target_data</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">])</span>
 
 <span class="c1"># Wrap the data in a TensorDataset and then create a DataLoader</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
-<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Adjust the batch size as needed</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>  <span class="c1"># Adjust the batch size as needed</span>
 
 <span class="c1"># Define your TextModule</span>
 <span class="n">text_module</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;{*}&quot;</span><span class="p">)</span>  <span class="c1"># Initialize your TextModule here</span>
@@ -833,24 +807,6 @@ LangTorch starts by introducing structured *
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
     <span class="c1"># Pass the batch through the TextModule</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">text_module</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-</code></pre></div>
-    </div>
-  </div>
-</div>
-
-<hr />
-<h1 id="and-more">And more</h1>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab with a really long title 1</label><label for="__tabbed_1_2">Tab with a really long title 2</label><label for="__tabbed_1_3">Tab with a really long title 3</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>
-
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch.CosineSimilarity</span>
-
-<span class="n">tensor1</span> <span class="o">=</span><span class="p">[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]],</span>
-<span class="n">tensor</span> <span class="mi">2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;Nay&quot;</span><span class="p">,</span> <span class="s2">&quot;Si&quot;</span><span class="p">]</span>
-
-<span class="n">torch</span><span class="o">.</span><span class="n">CosineSimilarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor</span><span class="p">)</span>
 </code></pre></div>
 
 </p>
@@ -883,14 +839,56 @@ s
 </div>
 </div>
 </div>
+    </div>
+  </div>
+</div>
 
-<ul>
-<li><strong>Prompt Optimization</strong> is for the first time enabled directly with autograd. LangTorch operations save a computational graph that can be traversed backward to update gradient text values or dynamically undo and repeat calls. With a dataset of examples such gradient text values can inform and optimizer on how it should update the prompts in the chain.</li>
-</ul>
-<p>As <code>TextModules</code> operate on tensor data, all operations are easily parallelizable and integrate seamlessly with PyTorch, Transformers Models and APIs. Chaining TextModules offers both low-level control and a higher level of architectural abstraction.</p>
-<ul>
-<li><strong>Caching Results and Maintaining Context</strong>: When running your LangTorch app you can use a persistent context. This let's you cache the results of LLM calls and store all TextTensors and pending API requests in a yaml session file. This saves a lot of costs, allows the state to persist between runs, makes apps robust to crushes and creates a persistent context that can be accessed from anywhere in the code to inject content from your file system.</li>
-</ul>
+<hr />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Column 1 content -->
+<br>
+
+<div class="highlight"><pre><span></span><code><span class="c1"># TODO</span>
+</code></pre></div>
+    </div>
+    <div class="col-md-6">
+      <!-- Column 2 content -->
+<h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
+  <b style="z-index: 1;">Richer text representations</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.35ch">
+</div></h3> 
+
+Every text entry in LangTorch has a set structure, such that they can be constructed from and formatted into any markup language. This unified structure allows for a systematic treatment of diverse objects like chat histories, chunked documents, document stores, dictionaries, text meta-data, extracted named entities and code. 
+<br>This structure is expanded in <code>TextTensors</code> giving them the ability  <b>hold multiple representations of the same text </b> and automatically switch between acting <i>as strings</i> when printed, <i>as embeddings</i> when inputted into <code>torch.cosine_similarity</code> and <i>as tokens</i> when passed to a local LLM. 
+    </div>
+  </div>
+</div>
+
+<hr />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+<h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
+  <b style="z-index: 1;">Embeddings</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.35ch">
+</div> </h3> 
+Will totally write this, probably, maybe
+    </div>
+
+
+    <div class="col-md-6">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch.CosineSimilarity</span>
+
+<span class="n">tensor1</span> <span class="o">=</span><span class="p">[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]],</span>
+<span class="n">tensor</span> <span class="mi">2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;Nay&quot;</span><span class="p">,</span> <span class="s2">&quot;Si&quot;</span><span class="p">]</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">CosineSimilarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor</span><span class="p">)</span>
+</code></pre></div>
+  </div>
+</div>
+</div>
+
+<hr />
 <h2 id="dive-in-and-get-started"><strong>Dive In and Get Started</strong></h2>
 <p>Install LangTorch with:
 <div class="highlight"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">langtorch</span>
@@ -926,8 +924,10 @@ s
 <p><a href="https://github.com/AdamSobieszek/langtorch"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> GitHub Repo</a></p>
 </li>
 </ul>
-<p>Join us in improving the LLM application dev experience. Welcome to LangTorch!</p>
 </div>
+<p>Join us in improving the LLM application dev experience!</p>
+<p>Contact:
+contact@langtorch.org</p>
 
 
 
@@ -970,6 +970,8 @@ s
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
         <script src="css/tabs.js"></script>
       
