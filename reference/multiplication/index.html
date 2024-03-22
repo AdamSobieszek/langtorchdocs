@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../tensorattrs/">
       
       
-        <link rel="next" href="../text/">
+        <link rel="next" href="../tt/">
       
       
       <link rel="icon" href="../../langtorch_white3.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Index - LangTorch documentation</title>
+        <title>1. Working with Text objects - LangTorch documentation</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#semantic-algebra-vs-tensor-algebra" class="md-skip">
+        <a href="#1-working-with-text-objects" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              1. Working with Text objects
             
           </span>
         </div>
@@ -308,8 +308,6 @@
                 
   
   
-    
-  
   
   
     
@@ -324,16 +322,16 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../langtorch/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -345,7 +343,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             langtorch
@@ -590,6 +588,8 @@
                 
   
   
+    
+  
   
   
     
@@ -604,16 +604,16 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../multiplication/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   <span class="md-ellipsis">
@@ -625,7 +625,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_7">
             <span class="md-nav__icon md-icon"></span>
             TextTensor Multiplication
@@ -834,23 +834,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#semantic-algebra-vs-tensor-algebra" class="md-nav__link">
-    <span class="md-ellipsis">
-      Semantic algebra vs Tensor algebra
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -865,81 +850,69 @@
                   
 
 
-  <h1>Index</h1>
+<h1 id="1-working-with-text-objects">1. Working with Text objects</h1>
+<p>The LangTorch <code>Text</code> class allows for complex operations on text objects, mimicking mathematical operations for strings. Here are several examples utilizing the <code>Text</code> multiplication operation for various purposes, based on the guide in my knowledge:</p>
+<p><strong>1. Formatting Prompts:</strong> You can use Text multiplication to format prompts by matching keys in the second <code>Text</code> with values in the first <code>Text</code>. The same operation can be done element-wise by multiplying <code>TextTensor</code> objects.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">TextTensor</span>  
 
-<p>LangTorch implements many of the same utility functions one can use in Torch. To streamline usage, these are also automatically invoked if one passes TextTensor inputs to the analogous torch function. </p>
-<p>Functions, that take in TextTensors and output TextTensors (note, functions like <code>reshape</code> are also TextTensor methods):</p>
-<table>
-<thead>
-<tr>
-<th>Operation</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="">stack</a></td>
-<td>Concatenates a sequence of TextTensors along a new dimension.</td>
-</tr>
-<tr>
-<td><a href="">cat</a></td>
-<td>Concatenates the given sequence of <code>seq</code> TextTensors in the given dimension.</td>
-</tr>
-<tr>
-<td><a href="">reshape</a></td>
-<td>Returns a TextTensor with the same data and number of elements as the input, but with the specified shape.</td>
-</tr>
-<tr>
-<td><a href="">squeeze</a></td>
-<td>Returns a TextTensor with all the dimensions of input of size 1 removed.</td>
-</tr>
-<tr>
-<td><a href="">unsqueeze</a><br></td>
-<td>Returns a TextTensor with a dimension of size one inserted at the specified position.</td>
-</tr>
-<tr>
-<td><a href="">swapaxes</a></td>
-<td>Swaps two axes of the TextTensor.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="semantic-algebra-vs-tensor-algebra">Semantic algebra vs Tensor algebra</h3>
-<p>One of the benefits of representing information geometrically in tensors is that we can have meaningful dimensions, that differentiate e.g. different answers to the same query. In such cases, often we wish to perform some action along this dimension. For the dimension of different answers we may want to synthesize the answers into one better answer, or pick out the best one. </p>
-<p>What LangTorch proposes is that we may think of such operations as taking the (semantic) mean and max value along that dimension. In another use cases the mean may be used to average the embeddings along a dimension. To enable both, the following function operate as numerical operations on embeddings if imported from torch, and as "semantic" functions that call an LLM to perform the analogous operation on texts: </p>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="">torch.mean</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="">langtorch.mean</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="">torch.max</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="">langtorch.max</a></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="">unsqueeze</a><br></td>
-<td></td>
-</tr>
-<tr>
-<td><a href="">swapaxes</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<span class="n">prompt_template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{greeting}</span><span class="s2">, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">)</span>
+<span class="n">input_values</span> <span class="o">=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>
+<span class="n">formatted_prompt</span> <span class="o">=</span> <span class="n">prompt_template</span> <span class="o">*</span> <span class="n">input_values</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">formatted_prompt</span><span class="p">)</span>  <span class="c1"># Outputs: Hello, Alice!</span>
+
+<span class="c1"># Or with TextTensors</span>
+
+<span class="n">prompt_template</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="n">prompt_template</span><span class="p">,</span> <span class="n">prompt_template</span><span class="p">])</span>
+<span class="n">text_values</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">input_values</span><span class="p">)</span>
+<span class="n">formatted_prompt</span> <span class="o">=</span> <span class="n">prompt_template</span> <span class="o">*</span> <span class="n">input_values</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">formatted_prompt</span><span class="p">)</span>   <span class="c1"># Outputs: [Hello, Alice!  Hello, Alice!]</span>
+</code></pre></div>
+<p>The next examples similarly are all applicable to <code>TextTensor</code> multiplication.</p>
+<p><strong>2. Text Representations</strong>:  Texts represent textual content with a list of key-value pairs. Unlike dictionaries the same key may be used multiple times, serving as a name or tag for a particular value (the values being the actual substrings that make up the text). The keys are not visible from the string representation of Text, but we can use them to format strings in many ways. The pairs that make up a text object can be access with its .items() method and we can edit these entries using indexing similar to pandas, which uses .iloc and .loc:
+<div class="highlight"><pre><span></span><code>
+</code></pre></div></p>
+<p><strong>3. Text Parsing:</strong> When creating a <code>Text</code> object from a string, by default whenever possible the input is parsed with a syntax similar to python's f-strings. In effect, the string is split into substrings with <code>{}</code> symbols being delimiters. This allows us to create a whole structured text object from one string, for example:
+<div class="highlight"><pre><span></span><code><span class="n">prompt_template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{object}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">&quot;</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">prompt_template</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
+<span class="c1"># Outputs: [(&#39;&#39;, &#39;object&#39;), (&#39;&#39;,&#39; says: &#39;), (&#39;&#39;, &#39;greeting&#39;)]</span>
+</code></pre></div>
+To also set keys using this syntax, you can use pass strings written like this: 
+<code>"{value:key}{value1:key1}"</code>, which parses to <code>[('value','key),('value1','key1')]</code>. Below of supported patterns you can mix together:
+| pattern | result |
+| ------- | ------ |
+|         |        |</p>
+<ol>
+<li>The expressiveness of the (key, value) Text representations is based on the fact that we can set as text values another Text object instead of a string, allowing for tree-like structures that can represent e.g. chat templates:
+<div class="highlight"><pre><span></span><code><span class="n">chat</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s2">&quot;Hi&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;assistant&#39;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;Can you explain </span><span class="si">{theory}</span><span class="s1"> like im five?&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">chat</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;theory&quot;</span><span class="p">:</span> <span class="s2">&quot;critical theory&quot;</span><span class="p">})</span>
+</code></pre></div></li>
+</ol>
+<p>To 
+<div class="highlight"><pre><span></span><code><span class="n">keyed_text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;key&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">keyed_text</span><span class="p">)</span>  <span class="c1"># Outputs: Text((&quot;&quot;, &quot;value&quot;))`</span>
+</code></pre></div>
+if the contents match but the keys don't, a new <code>Text</code> object is created with the concatenated contents.
+<div class="highlight"><pre><span></span><code><span class="n">keyed_text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;key&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">keyed_text</span><span class="p">)</span>  <span class="c1"># Outputs: Text((&quot;&quot;, &quot;value&quot;))`</span>
+</code></pre></div></p>
+<p><strong>3. Appending Chat Messages:</strong> For appending chat messages, you can concatenate <code>Text</code> objects to build up a conversation.</p>
+<div class="highlight"><pre><span></span><code><span class="err">`</span><span class="n">message1</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">))</span> <span class="n">message2</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;bot&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m fine, thank you!&quot;</span><span class="p">))</span> <span class="n">conversation</span> <span class="o">=</span> <span class="n">message1</span> <span class="o">+</span> <span class="n">Text</span><span class="o">.</span><span class="n">identity</span> <span class="o">+</span> <span class="n">message2</span> <span class="nb">print</span><span class="p">(</span><span class="n">conversation</span><span class="p">)</span>  <span class="c1"># Outputs: How are you?I&#39;m fine, thank you!`</span>
+</code></pre></div>
+<p><strong>4. Renaming Entries:</strong> To rename entries, you can use the inverse operation, which swaps keys and contents, and then perform multiplication to apply the new names.</p>
+<div class="highlight"><pre><span></span><code><span class="err">`</span><span class="n">original_text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">))</span> <span class="n">renaming_template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;salutation&quot;</span><span class="p">,</span> <span class="s2">&quot;greeting&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="s2">&quot;object&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span> <span class="n">renamed_text</span> <span class="o">=</span> <span class="n">original_text</span> <span class="o">*</span> <span class="n">renaming_template</span> <span class="nb">print</span><span class="p">(</span><span class="n">renamed_text</span><span class="p">)</span>  <span class="c1"># Should output Text with keys &quot;salutation&quot; and &quot;entity&quot;`</span>
+</code></pre></div>
+<p><strong>5. Combining Multiple Operations:</strong> The Text multiplication operation can be extended to combine multiple operations like formatting, adding keys, and appending in one expression.
+<div class="highlight"><pre><span></span><code><span class="err">`</span><span class="c1"># Create a conversation with prompts and dynamically insert names conversation_template = TextTensor([     &quot;{user1} says: {greeting}, {user2}.&quot;,     &quot;{user2} replies: {reply}&quot; ]) user_messages = Text((&quot;greeting&quot;, &quot;Hello&quot;), (&quot;reply&quot;, &quot;Hi there!&quot;)) user_names = Text((&quot;user1&quot;, &quot;Alice&quot;), (&quot;user2&quot;, &quot;Bob&quot;)) formatted_conversation = conversation_template * user_messages * user_names print(formatted_conversation) # Outputs: Alice says: Hello, Bob. Bob replies: Hi there!`</span>
+</code></pre></div>
+These examples show how the <code>Text</code> multiplication operation can be used for formatting, concatenating, and structuring text dynamically in LangTorch.
+Think of the multiplication like this:
+<script type="math/tex; mode=display"> \left(\frac {\text{This is a format:}}{\text{input}} + \frac {\text{key}} {\text{""}}  + \frac {\text{and this is for appending:}} {\text{input}} + \frac {\text{input}} {\text{""}} \right) \circ\frac{\text{value for}}{\text{key}} = 
+    </script>
+</p>
 
 
 

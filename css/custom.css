@@ -151,7 +151,7 @@ a {
     font-family: FreightSans, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 .md-content__inner {
-font-size: 0.75rem;
+font-size: 0.7rem;
   max-width: 1000px; /* Your specified maximum width */
   width: 100%; /* Ensures it doesn't exceed the parent container's width */
   /* Optionally, if you decide not to use flexbox on .md-content */
@@ -178,10 +178,10 @@ font-size: 0.75rem;
 }
 .md-nav__link{
     color: #000000 !important;
-  font-weight: 500;
+  font-weight: 550;
 }
 .md-nav__item .md-nav__item .md-nav__link {
-    font-weight: 350;
+    font-weight: 300;
 }
 /* Reset list style and padding for nav-tabs */
 .nav-tabs {
@@ -205,6 +205,7 @@ font-size: 0.75rem;
   margin-right: 2px; /* Space between tabs */
   background-color: #f8f9fa; /* Light background color */
   color: #007bff; /* Text color */
+
 }
 
 /* Hover effect for nav-links */
