@@ -20,7 +20,7 @@
     
     
       
-        <title>Text parsing - LangTorch documentation</title>
+        <title>Text parsing (WORK IN PROGRESS) - LangTorch documentation</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#text-parsing" class="md-skip">
+        <a href="#text-parsing-work-in-progress" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Text parsing
+              Text parsing  (WORK IN PROGRESS)
             
           </span>
         </div>
@@ -850,7 +850,7 @@
                   
 
 
-<h1 id="text-parsing">Text parsing</h1>
+<h1 id="text-parsing-work-in-progress">Text parsing  (WORK IN PROGRESS)</h1>
 <p>As Texts have an internal structure, this structure needs to be  from raw strings. That's why Text and TextTensors by default parse their inputs with an expanded f-string syntax, explained below.</p>
 <h1 id="chats">Chats</h1>
 <div class="highlight"><pre><span></span><code>  <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
@@ -883,16 +883,15 @@
 <li>Assistant: "Okay"</li>
 <li>User: "Go!"</li>
 </ul>
-<h2 id="3-power-of-multiplication"><strong>3. Power of Multiplication:</strong></h2>
-<p>LangTorch's parsing mechanism allows you to perform multiplication operations on text, making text manipulations incredibly expressive.</p>
+<h2 id="using-parsing-with-multiplication"><strong>Using Parsing with Multiplication:</strong></h2>
 <p>For instance:</p>
 <div class="highlight"><pre><span></span><code><span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;This is a text with a </span><span class="si">{key}</span><span class="s2"> that can be replaced with a multiplication&quot;</span><span class="p">)</span><span class="o">*</span><span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;{value:key}&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Produces:</p>
 <div class="highlight"><pre><span></span><code>&quot;This is a text with a value that can be replaced with a multiplication&quot;
 </code></pre></div>
-<p>Here's the magic: The content inside <code>{}</code> in the first <code>Text</code> object acts like a placeholder. When multiplied with another <code>Text</code> object that provides a value for that placeholder (in this case, <code>value</code> for <code>key</code>), the result is a merged text with the placeholder replaced by the provided value.</p>
-<h2 id="4-practical-tips"><strong>4. Practical Tips:</strong></h2>
+<p>The content inside <code>{}</code> in the first <code>Text</code> object acts like a placeholder. When multiplied with another <code>Text</code> object that provides a value for that placeholder (in this case, <code>value</code> for <code>key</code>), the result is a merged text with the placeholder replaced by the provided value.</p>
+<h2 id="practical-tips"><strong>Practical Tips:</strong></h2>
 <ol>
 <li><strong>Values as Placeholders</strong>: Every substring value can act as a placeholder for a format operation via another “{value:placeholder}” string. They act as positions in the original text where you might want to insert or replace content.</li>
 <li><strong>Embedding Text</strong>: You can embed one piece of text within another using this structure, making it versatile for various text manipulation tasks.</li>

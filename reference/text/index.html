@@ -850,49 +850,13 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#text-class" class="md-nav__link">
-    <span class="md-ellipsis">
-      Text Class
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Text Class">
+    <nav class="md-nav" aria-label="Initialization">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#attributes" class="md-nav__link">
     <span class="md-ellipsis">
       Attributes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#initialization_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Initialization
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Notes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#warnings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Warnings
     </span>
   </a>
   
@@ -946,6 +910,24 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Warnings
+    </span>
+  </a>
   
 </li>
         
@@ -1051,25 +1033,11 @@
 <li>Dictionaries of correctly ordered keys and values</li>
 <li>Sequences of any of the above</li>
 </ul>
-<h2 id="text-class">Text Class</h2>
-<p>The <code>Text</code> class is integral to LangTorch, designed for sophisticated text manipulations akin to operations on ordered dictionaries but augmented for string processing.</p>
 <h3 id="attributes">Attributes</h3>
 <ul>
 <li><code>content</code>: Holds "named strings" or key-value pairs, enabling concatenation, formatting, and structured text manipulations.</li>
 <li><code>language</code>: Defines the language for content parsing and formatting. Defaults to <code>"str"</code>. Alterable to support diverse textual operations.</li>
 <li><code>allowed_keys</code>: Restricts to a list of permissible keys within a <code>Text</code> instance, enforcing schema via <code>ValueError</code> on deviation.</li>
-</ul>
-<h3 id="initialization_1">Initialization</h3>
-<p>Initialization accommodates strings, key-value pair tuples, dictionaries, or other <code>Text</code> instances, promoting flexible textual data structuring.</p>
-<h3 id="notes">Notes</h3>
-<ul>
-<li>Supports text formatting, concatenation, and splitting into <code>TextTensor</code> for advanced manipulations.</li>
-<li><code>iloc</code> and <code>loc</code> properties enable precise sub-element access and manipulation by index or key, respectively.</li>
-</ul>
-<h3 id="warnings">Warnings</h3>
-<ul>
-<li>Usage of unspecified keys in <code>allowed_keys</code> triggers a <code>ValueError</code>.</li>
-<li>Improper formatting operations or key/index accesses may cause unintended results.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <h4 id="initializing-a-text-instance">Initializing a Text Instance</h4>
@@ -1101,8 +1069,16 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;key1&#39;</span><span class="p">])</span>
 <span class="c1"># Output: &quot;Value1&quot;</span>
 </code></pre></div>
-<h2 id="indexing"><strong>Indexing</strong></h2>
-<p>DESC</p>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>If you want to perform some LLM operation on each "substring" of Text (each element in content), you can use <code>.to_tensor()</code> to create a 1-d tensor with separate entries for each element (normally, creating a TextTensor on a Text assumes the Text to be one element). </li>
+</ul>
+<h3 id="warnings">Warnings</h3>
+<ul>
+<li>Usage of unspecified keys in <code>allowed_keys</code> triggers a <code>ValueError</code>.</li>
+<li>Improper formatting operations or key/index accesses may cause unintended results.</li>
+</ul>
+<h2 id="indexing">Indexing</h2>
 
 
 <div class="doc doc-object doc-class">
