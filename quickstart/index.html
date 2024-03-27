@@ -386,15 +386,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1140,15 +1131,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1242,7 +1224,7 @@
 <p>To use a concrete example we will write a module to use an ensemble to rewrite our manuscript. Assuming we have 15 paragraphs in a paragraphs TextTensor:</p>
 <div class="highlight"><pre><span></span><code><span class="n">rewrite</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Rewrite this paragraph to improve clarity: &quot;</span><span class="p">],</span> <span class="n">activation</span> <span class="o">=</span> <span class="n">ensemble_llm</span><span class="p">)</span> 
 <span class="n">ensemble_rewrite</span> <span class="o">=</span> <span class="n">rewrite</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
-<span class="c1"># To more quickly get the average of the completions we can use langtorch&#39;s &quot;semantic algebra&quot; which can combine texts along a dimension it one better &quot;average&quot; text</span>
+<span class="c1"># To quickly combine completions we can use langtorch&#39;s &quot;semantic algebra&quot; to get one better &quot;average&quot; text along a dimension</span>
 <span class="n">rewritten_paragraphs</span> <span class="o">=</span> <span class="n">langtorch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ensemble_rewrite</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ensemble_rewrite</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">rewritten_paragraphs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="c1"># Outputs (15, 5), (15)</span>
@@ -1294,7 +1276,7 @@
 
 <span class="nb">print</span><span class="p">(</span><span class="n">retriever</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
 </code></pre></div></p>
-<p>Note how the implementation didn't require us to learn about any new operations we would not find in regular PyTorch. This is why .. and why LangTorch does not pre-define such modules in the main package.</p>
+<p>Note how the implementation didn't require us to learn about any new operations we would not find in regular PyTorch. One goal of LangTorch is to give developers control over these lower level operations, while being able to write compact code without a multitude of classes. For this reason implementations such as the retriever above are not pre-defined classes in the main package.  </p>
 <p>We can now compose this module with a Module making LLM calls to get a custom Retrieval Augmented Generation pipeline:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RAG</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>  
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="n">TextTensor</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  
@@ -1309,11 +1291,11 @@
 <div class="highlight"><pre><span></span><code><span class="n">rag_chat</span> <span class="o">=</span> <span class="n">RAG</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">,</span>  
                <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Use the context to answer the following user query: &quot;</span><span class="p">,</span>
                <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">)</span>
+
+<span class="n">assistant_response</span> <span class="o">=</span> <span class="n">rag_chat</span><span class="p">(</span><span class="n">user_query</span><span class="p">)</span>
 </code></pre></div>
-<p>With only small modifications this module could also perform batched inference — performing multiple simultaneous queries without much additional latency.</p>
-<p>Note, <code>prompt</code> and <code>activation</code> are arguments inherited from TextModule and need the <code>super().forward</code> call to work. </p>
-<h2 id="next-steps">Next Steps</h2>
-<p>For a deeper understanding, explore the reference documentation for the langtorch functions and classes. For online support, bug reports and feature request join our <a href="https://discord.gg/jkreqtCCkv">discord</a> or post on the <a href="https://github.com/AdamSobieszek/langtorch">GitHub Repo</a>.</p>
+<p>With only small modifications to the retriever this module could also perform batched inference — performing multiple simultaneous queries without much additional latency. Note, <code>prompt</code> and <code>activation</code> are arguments inherited from TextModule and need the <code>super().forward</code> call to work. </p>
+<p>We are excited to see what you will build with LangTorch. If you want to share some examples or have any questions, feel free to ask on our <a href="https://discord.gg/jkreqtCCkv">discord</a>. In the likely event of encountering a bug send it on discord or post on the <a href="https://github.com/AdamSobieszek/langtorch">GitHub Repo</a> and we will fix it ASAP.</p>
 
 
 
