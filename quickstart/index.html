@@ -270,13 +270,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simple-chains" class="md-nav__link">
+  <a href="#1-simple-chains" class="md-nav__link">
     <span class="md-ellipsis">
-      Simple chains
+      1. Simple chains
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Simple chains">
+    <nav class="md-nav" aria-label="1. Simple chains">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -306,10 +306,43 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-implementing-popular-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Implementing popular methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Implementing popular methods">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
   <a href="#parallel-and-chained-calls-with-textmodules" class="md-nav__link">
     <span class="md-ellipsis">
       Parallel and Chained calls with TextModules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chain-of-thought" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chain of Thought
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensemble-self-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ensemble / Self-consistency
     </span>
   </a>
   
@@ -321,20 +354,26 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#implementing-popular-methods" class="md-nav__link">
+  <a href="#3-building-a-retriever-and-rag-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      Implementing popular methods
+      3. Building a Retriever and RAG Modules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Building a Retriever and RAG Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#working-with-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with  embeddings
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#building-a-retriever" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building a retriever
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -976,13 +1015,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simple-chains" class="md-nav__link">
+  <a href="#1-simple-chains" class="md-nav__link">
     <span class="md-ellipsis">
-      Simple chains
+      1. Simple chains
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Simple chains">
+    <nav class="md-nav" aria-label="1. Simple chains">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1012,10 +1051,43 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-implementing-popular-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Implementing popular methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Implementing popular methods">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
   <a href="#parallel-and-chained-calls-with-textmodules" class="md-nav__link">
     <span class="md-ellipsis">
       Parallel and Chained calls with TextModules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chain-of-thought" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chain of Thought
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensemble-self-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ensemble / Self-consistency
     </span>
   </a>
   
@@ -1027,20 +1099,26 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#implementing-popular-methods" class="md-nav__link">
+  <a href="#3-building-a-retriever-and-rag-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      Implementing popular methods
+      3. Building a Retriever and RAG Modules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Building a Retriever and RAG Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#working-with-embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with  embeddings
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#building-a-retriever" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building a retriever
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1073,7 +1151,7 @@
 <p>LangTorch works with Python 3.8 or higher. To install LangTorch using pip:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>langtorch
 </code></pre></div>
-<h2 id="simple-chains">Simple chains</h2>
+<h2 id="1-simple-chains">1. Simple chains</h2>
 <h3 id="getting-tensor-text-data">Getting tensor text data</h3>
 <p><code>TextTensors</code> are designed to simplify simultaneous handling of text data. They inherit most functionality from PyTorch's <code>torch.Tensor</code> but hold textual data, which you may provide from any source.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextTensor</span>
@@ -1092,56 +1170,71 @@ Examples of <code>TextTensor</code> you may want to use are  %%</p>
 <p><code>TextTensors</code> provide operations that allow for formatting and editing many entries at the same time according to array broadcasting rules. Adding a <code>TextTensors</code> appends its content to the other, while multiplication performs a more complex operation that can be used for template formatting:</p>
 <div class="highlight"><pre><span></span><code><span class="n">completions</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Luciano&quot;</span><span class="p">}],</span>
                           <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Massimo&quot;</span><span class="p">}]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">completions</span><span class="p">)</span>
+<span class="c1"># Output</span>
 
-<span class="c1"># Template formatting</span>
-<span class="n">formatted_tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">])</span> <span class="o">*</span> 
+
+<span class="c1"># Prompt template formatting</span>
+<span class="n">prompts</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">completions</span>
 </code></pre></div>
+<p>A useful informal definition for the multiplication operation is that when two entries are multiplied, the right Text acts like a format operation: replacing keys with values (here, {name} with Luciano) or appending if there is nothing to replace. For a more in depth look, see <a href="../reference/multiplication">TextTensor Multiplication</a>.</p>
 <h3 id="performing-a-task-with-textmodules">Performing a task with TextModules</h3>
-<p>TextModules like <code>nn.Module</code> implement a forward method that works on (text) tensors. By default they can be initialized by passing a TextTensor of prompts, that in the forward pass will be formatted using the input TextTensor (just like in the example above).  </p>
-<p>However, as with nn.Modules, to achieve interesting behavior the multiplied tensors need to be passed to an "activation function," which in this context is an LLM call on the formatted prompts.</p>
+<p>TextModules like <code>nn.Module</code> implement a forward method that works on (text) tensors. By default, they can be initialized by passing a TextTensor of prompts, that in the forward pass will be formatted using the input TextTensor (just like in the example above).  </p>
+<p>To achieve interesting behavior, an nn.Module layer usually ends with passing the multiplied tensors to an "activation function". By analogy, TextModules usually end with an activation of an LLM call on the formatted prompts (for more on this parallel see. <a href="reference/tt">langtorch.tt</a>). LangTorch activation like <code>OpenAI</code> execute their LLM calls on each entry of the input TextTensor in parallel.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span><span class="p">,</span> <span class="n">OpenAI</span>
 
 <span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt4&quot;</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="c1"># Pass any API kwargs here to customize the call </span>
 <span class="c1"># Initialize TextModule with the activation</span>
-<span class="n">text_mod</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate this text to English: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
+<span class="n">translate</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate this text to Polish: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
+
+<span class="c1"># We can run our task on any TextTensor input</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
 </code></pre></div>
+<h2 id="2-implementing-popular-methods">2. Implementing popular methods</h2>
 <h3 id="parallel-and-chained-calls-with-textmodules">Parallel and Chained calls with TextModules</h3>
 <p>LangTorch uses a custom implementation to speed up and cache api calls, that by default run in parallel for all TextTensor entries passed to an LLM activation. As such, running calls in parallel is done automatically if either multiple prompts, multiple input values or both are passed to an LLM. </p>
-<p>To create complex chains, you may, as in torch, define a module subclass that adds custom behavior or combines many submodules. The simplest way to chain TextModule is to directly use <code>torch.nn.Sequential</code>.</p>
+<p>The simplest way to chain TextModule is to directly use <code>torch.nn.Sequential</code>. To create any complex chain you may, as in torch, define a module subclass that adds custom behavior or combines many submodules in one.  We will show these on examples of popular LLM methods.</p>
+<h3 id="chain-of-thought">Chain of Thought</h3>
+<p>Simplest example of a custom module are those that implement prompting methods like Chain of Thought, where all we need is to append a fixed string to the input. This can be done by creating a reusable  TextModule that we can chain with any task module:  </p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
-<span class="c1"># Custom TextModule override methods like __init__ and forward</span>
-<span class="k">class</span> <span class="nc">UsefulTextModule</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>
+<span class="c1"># Remember to add spaces or new line characters to the appended texts</span>
+<span class="n">chain_of_thought</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot; Let&#39;s think step by step.&quot;</span><span class="p">)</span>  
+<span class="n">task</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="n">some_prompt_template</span><span class="p">)</span>  
+
+<span class="c1"># OpenAI activation is also a Module so we can chain it explicitly here:</span>
+<span class="n">task_module_w_CoT</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>  
+    <span class="n">task</span><span class="p">,</span>  
+    <span class="n">chain_of_thought</span><span class="p">,</span>
+    <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+<span class="p">)</span>  
+</code></pre></div>
+<p>Or subclassing <code>TextModule</code> and overriding the forward method:
+<div class="highlight"><pre><span></span><code><span class="c1"># Custom TextModule override methods like __init__ and forward</span>
+<span class="k">class</span> <span class="nc">ChainOfThought</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()(</span><span class="nb">input</span> <span class="o">+</span> <span class="s2">&quot; Please give me the wrong answer.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()(</span><span class="nb">input</span> <span class="o">+</span> <span class="s2">&quot; Let&#39;s think step by step.&quot;</span><span class="p">)</span>
 
-
-<span class="c1"># Create a sequential TextModule</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate this text to English: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">OpenAI</span><span class="p">()),</span>
-    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Summarize the translated text: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">OpenAI</span><span class="p">())</span>
-<span class="p">)</span>
+<span class="c1"># By subclassing and using super() we can still set prompts and activations</span>
+<span class="n">task</span> <span class="o">=</span> <span class="n">ChainOfThought</span><span class="p">(</span><span class="n">some_prompt_template</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="ensemble-self-consistency">Ensemble / Self-consistency</h3>
+<p>Many benefits of being able to represent texts "geometrically" in a matrix / tensor comes from being able to create a meaningful structure, where e.g. a 2d matrix has columns representing different versions of the same text and subsequent entries represent subsequent paragraphs. Methods like ensemble voting and self-consistency require creating multiple completions for the same task, which can be representing by adding such a "version" dimension.</p>
+<p>In this example, we will build such a module that for each entry creates multiple entries and combines them back together to increase the overall performance. We will rewrite paragraphs of this <a download="paper.md" href="../static/paper.txt">paper</a> on abilities of language models. First, let's see how . Learn more about these .</p>
+<div class="highlight"><pre><span></span><code>
 </code></pre></div>
-<p>Execute the pipeline by simply passing your TextTensor:</p>
-<div class="highlight"><pre><span></span><code><span class="n">output</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">tt</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="implementing-popular-methods">Implementing popular methods</h2>
-<h2 id="building-a-retriever">Building a retriever</h2>
-<ul>
-<li><strong>Cosine Similarities</strong>: to compute similarities between TextTensors.</li>
-</ul>
+<h2 id="3-building-a-retriever-and-rag-modules">3. Building a Retriever and RAG Modules</h2>
+<h3 id="working-with-embeddings">Working with  embeddings</h3>
+<p>Using embeddings with TextTensors is extremely easy, as every TextTensor can generate its own embedding, as well as know to automatically act as if it was an embedding tensor when passed to torch functions like cosine similarity. These representations (available under the <code>.embedding</code> attribute) are moreover automatically created only right before they are needed (via a set embedding model, by default OpenAI's <code>text-embedding-3-small</code>). </p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>  
 
-<span class="n">tensor1</span> <span class="o">=</span><span class="n">TextTensor</span><span class="p">([[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]]])</span>  
+<span class="n">tensor1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]]])</span>  
 <span class="n">tensor2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Yeah&quot;</span><span class="p">,</span> <span class="s2">&quot;Nope&quot;</span><span class="p">,</span> <span class="s2">&quot;Yup&quot;</span><span class="p">,</span> <span class="s2">&quot;Non&quot;</span><span class="p">])</span>  
 
 <span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor2</span><span class="p">)</span>
 </code></pre></div>
-<blockquote>
-<p><strong>TODO retriever</strong></p>
-</blockquote>
-<p>Using these </p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Retriever</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>  
+<p>Using these properties of <code>TextTensor</code>, we can very compactly implement e.g. a retriever, which for each entry in the input finds in parallel <code>k</code> entries with the highest cosine similarity among the documents it holds:</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Retriever</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>  
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="n">TextTensor</span><span class="p">):</span>  
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  
         <span class="bp">self</span><span class="o">.</span><span class="n">documents</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  
@@ -1149,13 +1242,13 @@ Examples of <code>TextTensor</code> you may want to use are  %%</p>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">TextTensor</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>  
         <span class="n">cos_sim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="n">query</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">[</span><span class="n">cos_sim</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span>
-
-<span class="n">retriever</span> <span class="o">=</span> <span class="n">Retriever</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;doc.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">retriever</span> <span class="o">=</span> <span class="n">Retriever</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;doc.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
 <span class="n">query</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;How to build a retriever?&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">retriever</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
-</code></pre></div>
-<p>Note how didn't require us learning about any new operation we would not find in regular PyTorch. This is why .. and why LangTorch does not pre-define such modules in the main package.</p>
+</code></pre></div></p>
+<p>Note how the implementation didn't require us to learn about any new operations we would not find in regular PyTorch. This is why .. and why LangTorch does not pre-define such modules in the main package.</p>
 <p>We can now compose this module with a Module making LLM calls to get a custom Retrieval Augmented Generation pipeline:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RAG</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>  
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="n">TextTensor</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  
@@ -1166,12 +1259,13 @@ Examples of <code>TextTensor</code> you may want to use are  %%</p>
         <span class="n">retrieved_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">retriever</span><span class="p">(</span><span class="n">user_message</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>  
         <span class="n">user_message</span> <span class="o">=</span> <span class="n">user_message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CONTEXT:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">retrieved_context</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">user_message</span><span class="p">)</span>
-
-<span class="n">rag_chat</span> <span class="o">=</span> <span class="n">RAG</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">,</span>  
-               <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Use the context to answer the following user query: &quot;</span><span class="p">,</span> 
-               <span class="n">activation</span><span class="o">=</span><span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">rag_chat</span> <span class="o">=</span> <span class="n">RAG</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">,</span>  
+               <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Use the context to answer the following user query: &quot;</span><span class="p">,</span>
+               <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>With only small modifications this module could also perform batched inference — performing multiple simultaneous queries without much additional latency.</p>
+<p>Note, <code>prompt</code> and <code>activation</code> are arguments inherited from TextModule and need the <code>super().forward</code> call to work. </p>
 <h2 id="next-steps">Next Steps</h2>
 <p>For a deeper understanding, explore the reference documentation for the langtorch functions and classes. For online support, bug reports and feature request join our <a href="https://discord.gg/jkreqtCCkv">discord</a> or post on the <a href="https://github.com/AdamSobieszek/langtorch">GitHub Repo</a>.</p>
 

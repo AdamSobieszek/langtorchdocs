@@ -1,3 +1,41 @@
+:root {
+    --md-code-fg-color: #000; /* Primary code font color set to black */
+    --md-code-hl-number-color: #793409; /* Darker shade for numbers */
+    --md-code-hl-special-color: #005cc5; /* Darker shade for special */
+    --md-code-hl-function-color: #6f42c1; /* Darker shade for functions */
+    --md-code-hl-constant-color: #005cc5; /* Darker shade for constants */
+    --md-code-hl-keyword-color: #d73a49; /* Darker shade for keywords */
+    --md-code-hl-string-color: #04772c; /* Darker shade for strings */
+    --md-code-hl-name-color: #22863a; /* Darker shade for names */
+    --md-code-hl-operator-color: #380f12; /* Darker shade for operators */
+    --md-code-hl-punctuation-color: #24292e; /* Darker shade for punctuation */
+    --md-code-hl-comment-color: #636363; /* Darker shade for comments */
+    --md-code-hl-generic-color: #005cc5; /* Darker shade for generic */
+    --md-code-hl-variable-color: #5b2a04; /* Darker shade for variables */
+}
+
+/* Custom styling for code blocks to ensure high contrast */
+.md-typeset code,
+.md-typeset pre {
+    color: var(--md-code-fg-color);
+    font-weight: 540;
+    font-size: .63rem;
+}
+
+.md-typeset .md-code .hljs-number { color: var(--md-code-hl-number-color); }
+.md-typeset .md-code .hljs-special { color: var(--md-code-hl-special-color); }
+.md-typeset .md-code .hljs-function { color: var(--md-code-hl-function-color); }
+.md-typeset .md-code .hljs-constant { color: var(--md-code-hl-constant-color); }
+.md-typeset .md-code .hljs-keyword { color: var(--md-code-hl-keyword-color); }
+.md-typeset .md-code .hljs-string { color: var(--md-code-hl-string-color); }
+.md-typeset .md-code .hljs-name { color: var(--md-code-hl-name-color); }
+.md-typeset .md-code .hljs-operator { color: var(--md-code-hl-operator-color); }
+.md-typeset .md-code .hljs-punctuation { color: var(--md-code-hl-punctuation-color); }
+.md-typeset .md-code .hljs-comment { color: var(--md-code-hl-comment-color); }
+.md-typeset .md-code .hljs-generic { color: var(--md-code-hl-generic-color); }
+.md-typeset .md-code .hljs-variable { color: var(--md-code-hl-variable-color); }
+
+
 .md-header__button.md-logo img, .md-header__button.md-logo svg{
 
     height: 1.5rem;
@@ -75,7 +113,7 @@ h77 {
 
 body {
   --md-text-link-color: #f83516;
-  --md-code-hl-name-color: #f83516;
+  --md-code-hl-name-color: #ea3e10;
 }
 
 .md-nav__link:hover {
@@ -135,10 +173,6 @@ a {
 /* Change color of the blockquote borders */
 .md-typeset blockquote {
     border-left-color: #f83516 !important;  /* OrangeRed */
-}
-/* Change color of the blockquote borders */
-.md-typeset code {
-    font-size: .7rem;
 }
 
 .md-content {

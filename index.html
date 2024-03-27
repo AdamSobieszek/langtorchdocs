@@ -948,13 +948,14 @@
 
 <h1 id="_1"><div style="text-align: center;"> <img src="./langtorch_banner2.png" alt="LangTorch Logo" style="max-width: 40rem; width: 70%; height: auto; vertical-align: middle;"> </div></h1>
 <p><strong>LangTorch</strong> is a framework that accelerates development of complex language model applications by leveraging familiar PyTorch concepts.</p>
-<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing system of simple rules that <strong>unifies working with texts, chats, markup languages, prompt templates and techniques, tokens, embeddings, LLM calls and tools</strong> with seamless parallelization working with OpenAI APIs and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.</p>
+<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a system of simple rules that <strong>unifies working with texts, chats, markup languages, prompt templates and techniques, tokens, embeddings, LLM calls and tools</strong> with seamless parallelization working with OpenAI APIs and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.</p>
 <h2 id="the-langtorch-framework">The LangTorch Framework</h2>
-<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces key objects that while governed by few simple rules, enable all kinds of text formatting and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users that want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
+<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces key objects that, while governed by a few simple rules, enable all kinds of text formatting and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users who want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
 <blockquote>
 <p><strong>Note</strong> the package is early in its development and some features may be unstable or unfinished! 
 Use for research rather than production purposes</p>
 </blockquote>
+<p>The framework is centered around these objects and utilities (to skip to results see how compact a full Retriever and RAG implementations are <a href="quickstart/#building-a-retriever-and-rag-modules">here</a>):</p>
 <div></div>
 <div class="container-fluid" style=>
   <div class="row">
@@ -965,7 +966,7 @@ Use for research rather than production purposes</p>
 </div>
 </h3> 
 
-    inherits functionalities from <b><code>torch.Tensor</code></b>, but holds structured text as entries. <a href="reference/tensors/texttensor"><code>TextTensors</code></a> allow us to structure text information geometrically and dynamically inject this data into LLM calls.<br><br>The utility of Tensors, as used in Torch, relies on their ability to calculate simultaneously products of several weights. The corresponding feature in TextTorch allows several prompts to be formatted on several inputs, by defining the product of <code>text1</code> and <code>text2</code> similarly to <code>text1.format(text2)</code>.
+    inherits functionalities from <b><code>torch.Tensor</code></b>, but holds structured text as entries. <a href="reference/texttensor"><code>TextTensors</code></a> allow us to structure text information geometrically and dynamically inject this data into LLM calls.<br><br>The utility of Tensors, as used in Torch, relies on their ability to calculate simultaneously products of several weights. The corresponding feature in TextTorch allows several prompts to be formatted on several inputs, by defining the product of <code>text1</code> and <code>text2</code> similarly to <code>text1.format(text2)</code>.
 
     </div>
     <div class="col-md-6">
@@ -976,8 +977,8 @@ Use for research rather than production purposes</p>
                    <span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">prompt_templates</span> <span class="o">*</span> <span class="n">TextTensor</span><span class="p">(</span>
-                    <span class="p">{</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">}</span>
-                    <span class="p">)</span> 
+            <span class="p">{</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">}</span>
+            <span class="p">)</span> 
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </code></pre></div>
 <div class="code-ouput"> <!-- Replace #f0f0f0 with your desired color -->
@@ -999,13 +1000,21 @@ Use for research rather than production purposes</p>
 <br>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span>
 
-<span class="n">prompts</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Calculate this equation:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">],</span> 
-            <span class="p">[</span><span class="s2">&quot;Write this equation in latex:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">]]</span>
-<span class="n">parallel_tasks</span><span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+<span class="n">prompts</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Summarize this text: &quot;</span><span class="p">],</span>  
+           <span class="p">[</span><span class="s2">&quot;Simplify this text: &quot;</span> <span class="p">]]</span>
+<span class="n">parallel_tasks</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
 
-<span class="n">parallel_tasks</span><span class="p">(</span> <span class="n">Te</span> <span class="n">xtTensor</span><span class="p">([</span><span class="s2">&quot;sin(pi)* 10 =&quot;</span><span class="p">,</span> <span class="s2">&quot;12**2+36 =&quot;</span><span class="p">])</span> <span class="p">)</span>
+<span class="c1"># Do multiple tasks on multiple inputs</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">])</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">parallel_tasks</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<div class="code-ouput"> <!-- Replace #f0f0f0 with your desired color -->
+
+<div class="highlight"><span class="filename">Output:</span><pre><span></span><code>torch.Size([2, 3])
 </code></pre></div>
 
+</div>
     </div>
     <div class="col-md-6">
       <!-- Column 2 content -->
@@ -1014,7 +1023,7 @@ Use for research rather than production purposes</p>
   <b style="z-index: 1;">TextModules</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; z-index: -1; margin-left: 0.5ch; margin-top: 0.4ch">
 </div> </h3> 
 
-are the compositional building blocks. A subclass of <b><code>torch.nn.Module</code></b>, <a href="reference/tt/textmodule"><code>TextModules</code></a>  are reusable "layers", whose weights are <code>TextTensors</code>, and which instead of an activation function can include the activation of an LLM call on the dynamically created text inputs.<br>Instead of many clunky retrievers, chains, chats or agent, all can be defined as TextModules with different forward calls. These can then be easily included as submodules in complex modules that in the forward pass perform any parts of common architectures, like operations on embeddings, retrieval, parallel LLM API calls, batched local LLM inference, actions and so on.
+are the compositional building blocks. A subclass of <b><code>torch.nn.Module</code></b>, <a href="reference/textmodule"><code>TextModules</code></a>  are reusable "layers", whose weights are <code>TextTensors</code>, and which instead of an activation function can include the activation of an LLM call on the dynamically created text inputs.<br>Instead of many clunky retrievers, chains, chats or agent, all can be defined as TextModules with different forward calls. These can then be easily included as submodules in complex modules that in the forward pass perform any parts of common architectures, like operations on embeddings, retrieval, parallel LLM API calls, batched local LLM inference, actions and so on.
     </div>
   </div>
 </div>
@@ -1029,30 +1038,33 @@ are the compositional building blocks. A subclass of <b><code>torch.nn.Module</c
 <h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
   <b style="z-index: 1;">Supporting PyTorch utilities</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.4ch">
 </div> </h3> 
-LangTorch implements textual versions of many PyTorch utilities. TextTensors can be accessed, reshaped, squeezed, unsqueezed and so on just like torch tensors. Moreover, using regular torch functions they can be summed (text join), stacked, concatenated, used in tensor datasets, and even <b>traced with autograd</b>. In the near future this ability will be used in automatic prompt optimization given a text description of our "loss function".
-
+LangTorch implements textual versions of many PyTorch utilities. TextTensors can be accessed, reshaped, squeezed, unsqueezed and so on just like torch tensors. 
+<br>
+Moreover, using regular torch functions they can be summed (text join), stacked, concatenated, used in tensor datasets, and even <b>traced with autograd</b>. In the near future this ability will be used in automatic prompt optimization given a text description of our "loss function".
 
     </div>
     <div class="col-md-6">
       <!-- Column 2 content -->
-      <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Using tensor utilities</label><label for="__tabbed_1_2">Using PyTorch Datasets</label><label for="__tabbed_1_3">Something else 2 (autograd?)</label></div>
+      <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">TextTensors Ops</label><label for="__tabbed_1_2">PyTorch Datasets</label><label for="__tabbed_1_3">Transformations</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]])</span>
+<span class="c1"># Indexing</span>
+<span class="n">x_col</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> 
+<span class="c1"># Reshaping, stacking, squeezing</span>
+<span class="n">x_col</span> <span class="o">=</span> <span class="n">x_col</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">x_col</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">x_col</span><span class="p">,</span> <span class="n">x_col</span><span class="p">,</span> <span class="n">x_col</span><span class="p">))</span>
 
-<span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]),</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">])</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x_col</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+</code></pre></div>
+<div class="code-ouput"> <!-- Replace #f0f0f0 with your desired color -->
 
-<span class="c1"># Simply select batch size for llm calls</span>
-<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-
-<span class="n">llm_call</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Task: &quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm_call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Output:</span><pre><span></span><code>[ a  c  a  c  a  c ]
 </code></pre></div>
 
+</div>
 </p>
 </div>
 <div class="tabbed-block">
@@ -1060,29 +1072,45 @@ LangTorch implements textual versions of many PyTorch utilities. TextTensors can
 
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
 
-<span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]),</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">])</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span>
+<span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]),</span> <span class="n">TextTensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">])</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
 
-<span class="c1"># Simply select batch size for llm calls</span>
+<span class="c1"># Batch size for llm calls</span>
 <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="n">llm_call</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Task: &quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+<span class="n">check_answer</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Is this response the same as the target? &quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">llm_call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">llm_answers</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">check_answer</span><span class="p">(</span><span class="n">llm_answers</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Target: &quot;</span><span class="o">+</span><span class="n">targets</span><span class="p">)</span>
 </code></pre></div>
 </p>
 </div>
 <div class="tabbed-block">
 <p>
 
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch.CosineSimilarity</span>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]])</span>
+<span class="c1"># Addition concatenates texts</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1"># Adding first row with broadcasting</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
 
-<span class="n">tensor1</span> <span class="o">=</span><span class="p">[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]],</span>
-<span class="n">tensor</span> <span class="mi">2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;Nay&quot;</span><span class="p">,</span> <span class="s2">&quot;Si&quot;</span><span class="p">]</span>
+<span class="c1"># We can add many entries by summing</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">torch</span><span class="o">.</span><span class="n">CosineSimilarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x2:</span><span class="se">\n</span><span class="si">{</span><span class="n">x2</span><span class="si">}</span><span class="se">\n</span><span class="s2">x3:</span><span class="se">\n</span><span class="si">{</span><span class="n">x3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
+<div class="code-ouput"> <!-- Replace #f0f0f0 with your desired color -->
+
+<div class="highlight"><span class="filename">Output:</span><pre><span></span><code>x2:
+[[aa  bb]
+ [ca  db]]
+x3:
+[ ac  bd ]
+</code></pre></div>
+
+</div>
 </p>
 </div>
 </div>
@@ -1096,15 +1124,22 @@ LangTorch implements textual versions of many PyTorch utilities. TextTensors can
   <div class="row">
     <div class="col-md-6">
       <!-- Column 1 content -->
-<br>
 
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>  
 
-<span class="n">tensor1</span> <span class="o">=</span><span class="n">TextTensor</span><span class="p">([[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]]])</span>  
+<span class="n">tensor1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]]])</span>  
 <span class="n">tensor2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Yeah&quot;</span><span class="p">,</span> <span class="s2">&quot;Nope&quot;</span><span class="p">,</span> <span class="s2">&quot;Yup&quot;</span><span class="p">,</span> <span class="s2">&quot;Non&quot;</span><span class="p">])</span>  
 
-<span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor2</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span> <span class="n">tensor2</span><span class="p">)</span>
 </code></pre></div>
+<div class="code-ouput"> <!-- Replace #f0f0f0 with your desired color -->
+
+<div class="highlight"><span class="filename">Output:</span><pre><span></span><code>tensor([[0.6923, 0.6644, 0.6317, 0.5749],
+        [0.5457, 0.7728, 0.5387, 0.7036]])
+</code></pre></div>
+
+</div>
+
     </div>
     <div class="col-md-6">
       <!-- Column 2 content -->
@@ -1123,13 +1158,25 @@ Apart from streamlining work on texts, <code>TextTensors</code> can  <b>hold mul
 <h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
   <b style="z-index: 1;">Richer text representations</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.35ch">
 </div> </h3> 
-Every text entry in LangTorch has a set structure, such that they can be constructed from and formatted into any markup language. This unified structure allows for a systematic treatment of diverse objects like chat histories, chunked documents, document stores, dictionaries, text meta-data, extracted named entities and code. 
+Every <code>Text</code>  entry of a  <code>TextTensor</code>  is structured , such that they can be constructed from and formatted into any markup language. This unified structure allows for a systematic treatment of diverse objects like chat histories, chunked documents, document stores, dictionaries, text meta-data, extracted named entities and code. 
+
+The  example illustrates how a  <code>Text</code> can be chunked into segments that occupy seperate entries of the created TextTensor, which allows us to quickly transform each paragraph separately.
     </div>
 
 
     <div class="col-md-6">
-    <br>
-<div class="highlight"><pre><span></span><code>
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">Text</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">some_string</span><span class="p">)</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Rewrite to improve clarity: &quot;</span><span class="p">,</span> 
+                        <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+<span class="c1"># Chunk into paragraphs and transform</span>
+<span class="n">paragraphs</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">pargraphs</span><span class="p">)</span>
+
+<span class="c1"># Join new entries separated with new line characters</span>
+<span class="n">rewritten_text</span> <span class="o">=</span> <span class="p">(</span><span class="n">result</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> 
 </code></pre></div>
   </div>
 </div>
@@ -1147,12 +1194,12 @@ Every text entry in LangTorch has a set structure, such that they can be constru
 <p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8m0 2a6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6 6 6 0 0 0-6-6m-1 2h1.5v3.78l2.33 2.33-1.06 1.06L14 12.4V8M2 18a1 1 0 0 1-1-1 1 1 0 0 1 1-1h3.83c.31.71.71 1.38 1.17 2H2m1-5a1 1 0 0 1-1-1 1 1 0 0 1 1-1h2.05L5 12l.05 1H3m1-5a1 1 0 0 1-1-1 1 1 0 0 1 1-1h3c-.46.62-.86 1.29-1.17 2H4Z"/></svg></span> <strong>Quick-Start Tutorial</strong></p>
 <hr />
 <p>Get building with LangTorch in 5 minutes</p>
-<p><a href="#"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Getting started</a></p>
+<p><a href="quickstart"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Getting started</a></p>
 </li>
 <li>
 <p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16h160v80c0 17.7 14.3 32 32 32h80v288c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3l-90.6-90.5C262.7 6.7 246.5 0 229.5 0H64zm97 289c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L79 303c-9.4 9.4-9.4 24.6 0 33.9l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-31-31 31-31zm96-34c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l31 31-31 31c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l48-48c9.4-9.4 9.4-24.6 0-33.9l-48-48z"/></svg></span> <strong>Reference</strong></p>
 <hr />
-<p>Learn how to use <a href="reference/text/text"><code>Text</code></a> objects, <a href="reference/texttensor/texttensor"><code>TextTensors</code></a>, <a href="reference/tt/textmodule"><code>TextModules</code></a>, <a href="reference/tt/activation"><code>Activations</code></a>  and <a href="reference/langtorch"><code>torch</code></a> functions with LangTorch</p>
+<p>Learn how to use <a href="reference/text"><code>Text</code></a> objects, <a href="reference/texttensor"><code>TextTensors</code></a>, <a href="reference/textmodule"><code>TextModules</code></a>, <a href="reference/activation"><code>Activations</code></a>  and <a href="reference/langtorch"><code>torch</code></a> functions with LangTorch</p>
 <p><a href="https://langtorch.org/reference/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Reference</a>.</p>
 </li>
 <li>
@@ -1179,7 +1226,7 @@ Every text entry in LangTorch has a set structure, such that they can be constru
 <p><strong>LangTorch</strong> is an open source python package by Adam Sobieszek (University of Warsaw; Jutro Medical). Contributions, comments and issue submissions are very much welcomed.</p>
 <p><strong>Contact:</strong>
 contact@langtorch.org</p>
-<p>I'd like to thank Tadeusz Price, Hubert Plisiecki, Jakub Podolak and Mikołaj Boroński for their help in testing and explaining the package.</p>
+<p>I'd like to thank Tadeusz Price, Hubert Plisiecki, Jakub Podolak and Mikołaj Boroński for their help in testing and explaining the package, as well as the University of Warsaw and Jutro Medical for supporting early development.</p>
 </blockquote>
 <hr />
 

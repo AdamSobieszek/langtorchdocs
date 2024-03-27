@@ -837,71 +837,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#example-text-transformation-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: Text Transformation Model
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example: Text Transformation Model">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#note" class="md-nav__link">
-    <span class="md-ellipsis">
-      Note
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#processing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Processing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Processing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sequential-processing-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sequential Processing Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Considerations
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -916,45 +851,93 @@
 
 
 <h1 id="class-langtorchtextmodule"><code>class</code> langtorch.TextModule</h1>
-<p><code>TextModule</code> integrates with <code>TextTensor</code> for text manipulation, extending <code>torch.nn.Module</code> for text-based ____. It facilitates the construction of models with complex, hierarchical architectures through subclassing and the organization of task-specific submodules.</p>
-<h2 id="example-text-transformation-model">Example: Text Transformation Model</h2>
-<p>Simplify model construction by initializing shared activations once and reusing them, enhancing code efficiency and reducing redundancy.</p>
+<h1 id="textmodule">TextModule</h1>
+<p><code>TextModule</code> is the base class for constructing text-based neural network modules within the LangTorch framework. It is intricately designed to work with <code>TextTensor</code> objects, enabling structured text manipulation and processing through the integration of prompt-driven transformations and optional language model (LLM) calls.</p>
+<p>In LangTorch, models designed for handling text data should subclass <code>TextModule</code>. This approach not only extends <code>torch.nn.Module</code>'s functionality to text processing but also facilitates the creation of complex, nested module architectures. Developers can encapsulate specific text processing tasks within submodules, which are then hierarchically organized by assigning them as regular attributes, forming a tree-like structure.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href=""><code>prompt</code></a></td>
+<td><code>TextTensor</code></td>
+<td>The ID of the language model to use for processing.</td>
+</tr>
+<tr>
+<td><a href=""><code>activation</code></a></td>
+<td><code>TextModule</code> or <code>str</code></td>
+<td>Predefined system message to guide the model's response.</td>
+</tr>
+<tr>
+<td><a href=""><code>key</code></a></td>
+<td><code>str</code></td>
+<td>Number of completions to generate for the input, adds a dimension.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-text-model">Example: Text Model</h2>
+<p>To illustrate, consider defining a <code>TextModule</code> subclass that incorporates a sequence of text transformation tasks. Each task is represented by a <code>TextModule</code> configured with its unique prompt and LLM activation:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span><span class="p">,</span> <span class="n">Activation</span>
+<span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span><span class="p">,</span> <span class="n">OpenAI</span>
 
-<span class="n">activation</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> <span class="s2">&quot;You&#39;re an assistant.&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> <span class="s2">&quot;You&#39;re an assistant.&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">TextTransformationModel</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate this text: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">summarize</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Summarize this text: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate to English: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">summarize</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Summarize this text: &#39;</span><span class="si">{text}</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_text</span><span class="p">):</span>
         <span class="n">translated_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">input_text</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="n">translated_text</span><span class="p">)</span>
 </code></pre></div>
-<p>This model translates and summarizes text using a shared <code>Activation</code>, streamlining the process.</p>
-<h3 id="note">Note</h3>
+<p>The module translates and summarizes text using a shared activation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Ensure <code>super().__init__()</code> is called before adding submodules for correct initialization.</p>
-<h2 id="processing">Processing</h2>
-<p><code>TextModule</code> supports both sequential and parallel processing, suitable for handling batched inputs and multiple prompts.</p>
-<h3 id="sequential-processing-example">Sequential Processing Example</h3>
-<p>Construct pipelines with <code>torch.nn.Sequential</code>, passing <code>TextTensor</code> through defined <code>TextModule</code> operations.</p>
-<div class="highlight"><pre><span></span><code><span class="n">pipeline</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate this text to English: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="p">),</span>
-    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Summarize the translated text: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="p">)</span>
+</div>
+<p>This <code>TextTransformationModel</code> performs text translation followed by summarization. Each processing step is modularized by a <code>TextModule</code>, specifying the task through its prompt and the language model for activation.</p>
+<p>Assigning submodules in this structured manner ensures their registration within the LangTorch framework, which is crucial for comprehensive management of parameters and states. This includes ensuring compatibility with operations like <code>.to()</code>, facilitating device management, and parameter optimization.</p>
+<h3 id="note">Note</h3>
+<p>It's imperative to call <code>super().__init__()</code> before submodule assignment in the subclass. This ensures proper initialization and registration of the module within LangTorch, enabling the effective use of nested <code>TextModule</code> instances. Such a setup allows for the development of sophisticated text processing pipelines, leveraging the dynamic and structured nature of <code>TextTensor</code> for advanced NLP tasks.</p>
+<p>Following the initial introduction and example usage of <code>TextModule</code>, let's continue with further details and functionalities that <code>TextModule</code> offers within the LangTorch framework.</p>
+<h2 id="sequential-and-parallel-processing">Sequential and Parallel Processing</h2>
+<p><code>TextModule</code> inherently supports both sequential and parallel processing of <code>TextTensor</code> inputs. This functionality is crucial for optimizing performance, especially when dealing with batched inputs or multiple prompts that necessitate parallel processing through language model activations.</p>
+<h3 id="sequential-processing-with-torchnnsequential">Sequential Processing with <code>torch.nn.Sequential</code></h3>
+<p>LangTorch's <code>TextModule</code> can be seamlessly integrated into PyTorch's sequential models. This allows for the straightforward chaining of multiple text processing steps, each represented as a <code>TextModule</code>, within a unified processing pipeline.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span><span class="p">,</span> <span class="n">Activation</span>
+
+<span class="c1"># Define a sequential processing pipeline</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Translate this text to English: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">Activation</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You&#39;re a translator.&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)),</span>
+    <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot;Summarize the translated text: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">Activation</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You&#39;re a summarizer.&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
 <span class="p">)</span>
 
-<span class="n">output</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Text to be processed.&quot;</span><span class="p">]))</span>
+<span class="c1"># Example input TextTensor</span>
+<span class="n">input_text_tensor</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;This is a text to be translated and summarized.&quot;</span><span class="p">])</span>
+
+<span class="c1"># Execute the processing pipeline</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">input_text_tensor</span><span class="p">)</span>
 </code></pre></div>
-<p>This approach allows for straightforward chaining of translation and summarization steps using a unified <code>Activation</code>.</p>
-<h2 id="considerations">Considerations</h2>
+<p>This example showcases how to construct a processing pipeline that first translates text to English and then summarizes the translated text. Each step in the pipeline is modularized by <code>TextModule</code>, facilitating clear and efficient text processing flows.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure that the <code>TextTensor</code> inputs match the expected format of the prompt templates accurately. If there is a mismatch between the placeholder name used in the module prompt and the corresponding key in the input tensor the completion text will be appended at the end of the text instead of being placed at the placeholder.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul>
-<li>Match <code>TextTensor</code> inputs with prompt templates to prevent processing errors.</li>
-<li>Customize <code>TextModule</code> through subclassing for specific needs.</li>
-<li>Automated parallel processing enhances efficiency for complex input scenarios.</li>
+<li><code>TextModule</code> can be extended through subclassing to implement custom forward methods, offering tailored text processing capabilities. Some currently available subclasses are listed in <a href="tt">langotrch.tt</a> </li>
+<li>Parallel (batched) processing of inputs through the LLM activation is handled automatically for all entries regardless of shape.</li>
 </ul>
+</div>
 
 
 

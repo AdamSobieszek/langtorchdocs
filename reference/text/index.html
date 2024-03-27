@@ -844,16 +844,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#content-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Content Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#initialization" class="md-nav__link">
     <span class="md-ellipsis">
       Initialization
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Initialization">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#attributes" class="md-nav__link">
     <span class="md-ellipsis">
       Attributes
@@ -861,8 +869,17 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
+  <a href="#operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       Examples
@@ -912,96 +929,22 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
+  <a href="#language-parsing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Parsing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
       Notes
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#warnings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Warnings
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#indexing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Indexing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Indexing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#langtorch.texts.Text" class="md-nav__link">
-    <span class="md-ellipsis">
-      Text
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#langtorch.texts.Text.iloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      iloc
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#langtorch.texts.Text.loc" class="md-nav__link">
-    <span class="md-ellipsis">
-      loc
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#langtorch.texts.Text.keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#langtorch.texts.Text.values" class="md-nav__link">
-    <span class="md-ellipsis">
-      values
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#langtorch.texts.Text.items" class="md-nav__link">
-    <span class="md-ellipsis">
-      items
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1021,25 +964,125 @@
 
 
 <h1 id="class-langtorchtext"><code>class</code> langtorch.Text</h1>
-<p>The <code>Text</code> class represents strings as a sequence of named segments.  <script type="math/tex">(\text{label, text})</script>
-</p>
-<p>Texts represent textual content with a list of key-value pairs. Unlike dictionaries the same key may be used multiple times, serving as a name or tag for a particular value (the values being the actual substrings that make up the text). The keys are not visible from the string representation of Text, but we can use them to format strings in many ways. The pairs that make up a text object can be access with its .items() method and we can edit these entries using indexing similar to pandas, which uses .iloc and .loc:</p>
-<p>It supports markup language parsing for organized text handling. This design facilitates operations like text formatting through multiplication, streamlining text processing tasks.</p>
+<p>The <code>Text</code> class in LangTorch represents structured textual data, allowing for easy text modification.</p>
+<p><code>Text</code> represents strings as a sequence of named text segments  <script type="math/tex">(\text{label, text})</script>. Unlike key-value pair dictionaries, in such a sequence the same key may be used multiple times, serving as a name or tag for a particular segment of the text. This structure is similar to markup languages like XML and indeed can be parsed from and to most markup languages.</p>
+<h2 id="content-structure">Content Structure</h2>
+<p>The whole Text structure can be understood as a YAML file like in examples below. The list of segments is held in the <code>content</code> attribute and entries can be a text or a (key, value) pair:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">content</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Hello,</span><span class="nv"> </span><span class="s">&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Alice&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;!&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">content</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hi&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">assistant</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;How</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">you?&quot;</span>
+</code></pre></div>
+<p>As in XML, the labels can also be nested, i.e. the text of a single section labeled "user" can itself be structured into labelled segment (with nested keys):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">content</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">user</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nestet_label1</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text</span><span class="nv"> </span><span class="s">1.&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nestet_label2</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text</span><span class="nv"> </span><span class="s">2.&quot;</span>
+</code></pre></div>
 <h2 id="initialization">Initialization</h2>
-<p>which can include:</p>
+<p><code>Text</code> instances can be initialized on various inputs, including:</p>
 <ul>
-<li>Strings</li>
-<li>Tuples of the form <script type="math/tex">(\text{label, text})</script> representing text keys and values</li>
-<li>Dictionaries of correctly ordered keys and values</li>
-<li>Sequences of any of the above</li>
+<li>Regular strings</li>
+<li>Tuples representing key-value pairs</li>
+<li>Dictionaries of ordered keys and values</li>
+<li>Other <code>Text</code> instances</li>
 </ul>
-<h3 id="attributes">Attributes</h3>
+<p><code>Text</code> accepts a sequence of arguments which can include any mix of these types:</p>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello, &quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;Alice&quot;</span><span class="p">),</span> <span class="s2">&quot;!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="c1"># Output: Hello, Alice!</span>
+</code></pre></div>
+<h2 id="attributes">Attributes</h2>
 <ul>
 <li><code>content</code>: Holds "named strings" or key-value pairs, enabling concatenation, formatting, and structured text manipulations.</li>
 <li><code>language</code>: Defines the language for content parsing and formatting. Defaults to <code>"str"</code>. Alterable to support diverse textual operations.</li>
 <li><code>allowed_keys</code>: Restricts to a list of permissible keys within a <code>Text</code> instance, enforcing schema via <code>ValueError</code> on deviation.</li>
 </ul>
-<h3 id="examples">Examples</h3>
+<h2 id="operations">Operations</h2>
+<p>The <code>Text</code> class supports various operations for manipulating and transforming the textual data:</p>
+<ul>
+<li><strong>Concatenation</strong>: <code>Text</code> instances can be concatenated with other <code>Text</code> instances or strings using the <code>+</code> operator.</li>
+<li><strong>Formatting</strong>: The <code>*</code> operation between two <code>Text</code> objects allows for text formatting, where the content of the right (second) text can replace matching segments of the left text. If a key of a segment doesn't match any value of segments from the left text that segment is appended (like with +). This enables dynamic substitution of values based on keys, prompt injections and more and is explained in a separate page <a href="multiplication">here</a>.</li>
+<li><strong>Indexing</strong>: <code>Text</code> supports pandas style indexing with <code>iloc</code> and <code>loc</code> properties providing index-based and key-based indexing, respectively. They allow accessing and modifying specific parts of the text using integer indices or string keys (may be buggy in early releases).</li>
+<li><strong>Splitting</strong>: The <code>split()</code> method allows splitting the text into smaller segments based on a specified separator.</li>
+<li><strong>Iteration</strong>: <code>Text</code> instances are iterable, allowing iteration over the individual segments.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>__init__(*substrings, parse=True, language='str', **named_substrings)</code></td>
+<td>Initializes a new <code>Text</code> instance. Allows for various input formats, including parsable strings, string sequences, key-value pairs, and dictionaries. The <code>parse</code> parameter determines whether to parse the input content, and the <code>language</code> parameter specifies the language for parsing and formatting.</td>
+</tr>
+<tr>
+<td><code>items()</code></td>
+<td>Returns a list of key-value pairs representing the <code>Text</code> instance's content.</td>
+</tr>
+<tr>
+<td><code>keys()</code></td>
+<td>Returns a list of keys from the <code>Text</code> instance's content.</td>
+</tr>
+<tr>
+<td><code>values()</code></td>
+<td>Returns a list of values from the <code>Text</code> instance's content.</td>
+</tr>
+<tr>
+<td><code>set_key(key, inplace=False)</code></td>
+<td>Sets the top-level keys for the <code>Text</code> entries, removing previous keys. If <code>inplace</code> is <code>True</code>, it modifies the instance in-place; otherwise, it returns a new <code>Text</code> instance.</td>
+</tr>
+<tr>
+<td><code>add_key(key, inplace=False)</code></td>
+<td>Adds a new top-level key for the <code>Text</code> entries, preserving the previous structure. If <code>inplace</code> is <code>True</code>, it modifies the instance in-place; otherwise, it returns a new <code>Text</code> instance.</td>
+</tr>
+<tr>
+<td><code>to_tensor()</code></td>
+<td>Converts the <code>Text</code> instance to a <code>TextTensor</code>. If you want to perform some LLM operation on each "substring" of <code>Text</code> (each element in <code>content</code>), you can use <code>.to_tensor()</code> to create a 1-d tensor with separate entries for each element (normally, creating a <code>TextTensor</code> on a <code>Text</code> assumes the <code>Text</code> to be one element).</td>
+</tr>
+<tr>
+<td><code>split(sep=' ', mode='auto')</code></td>
+<td>Splits the <code>Text</code> instance into smaller segments based on the specified separator (<code>sep</code>). The <code>mode</code> parameter determines the splitting behavior, but currently only supports 'auto' mode.</td>
+</tr>
+<tr>
+<td><code>apply(func, *args, to='values', **kwargs)</code></td>
+<td>Applies a specified function to the keys, values, or both of the <code>Text</code> instance. The <code>to</code> parameter determines the target of the function application.</td>
+</tr>
+<tr>
+<td><code>from_messages(*messages)</code></td>
+<td>Creates a <code>Text</code> instance from a list of dictionaries representing chat messages. Each dictionary should have keys 'role' and 'content'.</td>
+</tr>
+<tr>
+<td><code>from_pandoc_json(ast_json)</code></td>
+<td>Creates a <code>Text</code> instance from a Pandoc AST JSON string.</td>
+</tr>
+<tr>
+<td><code>upper()</code>, <code>lower()</code></td>
+<td>Applies the corresponding string method to the <code>Text</code> instance using <code>method_apply()</code>.</td>
+</tr>
+<tr>
+<td><code>inv()</code></td>
+<td>Returns the inverse of the <code>Text</code> instance, swapping keys and values.</td>
+</tr>
+<tr>
+<td><code>load(path, language='str')</code>, or <code>from_file</code></td>
+<td>Loads a <code>Text</code> instance from a file specified by the <code>path</code> parameter. The <code>language</code> parameter determines the input format.</td>
+</tr>
+<tr>
+<td><code>save(path)</code>,<br>or <code>to_file</code></td>
+<td>Saves the <code>Text</code> instance to a file specified by the <code>path</code> parameter.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
 <h4 id="initializing-a-text-instance">Initializing a Text Instance</h4>
 <div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -1059,6 +1102,7 @@
 <span class="c1"># Output: &quot;Dear Mr. Doe,&quot;</span>
 </code></pre></div>
 <h4 id="accessing-attributes">Accessing Attributes</h4>
+<p>The pairs that make up a text object can be accessed with its <code>.items()</code> method and we can edit these entries using indexing similar to pandas, which uses <code>.iloc</code> and <code>.loc</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">,</span> <span class="n">key1</span><span class="o">=</span><span class="s2">&quot;Value1&quot;</span><span class="p">,</span> <span class="n">key2</span><span class="o">=</span><span class="s2">&quot;Value2&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="c1"># Output: [&#39;key1&#39;, &#39;key2&#39;]</span>
@@ -1069,545 +1113,13 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;key1&#39;</span><span class="p">])</span>
 <span class="c1"># Output: &quot;Value1&quot;</span>
 </code></pre></div>
-<h3 id="notes">Notes</h3>
+<h2 id="language-parsing">Language Parsing</h2>
+<p>The <code>Text</code> class supports parsing (constructing the content structure from just a string) from various markup languages, such as HTML, Markdown, and LaTeX and save them back to text files (potentially in a different language). By default, <code>Text</code> tries to parse an f-string syntax. Both parsing from and casting to strings is explained <a href="parsing">'here'</a>.</p>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>If you want to perform some LLM operation on each "substring" of Text (each element in content), you can use <code>.to_tensor()</code> to create a 1-d tensor with separate entries for each element (normally, creating a TextTensor on a Text assumes the Text to be one element). </li>
+<li>If you want to perform some LLM operation on each "segment" of <code>Text</code> seperately, you can use <code>.to_tensor()</code> to create a 1-d tensor with separate entries for each element (normally, creating a <code>TextTensor</code> on a <code>Text</code> assumes the <code>Text</code> to be one element).</li>
+<li>Be careful with strings with "{" and "}" symbols. If <code>parse</code> is not set to <code>False</code> LangTorch will attempt to parse such strings into segments as if it were an f-string.</li>
 </ul>
-<h3 id="warnings">Warnings</h3>
-<ul>
-<li>Usage of unspecified keys in <code>allowed_keys</code> triggers a <code>ValueError</code>.</li>
-<li>Improper formatting operations or key/index accesses may cause unintended results.</li>
-</ul>
-<h2 id="indexing">Indexing</h2>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="langtorch.texts.Text"></a>
-  <div class="doc doc-contents first">
-
-  
-      <p>The Text class represents structured textual data within LangTorch, allowing for complex manipulations
-and operations on text similar to working with ordered dictionaries but with enhanced string manipulation capabilities.</p>
-
-
-
-  <p>Attributes:</p>
-  <ul>
-      <li class="field-body">
-        <b><code><span title="langtorch.texts.Text.content">content</span></code></b>
-        –
-        <div class="doc-md-description">
-          <p>The core data of a Text instance, holding a sequence of "named strings" or key-value pairs. This attribute
-     allows Text to support operations like concatenation, formatting, and structured manipulation.</p>
-        </div>
-      </li>
-      <li class="field-body">
-        <b><code><span title="langtorch.texts.Text.language">language</span></code></b>
-        –
-        <div class="doc-md-description">
-          <p>Specifies the language for parsing and formatting the textual content. Default is "str", but can be set
-      to other languages to support various textual operations and transformations.</p>
-        </div>
-      </li>
-      <li class="field-body">
-        <b><code><span title="langtorch.texts.Text.allowed_keys">allowed_keys</span></code></b>
-        –
-        <div class="doc-md-description">
-          <p>Optionally specifies a list of keys that are permitted within the Text instance. Attempts to use
-          keys not in this list will raise a ValueError, enforcing a schema on the textual data.</p>
-        </div>
-      </li>
-  </ul>
-
-<details class="initialization" open>
-  <summary>Initialization</summary>
-  <p>Text instances can be initialized in multiple ways, including direct strings, tuples representing key-value pairs,
-dictionaries, or even from other Text instances. This flexibility allows developers to easily structure their textual
-data as needed for their applications.</p>
-</details>
-<details class="notes" open>
-  <summary>Notes</summary>
-  <ul>
-<li>Text instances support advanced text manipulation operations, including formatting via multiplication with other
-  Text instances or dictionaries, concatenation with other Text instances or strings, and even splitting into
-  TextTensor for further processing.</li>
-<li>The <code>iloc</code> and <code>loc</code> properties provide powerful mechanisms for accessing and manipulating sub-elements of a Text
-  instance based on index or key, respectively, facilitating easy modifications and queries.</li>
-</ul>
-</details>
-
-
-<p><strong>Examples:</strong></p>
-    <p>Initializing a Text instance:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="go">&quot;Hello, World!&quot;</span>
-</code></pre></div>
-    <p>Concatenating Text instances:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">greeting</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">combined</span> <span class="o">=</span> <span class="n">greeting</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">target</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
-<span class="go">&quot;Hello, World&quot;</span>
-</code></pre></div>
-    <p>Formatting Text instances:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Dear </span><span class="si">{title}</span><span class="s2"> </span><span class="si">{last_name}</span><span class="s2">,&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formatted</span> <span class="o">=</span> <span class="n">template</span> <span class="o">*</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Mr.&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
-<span class="go">&quot;Dear Mr. Doe,&quot;</span>
-</code></pre></div>
-    <p>Accessing attributes:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">,</span> <span class="n">key1</span><span class="o">=</span><span class="s2">&quot;Value1&quot;</span><span class="p">,</span> <span class="n">key2</span><span class="o">=</span><span class="s2">&quot;Value2&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="go">[&#39;key1&#39;, &#39;key2&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-<span class="go">[(&#39;key1&#39;, &#39;Value1&#39;), (&#39;key2&#39;, &#39;Value2&#39;)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="go">&quot;First&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;key1&#39;</span><span class="p">])</span>
-<span class="go">&quot;Value1&quot;</span>
-</code></pre></div>
-
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="langtorch.texts.Text.iloc" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">iloc</span></code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Index-based indexing. You can access entries with nested keys using dot notation, e.g. .loc["key1.key2"]</p>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="langtorch.texts.Text.loc" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">loc</span></code>
-  
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Key-based indexing. You can access entries with nested keys using dot notation, e.g. .loc["key1.key2"]</p>
-  </div>
-
-</div>
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="langtorch.texts.Text.keys" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">keys</span><span class="p">()</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="langtorch.texts.Text.values" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">values</span><span class="p">()</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="langtorch.texts.Text.items" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">items</span><span class="p">()</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Retrieves key-value pairs from the Text object, allowing for structured data extraction
-and further processing.</p>
-
-
-
-  <p>Returns:</p>
-  <ul>
-      <li class="field-body">
-            <code><span title="typing.List">List</span>[<span title="typing.Tuple">Tuple</span>[str, <span title="typing.Union">Union</span>[str, <span title="typing.Tuple">Tuple</span>[...]]]]</code>
-        –
-        <div class="doc-md-description">
-          <p>A list of key-value pairs representing the Text's content.</p>
-      </div>
-      </li>
-  </ul>
-
-  </div>
-
-</div>
-
-
-
-  </div>
-
-  </div>
-
-
-</div><h1 id="changing-keys"><strong>Changing keys</strong></h1>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="langtorch.texts.Text"></a>
-  <div class="doc doc-contents first">
-
-  
-      <p>The Text class represents structured textual data within LangTorch, allowing for complex manipulations
-and operations on text similar to working with ordered dictionaries but with enhanced string manipulation capabilities.</p>
-
-
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code><span title="langtorch.texts.Text.content">content</span></code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>The core data of a Text instance, holding a sequence of "named strings" or key-value pairs. This attribute
-     allows Text to support operations like concatenation, formatting, and structured manipulation.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.texts.Text.language">language</span></code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Specifies the language for parsing and formatting the textual content. Default is "str", but can be set
-      to other languages to support various textual operations and transformations.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.texts.Text.allowed_keys">allowed_keys</span></code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Optionally specifies a list of keys that are permitted within the Text instance. Attempts to use
-          keys not in this list will raise a ValueError, enforcing a schema on the textual data.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-<details class="initialization" open>
-  <summary>Initialization</summary>
-  <p>Text instances can be initialized in multiple ways, including direct strings, tuples representing key-value pairs,
-dictionaries, or even from other Text instances. This flexibility allows developers to easily structure their textual
-data as needed for their applications.</p>
-</details>
-<details class="notes" open>
-  <summary>Notes</summary>
-  <ul>
-<li>Text instances support advanced text manipulation operations, including formatting via multiplication with other
-  Text instances or dictionaries, concatenation with other Text instances or strings, and even splitting into
-  TextTensor for further processing.</li>
-<li>The <code>iloc</code> and <code>loc</code> properties provide powerful mechanisms for accessing and manipulating sub-elements of a Text
-  instance based on index or key, respectively, facilitating easy modifications and queries.</li>
-</ul>
-</details>
-
-
-<p><strong>Examples:</strong></p>
-    <p>Initializing a Text instance:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="go">&quot;Hello, World!&quot;</span>
-</code></pre></div>
-    <p>Concatenating Text instances:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">greeting</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">combined</span> <span class="o">=</span> <span class="n">greeting</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">target</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
-<span class="go">&quot;Hello, World&quot;</span>
-</code></pre></div>
-    <p>Formatting Text instances:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Dear </span><span class="si">{title}</span><span class="s2"> </span><span class="si">{last_name}</span><span class="s2">,&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formatted</span> <span class="o">=</span> <span class="n">template</span> <span class="o">*</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Mr.&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
-<span class="go">&quot;Dear Mr. Doe,&quot;</span>
-</code></pre></div>
-    <p>Accessing attributes:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">,</span> <span class="n">key1</span><span class="o">=</span><span class="s2">&quot;Value1&quot;</span><span class="p">,</span> <span class="n">key2</span><span class="o">=</span><span class="s2">&quot;Value2&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="go">[&#39;key1&#39;, &#39;key2&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-<span class="go">[(&#39;key1&#39;, &#39;Value1&#39;), (&#39;key2&#39;, &#39;Value2&#39;)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="go">&quot;First&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;key1&#39;</span><span class="p">])</span>
-<span class="go">&quot;Value1&quot;</span>
-</code></pre></div>
-
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="langtorch.texts.Text.set_key" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">set_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Override keys for the textual entries, used for restructuring the content.
-Useful for substituting the key right before passing TextTensor to a Module.</p>
-
-
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>key</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="langtorch.texts.text.Text" href="#langtorch.texts.Text">Text</a>, str, <span title="typing.List">List</span>[str]]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>The new key or keys to apply</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>inplace</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>.</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="langtorch.texts.text.Text" href="#langtorch.texts.Text">Text</a></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>A new Text instance with updated keys.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="langtorch.texts.Text.add_key" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">add_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Add a top-level  key, placing the items of the original as a value under the new key.
-Useful for working with nested keys like in Chat prompts.</p>
-
-
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>key</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="langtorch.texts.text.Text" href="#langtorch.texts.Text">Text</a>, str, <span title="typing.List">List</span>[str]]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>The new key to add</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>inplace</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>.</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-internal" title="langtorch.texts.text.Text" href="#langtorch.texts.Text">Text</a></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>A new Text instance with updated keys.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-</div>
-
-
-
-  </div>
-
-  </div>
-
-
-</div>
 
 
 

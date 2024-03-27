@@ -851,11 +851,17 @@
 
 
 <h1 id="langtorchtt">langtorch.tt</h1>
-<div class="highlight"><pre><span></span><code><span class="n">task_on_3_texts</span> <span class="o">=</span> <span class="n">TextLinear</span><span class="p">([[</span><span class="s2">&quot;Text 1: &quot;</span><span class="p">,</span> <span class="s2">&quot;Text 2: &quot;</span><span class="p">,</span> <span class="s2">&quot;Text 3: &quot;</span><span class="p">]],</span> 
-                             <span class="n">bias</span> <span class="o">=</span> <span class="s2">&quot;Task: What&quot;</span><span class="p">)</span>
-<span class="p">()</span>
+<p>The building blocks of pytorch models are Modules from <code>torch.nn</code>. The langtorch equivalent is the langtorch.tt which contains TextModules. The goal of this parallel is to systematize the emerging LLM app architectures in terms of the existing neural network architectures they share a topology with. For example tree summarization, a method for summarizing longer texts by summarizing it in chunks of e.g. 5 paragraphs, can be equated to a convolutional layer with a "Summarize" kernel and stride 5 (Conv TextModules coming soon btw). </p>
+<p>This philosophy is what motivates the use of the term "activation" for Modules that are LLM calls. It allows thinking of distinct steps of a sequential LLM program as subsequent "layers", where within a layer a lot of textual tasks can be done in parallel, and matrix algebra used in TextTensors helps quickly set up all prompts for these parallel tasks. For example, we can use a linear "layer", called <code>tt.Linear</code>, to format parts of the prompt separately. As a row of the weight matrix in a linear operation on a vector is defined as:</p>
+<div class="highlight"><pre><span></span><code><span class="n">TextTensor</span><span class="p">([[</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">w3</span><span class="p">]])</span> <span class="o">@</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="n">t1</span><span class="p">],[</span><span class="n">t2</span><span class="p">],[</span><span class="n">t3</span><span class="p">]])</span>
+<span class="c1"># is equal to: (w1*t1 + w2*t2 + w3*t3), so we can format:</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Which of these texts is most clear? &quot;</span>
+<span class="n">task_on_3_texts</span> <span class="o">=</span> <span class="n">langtorch</span><span class="o">.</span><span class="n">tt</span><span class="o">.</span><span class="n">Linear</span><span class="p">([[</span><span class="n">prompt</span><span class="o">+</span><span class="s2">&quot;Text 1: &quot;</span><span class="p">,</span> <span class="s2">&quot;Text 2: &quot;</span><span class="p">,</span> <span class="s2">&quot;Text 3: &quot;</span><span class="p">]])</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">task_on_3_texts</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
 </code></pre></div>
-<p>TextTensor([["\n"]*k]) @ retrieved_content.unsqueeze(1)</p>
+<p>Other subclasses include <code>ChatModule</code> which keeps "conversation history" by always outputting <code>input+my_output</code> and setting the key of my output to <code>assistant</code>. Learn about chat Text entries <a href="parsing">here</a>.</p>
 
 
 

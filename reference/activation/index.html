@@ -849,11 +849,71 @@
 
 
 <h1 id="class-langtorchactivation"><code>class</code> langtorch.Activation</h1>
-<p>Continuing the analogy with neural networks, a sequence of TextModule would not perform complex operations if we did not add a "activation function". In LangTorch such activations are LLM calls, done in parallel for each entry of the processed TextTensor. Activation by default supports any OpenAI model and its parameters:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># write simple example</span>
+<p>As introduced on the page <a href="">langtorch.tt</a>, a design principle of LangTorch is to maintain a correspondence between neural network components from torch and LangTorch objects that we can better understand using these existing taxonomies. Because of this, we call an "activation" the LLM call done at the end of a TextModule "layer" (from activation function). The activation is typically an LLM call performed in parallel for each entry of the processed <code>TextTensor</code>. Each entry of the input tensor corresponds to a separate LLM call, which can be a single user message or a complete message history (see. <a href="">Representing chat histories with Text</a>). </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that a <code>Text</code> whose content has a key than is neither system, user nor assistant, the input will be interpreted as one long user message. </p>
+</div>
+<p>The <code>Activation</code> class supports any OpenAI model and its parameters by default. You can initialize an activation using the <code>Activation</code> class directly or through its alias <code>OpenAI</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">OpenAI</span>
+
+<span class="c1"># Use either:</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are an expert assistant.&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># or:</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are an expert assistant.&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </code></pre></div>
-<p>LangTorch Activations were designed to streamline . Apart from working on TextTensors, they cache results of deterministic calls, skip redundant parallel calls and speed up inference.</p>
-<p>Activations are TextModules, but are more commonly used in conjunction with a TextModule to perform a two-step operation of formatting prompts and getting completions for them. </p>
+<p>When initializing an <code>Activation</code>, you can provide a <code>system_message</code> that guides the model's behavior. This system message can be overridden for individual entries in the input <code>TextTensor</code> by including a key-value pair of the form <code>("system", "your system message")</code> in the corresponding <code>Text</code> object.</p>
+<p>Here's an example of using <code>Activation</code> with a <code>TextTensor</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextTensor</span>
+
+<span class="n">user_messages</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span>
+    <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Can you explain the theory of relativity?&quot;</span><span class="p">,</span>
+    <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a math tutor.&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the Pythagorean theorem?&quot;</span><span class="p">}</span>
+<span class="p">])</span>
+
+<span class="n">llm_responses</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">user_messages</span><span class="p">)</span>
+</code></pre></div>
+<p>In this example, the first two entries in <code>user_messages</code> will use the default system message, while the third entry overrides the system message with "You are a math tutor."</p>
+<p>Activations are instances of <code>TextModule</code> themselves but are more commonly used in conjunction with another <code>TextModule</code> to perform a two-step operation of formatting prompts and obtaining completions for them.</p>
+<p>LangTorch Activations are designed to streamline the process of making LLM calls. They work seamlessly with <code>TextTensor</code> objects, cache results of deterministic calls, skip redundant parallel calls, and speed up inference.</p>
+<p>Some of the key parameters for <code>Activation</code> include:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td>The ID of the language model to use for processing.</td>
+</tr>
+<tr>
+<td><code>system_message</code></td>
+<td>Predefined system message to guide the model's response.</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td>Controls the randomness of the generated output. Lower values make the output more deterministic.</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>Number of completions to generate for each input entry. Adds an extra dimension to the output.</td>
+</tr>
+<tr>
+<td><code>max_tokens</code></td>
+<td>The maximum number of tokens to generate in the response.</td>
+</tr>
+<tr>
+<td><code>tools</code></td>
+<td>List of tools described by JSON schema or Python functions. The schema is generated based on the function's docstring and argument type hints.</td>
+</tr>
+</tbody>
+</table>
+<p>For a full list of supported parameters, refer to the OpenAI API documentation.</p>
+<p>By leveraging the power of <code>Activation</code> and <code>TextTensor</code>, you can easily create complex LLM-powered applications with minimal code and efficient processing.</p>
 
 
 

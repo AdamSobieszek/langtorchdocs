@@ -852,6 +852,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#texttensor-subclasses-and-text-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      TextTensor subclasses and Text attributes
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -869,13 +878,27 @@
 
 <h1 id="texttensor-attributes">TextTensor Attributes</h1>
 <p>Each <code>TextTensor</code> has 6 main attributes, two per each representation: texts (<code>content</code> and <code>ttype</code>), embeddings (<code>embedding</code> and <code>embedding_model</code>) and tokens (<code>tokens</code> and <code>tokenizer</code>). </p>
+<ul>
+<li>
 <p>The <code>content</code> attribute is a numpy array with the textual entries. The <code>ttype</code> is the "text type" of these entries, which is any subclass of the <a href="reference/text/index.md"><code>Text</code></a> class.</p>
-<p>The <code>embedding</code> holds a <code>torch.tensor</code> representation of the text entries, computed using the model specified in the <code>embedding_model</code> (name of OpenAI model or local Module).</p>
+</li>
+<li>
+<p>The <code>embedding</code> attribute holds a <code>torch.tensor</code> representation of the text entries, computed using the model specified in the <code>embedding_model</code> (name of OpenAI model or local Module).</p>
+</li>
+<li>
 <p><code>tokens</code> are the <code>torch.Tensor</code> tokenized text entries from <code>content</code>. While embeddings by default are computed using the "text-embedding-3-small" mode, to tokenize content the <code>tokenizer</code> attribute has to be set to a tokenizer from the Transformers library.</p>
-<hr />
+</li>
+</ul>
 <h3 id="setting-attributes">Setting attributes</h3>
 <p>The <code>content</code> is always set, as this is what we initialize a <code>TextTensor</code> on.</p>
 <p>The <code>embedding</code> and <code>tokens</code> are not calculated upon initialization to save costs. They are automatically computed directly before an operation that requires them or can be invoked manually with <code>.embed()</code> and <code>.tokenize()</code> respectively.</p>
+<h2 id="texttensor-subclasses-and-text-attributes">TextTensor subclasses and Text attributes</h2>
+<p>By default, a <code>TextTensor</code> is a tensor with entries of type <code>Text</code>. We can get various benefits from using subclasses of <code>Text</code>, for example:</p>
+<ul>
+<li>Add a custom <code>__str__</code> method to automatically format content, e.g. <code>langtorch.Markdown</code></li>
+<li>Set the <code>allowed_keys</code> attribute to require certain keys, e.g. <code>langtorch.Chat</code> which guarantees a correct chat history representation with only system, user or assistant keys</li>
+<li></li>
+</ul>
 
 
 

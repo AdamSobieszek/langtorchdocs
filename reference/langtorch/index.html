@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#semantic-algebra-vs-tensor-algebra" class="md-skip">
+        <a href="#creation-ops" class="md-skip">
           Skip to content
         </a>
       
@@ -842,6 +842,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#creation-ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creation Ops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexing-slicing-joining-mutating-ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indexing, Slicing, Joining, Mutating Ops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#semantic-algebra-vs-tensor-algebra" class="md-nav__link">
     <span class="md-ellipsis">
       Semantic algebra vs Tensor algebra
@@ -867,8 +885,78 @@
 
   <h1>Index</h1>
 
-<p>LangTorch implements many of the same utility functions one can use in Torch. To streamline usage, these are also automatically invoked if one passes TextTensor inputs to the analogous torch function. </p>
+<p>LangTorch implements many of the same utility functions one can use in Torch. To streamline usage, these are also automatically invoked if one passes TextTensor inputs to the analogous torch function. The exception are creation operations, which have to be imported from LangTorch.</p>
+<h3 id="creation-ops">Creation Ops</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="">zeros</a></td>
+<td>Returns a text tensor with empty entries, with the shape defined by the variable argument size.</td>
+</tr>
+<tr>
+<td><a href="">zeros_like</a></td>
+<td>Returns a text tensor with empty entries, with the same size as input.</td>
+</tr>
+<tr>
+<td><a href="">full</a></td>
+<td>Creates a text tensor of the argument size filled with the given Text.</td>
+</tr>
+<tr>
+<td><a href="">full_like</a></td>
+<td>Returns a text tensor with the same size as input filled the given Text (fill_value).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="indexing-slicing-joining-mutating-ops">Indexing, Slicing, Joining, Mutating Ops</h3>
 <p>Functions, that take in TextTensors and output TextTensors (note, functions like <code>reshape</code> are also TextTensor methods):</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="">concatenate</a></td>
+<td>Concatenates the given sequence of seq tensors in the given dimension.</td>
+</tr>
+<tr>
+<td><a href="">permute</a></td>
+<td>Returns a view of the original tensor input with its dimensions permuted.</td>
+</tr>
+<tr>
+<td><a href="">reshape</a></td>
+<td>Returns a tensor with the same data and number of elements as input, but with the specified shape.</td>
+</tr>
+<tr>
+<td><a href="">squeeze</a></td>
+<td>Returns a tensor with all specified dimensions of input of size 1 removed.</td>
+</tr>
+<tr>
+<td><a href="">stack</a></td>
+<td>Concatenates a sequence of tensors along a new dimension.</td>
+</tr>
+<tr>
+<td><a href="">swapaxes</a></td>
+<td>Alias for [htt</td>
+</tr>
+<tr>
+<td><a href="">transpose</a></td>
+<td>Returns a tensor that is a transposed version of input.</td>
+</tr>
+<tr>
+<td><a href="">split</a></td>
+<td>Splits input, a tensor with three or more dimensions, into multiple tensors depthwise according to indices_or_sections.</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
