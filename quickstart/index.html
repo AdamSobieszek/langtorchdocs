@@ -348,6 +348,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#working-with-structured-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with structured documents
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1093,6 +1102,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#working-with-structured-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with structured documents
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1163,9 +1181,6 @@
 <span class="c1"># Append to every entry in lines</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span> <span class="o">+</span> <span class="s2">&quot; Have a great day!&quot;</span>
 </code></pre></div>
-<p>Each entry of TextTensor is a Text class, that 
-%% 
-Examples of <code>TextTensor</code> you may want to use are  %%</p>
 <h3 id="texttensor-operations-for-prompt-templating">TextTensor operations for prompt templating</h3>
 <p><code>TextTensors</code> provide operations that allow for formatting and editing many entries at the same time according to array broadcasting rules. Adding a <code>TextTensors</code> appends its content to the other, while multiplication performs a more complex operation that can be used for template formatting:</p>
 <div class="highlight"><pre><span></span><code><span class="n">completions</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Luciano&quot;</span><span class="p">}],</span>
@@ -1220,8 +1235,39 @@ Examples of <code>TextTensor</code> you may want to use are  %%</p>
 </code></pre></div></p>
 <h3 id="ensemble-self-consistency">Ensemble / Self-consistency</h3>
 <p>Many benefits of being able to represent texts "geometrically" in a matrix / tensor comes from being able to create a meaningful structure, where e.g. a 2d matrix has columns representing different versions of the same text and subsequent entries represent subsequent paragraphs. Methods like ensemble voting and self-consistency require creating multiple completions for the same task, which can be representing by adding such a "version" dimension.</p>
-<p>In this example, we will build such a module that for each entry creates multiple entries and combines them back together to increase the overall performance. We will rewrite paragraphs of this <a download="paper.md" href="../static/paper.txt">paper</a> on abilities of language models. First, let's see how . Learn more about these .</p>
-<div class="highlight"><pre><span></span><code>
+<p>In this example, we will build such a module that for each entry creates multiple answer entries and combines them back together to increase the overall performance. First, to add a new dimension with different answers given by the LLM we need only adjust the <code>n</code> parameter:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="n">ensemble_llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># 5 completions for each entry</span>
+</code></pre></div>
+<p>To use a concrete example we will write a module to use an ensemble to rewrite our manuscript. Assuming we have 15 paragraphs in a paragraphs TextTensor:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rewrite</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Rewrite this paragraph to improve clarity: &quot;</span><span class="p">],</span> <span class="n">activation</span> <span class="o">=</span> <span class="n">ensemble_llm</span><span class="p">)</span> 
+<span class="n">ensemble_rewrite</span> <span class="o">=</span> <span class="n">rewrite</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
+<span class="c1"># To more quickly get the average of the completions we can use langtorch&#39;s &quot;semantic algebra&quot; which can combine texts along a dimension it one better &quot;average&quot; text</span>
+<span class="n">rewritten_paragraphs</span> <span class="o">=</span> <span class="n">langtorch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ensemble_rewrite</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ensemble_rewrite</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">rewritten_paragraphs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># Outputs (15, 5), (15)</span>
+</code></pre></div>
+<h3 id="working-with-structured-documents">Working with structured documents</h3>
+<p>Instead of strings, each entry of a TextTensor is an instance of <a href="reference/text"><code>langtorch.Text</code></a>, which allows for more complex text processing. The <code>Text</code> class can load documents, parse most markup languages and provide a helpful interface for accessing and modifying their structured text segments. We will prepare data for the last task from a markdown file with a paper on the abilities of language models, available here <a download="paper.md" href="../static/paper.txt">paper.md</a>. As the text has headers and other text blocks, we need to select paragraphs:  </p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">Text</span>
+<span class="n">paper</span> <span class="o">=</span> <span class="n">Text</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;paper.md&quot;</span><span class="p">)</span>
+<span class="c1"># Text automatically parses markdown, encoding its text block structure to let us simply access and modify their content</span>
+
+<span class="c1"># To access the first block </span>
+<span class="n">first_block</span> <span class="o">=</span> <span class="n">paper</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># To filter block types we can take us that Text segments are have labels, accessible via:</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">paper</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="c1"># Outputs: {&#39;BlockQuote&#39;, &#39;Para&#39;, &#39;Header1&#39;, &#39;Header3&#39;, &#39;Header2&#39;}</span>
+
+<span class="c1"># To get all paragraphs</span>
+<span class="n">paragraphs</span> <span class="o">=</span> <span class="n">paper</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Para&quot;</span><span class="p">]</span>
+
+<span class="c1"># ... Rewriting module as before</span>
+
+<span class="c1"># We can easily edit the unfiltered text by setting rewritten paragraphs</span>
+<span class="n">paper</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Para&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rewritten_paragraphs</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">paper</span><span class="p">)</span> <span class="c1"># Outputs a string of the paper formatted in markdown with all rewritten paragraphs in their original places </span>
 </code></pre></div>
 <h2 id="3-building-a-retriever-and-rag-modules">3. Building a Retriever and RAG Modules</h2>
 <h3 id="working-with-embeddings">Working with  embeddings</h3>
