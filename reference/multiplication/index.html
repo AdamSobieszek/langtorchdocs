@@ -20,7 +20,7 @@
     
     
       
-        <title>Index - LangTorch Docs</title>
+        <title>Text Multiplication for Templating - LangTorch Docs</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#optional-mathematical-introduction" class="md-skip">
+        <a href="#text-multiplication-for-templating" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Text Multiplication for Templating
             
           </span>
         </div>
@@ -834,6 +834,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -842,9 +844,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#optional-mathematical-introduction" class="md-nav__link">
+  <a href="#understanding-multiplication" class="md-nav__link">
     <span class="md-ellipsis">
-      Optional Mathematical Introduction
+      Understanding Multiplication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-formal-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional Formal Introduction
     </span>
   </a>
   
@@ -865,11 +876,71 @@
                   
 
 
-  <h1>Index</h1>
+<h1 id="text-multiplication-for-templating">Text Multiplication for Templating</h1>
+<p>The LangTorch <code>Text</code> class encodes the structure, and enables the formatting of texts via multiplication. <code>TextTensor</code> multiplication follows the same rules but applies them to pairs of entries according to broadcasting rules. For most applications it is enough to use multiplication for string formatting as in python, where the left text is created from a template and the right from a completion dictionary such that <code>t1 * t2 = t1.format(**t2.keys())</code> </p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hi, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">)</span> <span class="o">*</span>  <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Hubert&quot;</span><span class="p">})</span> 
+<span class="c1"># Outputs: Hello, Hubert!</span>
+</code></pre></div>
+<h2 id="understanding-multiplication">Understanding Multiplication</h2>
+<p><code>Text</code> multiplication in LangTorch is a composition of two texts <code>t1 * t2</code>. </p>
+<p><strong>Text Representation</strong>:  Recall that <code>Text</code> represents content with a list of key-value pairs. Unlike dictionaries the same key may be used multiple times (the values being the actual substrings that make up the text). In this section we will assume <code>t2</code> only has only one key-value pair <script type="math/tex">(\text{key}, \text{value}</script>).</p>
+<div class="admonition intuitively">
+<p class="admonition-title">Intuitively</p>
+<ul>
+<li>
+<p><code>t1</code> the (left side of the operation) is the text being changed</p>
+</li>
+<li>
+<p>If <code>t1 = (key, value)</code> the right side of the operation <code>(_)*t2</code> means "replace <script type="math/tex">\text{key}</script> with <script type="math/tex">\text{value}</script>". </p>
+<p>To perform this replacement of <code>key</code>, we look for an entry in <code>t1</code> whose value matches <code>key</code>, it is replaced with the new value. If there is no matching value, multiplication acts just like addition by appending <script type="math/tex">(\text{key}, \text{value}</script>) to the end of <code>t1</code>.</p>
+</li>
+</ul>
+</div>
+<p>The two ways texts can be composed (replacement and addition):</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;</span> <span class="n">t1_t2</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;key&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;key&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">))</span> 
+<span class="o">&gt;&gt;</span> <span class="n">t1_t2</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="c1"># Outputs: [(&quot;&quot;, &quot;value&quot;)]</span>
+<span class="o">&gt;&gt;</span> <span class="n">t1_t2</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;key2&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">))</span>
+<span class="o">&gt;&gt;</span> <span class="n">t1_t2</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="c1"># Outputs: [(&quot;&quot;, &quot;key&quot;),(&quot;key2&quot;, &quot;value&quot;)]</span>
+</code></pre></div>
+<p>Pairs that make up a text object can be access with its .items(), to understand how these two rules allow for templating see how parsed <code>t1</code> has matching values to the <code>t2</code> keys:</p>
+<div class="highlight"><pre><span></span><code><span class="n">t1</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prompt_template</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
+ <span class="c1"># Outputs: [(&#39;&#39;, &#39;name&#39;), (&#39;&#39;,&#39; says: &#39;), (&#39;&#39;, &#39;greeting&#39;)]</span>
 
-<h2 id="optional-mathematical-introduction">Optional Mathematical Introduction</h2>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">input_values</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
+<span class="c1"># Outputs: [(&#39;greeting&#39;, &#39;Hello&#39;), (&#39;name&#39;, &#39;Alice&#39;)]</span>
+</code></pre></div>
+<p><strong>Combining Multiple Operations:</strong> We can chain multiplication <code>t1*t2*t3</code> to replace or append multiple values. In the example we also use the completion <code>TextTensors</code> to route different entries to different prompts:
+<div class="highlight"><pre><span></span><code><span class="err">`</span><span class="c1"># Two prompts with two completions needed</span>
+<span class="n">conversation_template</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">.&quot;</span><span class="p">],</span>
+                                    <span class="p">[</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> replies: </span><span class="si">{reply}</span><span class="s2">&quot;</span><span class="p">]])</span> 
+
+<span class="n">shared_completion</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:,</span><span class="s2">&quot;Bob&quot;</span><span class="p">})</span>
+<span class="n">unique_completion</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[(</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">)],</span> 
+                                <span class="p">[(</span><span class="s2">&quot;reply&quot;</span><span class="p">,</span> <span class="s2">&quot;Hi there!&quot;</span><span class="p">)]])</span>
+
+<span class="n">formatted_conversation</span> <span class="o">=</span> <span class="n">conversation_template</span> <span class="o">*</span> <span class="n">shared_completion</span> <span class="o">*</span> <span class="n">unique_completion</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">formatted_conversation</span><span class="p">)</span> 
+<span class="c1"># Outputs: [[Bob says: Hello.      ],</span>
+<span class="c1">#           [Bob replies: Hi there!]]`</span>
+</code></pre></div></p>
+<p><strong>Nested entries</strong>: The expressiveness of the (key, value) Text representations is based on the fact that we can set the value to be another structured Text object instead of one string, allowing for tree-like structures that can represent e.g. chat templates:
+<div class="highlight"><pre><span></span><code><span class="n">chat</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s2">&quot;Hi&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;assistant&#39;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;Can you explain </span><span class="si">{theory}</span><span class="s1"> like im five?&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">chat</span> <span class="o">*=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;theory&quot;</span><span class="p">:</span> <span class="s2">&quot;critical theory&quot;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">chat</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># Outputs: &#39;Can you explain critical theory like im five?&#39;</span>
+</code></pre></div></p>
+<p><strong>Wildcard:</strong> To make it easier to work with nested key-value pairs there is also a special "wildcard" entry <code>(key,value) = (key, "*")</code> that if present in the left text replaces the <code>"*"</code> value with the whole right text content, making it nested with a shared new key. </p>
+<h2 id="optional-formal-introduction">Optional Formal Introduction</h2>
 <p>The <code>TextTensor</code> multiplication operation can be thought of as a group of text composition. In this group, the empty string serves as the identity element, and reversing keys and values in each segment creates the inverse element. When an element is multiplied by its inverse, the result is the identity element.</p>
-<p>Let's denote the multiplication operation as <script type="math/tex">\circ</script>. For any <code>Text</code> objects <script type="math/tex">a</script>, <script type="math/tex">b</script>, and <script type="math/tex">c</script>, the following properties hold:</p>
+<p>Let's denote the multiplication operation as <script type="math/tex">\circ</script>. For any <code>Text</code> objects, <script type="math/tex">a</script>, <script type="math/tex">b</script>, and <script type="math/tex">c</script>, the following properties hold:</p>
 <ol>
 <li>Associativity: <script type="math/tex">(a \circ b) \circ c = a \circ (b \circ c)</script>
 </li>
@@ -878,21 +949,20 @@
 <li>Inverse element: For each <script type="math/tex">a</script>, there exists an <script type="math/tex">a^{-1}</script> such that <script type="math/tex">a \circ a^{-1} = a^{-1} \circ a = \text{empty_string}</script>
 </li>
 </ol>
-<p>However, the multiplication operation is not commutative, meaning <script type="math/tex">a \circ b \neq b \circ a</script> in general (it's a non-abelian group).</p>
+<p>However, the multiplication operation is not commutative, meaning <script type="math/tex">a \circ b \neq b \circ a</script> in general.</p>
 <p>The elements of this group are pairs of strings <script type="math/tex">(\text{key}, \text{value})</script> or a sequence of such pairs. An empty string is the element <script type="math/tex">(\text{""}, \text{""})</script>. We denote appending strings <script type="math/tex">s_1</script> and <script type="math/tex">s_2</script> as <script type="math/tex">s_1s_2</script>.</p>
-<p>To define the "text composition" operation we start with the informal statement that the right side of the composition <script type="math/tex">\circ\ (\text{key}, \text{value})</script>  means "replace <script type="math/tex">\text{key}</script> with <script type="math/tex">\text{value}</script>" and acts on the entries of the left element. The output is a pair or sequence of pairs, satisfying:</p>
+<p>In defining the "text composition" operation we aim to for it to satisfy that the right side of the composition <script type="math/tex">\circ\ (\text{key}, \text{value})</script>  intuitively means "replace <script type="math/tex">\text{key}</script> with <script type="math/tex">\text{value}</script>" and acts on the entries of the left element. The output is a pair or sequence of pairs, satisfying:</p>
 <p>
 <script type="math/tex; mode=display">(\text{key}_1, \text{value}_1) \circ (\text{key}_2, \text{value}_2) = \begin{cases}
 (\text{key}_2, \text{value}_1), & \text{if } \text{key}_1 = \text{value}_2 \\ \\
-(\text{key}_1, \text{value}_1  \text{value}_2), & \text{if } \text{key}_1 = \text{key}_2 \\ \\
 (\text{key}_1, \text{value}_1) (\text{key}_2, \text{value}_2), & \text{otherwise}
 \end{cases}</script>
 </p>
-<p>If the left <code>Text</code> has multiple segments, the element on the right is checked for matches on segments of the left text from left to right. If a match is found replace that segment according to rules above, append at the end otherwise.</p>
-<p>If the right <code>Text</code> object has multiple segments <script type="math/tex">[s_1, s_2, s_3]</script>, the composition is equivalent to composing the left <code>Text</code> with each segment in sequence:</p>
+<p>If the left <code>Text</code> has multiple segments, the element on the right is checked for matches on segments of the left text from left to right. If a match is found, replace that segment, append at the end otherwise.  If the left element has nested entries, like <script type="math/tex">(\text{key}_{1a}, (\text{key}_{1b}, \text{value}_1))</script>, for purposes of multiplication the matching value would be <script type="math/tex">key1 := \text{key}_{1a}+"."+\text{key}_{1b}</script>. </p>
+<p>If the right <code>Text</code> object has multiple segments <script type="math/tex">[s_1, s_2, s_3]</script>, the composition is composing the left <code>Text</code> with each segment in sequence:</p>
 <p>
 <script type="math/tex; mode=display">((\text{left\_text} \circ s_1) \circ s_2) \circ s_3</script>
-</p>
+With the added restriction that we don't format the same segment twice (which includes not matching <script type="math/tex">s_1</script> with <script type="math/tex">s_2</script>). </p>
 
 
 

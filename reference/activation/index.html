@@ -835,6 +835,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialization
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -849,11 +866,12 @@
 
 
 <h1 id="class-langtorchactivation"><code>class</code> langtorch.Activation</h1>
-<p>As introduced on the page <a href="">langtorch.tt</a>, a design principle of LangTorch is to maintain a correspondence between neural network components from torch and LangTorch objects that we can better understand using these existing taxonomies. Because of this, we call an "activation" the LLM call done at the end of a TextModule "layer" (from activation function). The activation is typically an LLM call performed in parallel for each entry of the processed <code>TextTensor</code>. Each entry of the input tensor corresponds to a separate LLM call, which can be a single user message or a complete message history (see. <a href="">Representing chat histories with Text</a>). </p>
+<p>As introduced on the page <a href="">langtorch.tt</a>, a design principle of LangTorch is to maintain a correspondence between neural network components from torch and LangTorch objects that we can better understand using these existing taxonomies. Because of this, we call an "activation" the LLM call done at the end of a TextModule "layer" (from activation function). The activation is typically an LLM call performed in parallel for each entry of the processed <code>TextTensor</code>. Each entry of the input tensor corresponds to a separate LLM call, which can be a single user message or a complete message history (see. <a href="../parsing/#representing-chat-histories">Representing chat histories with Text</a>). </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that a <code>Text</code> whose content has a key than is neither system, user nor assistant, the input will be interpreted as one long user message. </p>
 </div>
+<h2 id="initialization">Initialization</h2>
 <p>The <code>Activation</code> class supports any OpenAI model and its parameters by default. You can initialize an activation using the <code>Activation</code> class directly or through its alias <code>OpenAI</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">OpenAI</span>
 
@@ -875,9 +893,8 @@
 <span class="n">llm_responses</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">user_messages</span><span class="p">)</span>
 </code></pre></div>
 <p>In this example, the first two entries in <code>user_messages</code> will use the default system message, while the third entry overrides the system message with "You are a math tutor."</p>
-<p>Activations are instances of <code>TextModule</code> themselves but are more commonly used in conjunction with another <code>TextModule</code> to perform a two-step operation of formatting prompts and obtaining completions for them.</p>
-<p>LangTorch Activations are designed to streamline the process of making LLM calls. They work seamlessly with <code>TextTensor</code> objects, cache results of deterministic calls, skip redundant parallel calls, and speed up inference.</p>
-<p>Some of the key parameters for <code>Activation</code> include:</p>
+<p>Activations are instances of <code>TextModule</code> themselves, but are more commonly used in conjunction with another <code>TextModule</code> to perform a two-step operation of formatting prompts and obtaining completions for them. Apart from performing parallel calls, to speed up inference and decrease costs <code>Activation</code> caches results of deterministic calls (<code>T = 0</code>) and skips redundant parallel calls. If you want to cache and reuse results even for activations with non-zero temperature, set <code>cache=True</code>. The last non-standard init argument is <code>keep_history</code>, which <code>False</code> by default makes the module output only the completion, and the input + completion appended if <code>True</code>.</p>
+<p>The rest of the <code>Activation</code> arguments are parameters of the API call:</p>
 <table>
 <thead>
 <tr>
@@ -912,8 +929,7 @@
 </tr>
 </tbody>
 </table>
-<p>For a full list of supported parameters, refer to the OpenAI API documentation.</p>
-<p>By leveraging the power of <code>Activation</code> and <code>TextTensor</code>, you can easily create complex LLM-powered applications with minimal code and efficient processing.</p>
+<p>For a full list of parameters, refer to the OpenAI API documentation.</p>
 
 
 

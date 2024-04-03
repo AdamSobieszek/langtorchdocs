@@ -877,28 +877,109 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor" class="md-nav__link">
+  <a href="#basic-features" class="md-nav__link">
     <span class="md-ellipsis">
-      TextTensor
+      Basic Features
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor.item" class="md-nav__link">
+  <a href="#special-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      item
+      Special Operations
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="item">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#key-assignment" class="md-nav__link">
+  <a href="#reshapeshape" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Assignment
+      reshape(*shape)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#squeeze" class="md-nav__link">
+    <span class="md-ellipsis">
+      squeeze()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unsqueezedim0" class="md-nav__link">
+    <span class="md-ellipsis">
+      unsqueeze(dim=0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedmodeldefault" class="md-nav__link">
+    <span class="md-ellipsis">
+      embed(model=$default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_keykeysnone-inplacefalse" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_key(keys=None, inplace=False)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add_keykeysnone-inplacefalse" class="md-nav__link">
+    <span class="md-ellipsis">
+      add_key(keys=None, inplace=False)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applyfunc" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply(func)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sumdimnone-keepdimfalse" class="md-nav__link">
+    <span class="md-ellipsis">
+      sum(dim=None, keepdim=False)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formatkwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      format(**kwargs)
     </span>
   </a>
   
@@ -910,72 +991,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      TextTensor
+      Examples
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor.set_key" class="md-nav__link">
+  <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
-      set_key
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor.item" class="md-nav__link">
-    <span class="md-ellipsis">
-      item
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#warnings-and-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Warnings and Notes
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor" class="md-nav__link">
-    <span class="md-ellipsis">
-      TextTensor
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor.split" class="md-nav__link">
-    <span class="md-ellipsis">
-      split
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor.apply" class="md-nav__link">
-    <span class="md-ellipsis">
-      apply
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#langtorch.tensors.TextTensor.backward" class="md-nav__link">
-    <span class="md-ellipsis">
-      backward
+      Notes
     </span>
   </a>
   
@@ -997,805 +1024,116 @@
 
 
 <h1 id="class-langtorchtexttensor"><code>class</code> langtorch.TextTensor</h1>
-<p>A <code>TextTensor</code> is a multi-dimensional matrix containing elements of structured text data, each represented as a <code>Text</code> object  of structured text.</p>
+<p>A <code>TextTensor</code> is a multi-dimensional matrix containing elements of structured text data, each represented as a <code>Text</code> object. It is a specialized subclass of <code>torch.Tensor</code> designed for handling and manipulating textual data within the LangTorch framework.</p>
 <h2 id="initializing-and-basic-operations">Initializing and Basic Operations</h2>
-<p>A <code>TextTensor</code> can be constructed from Python lists or sequences of string-like inputs. Every entry is transformed into a Text object, so each entry must satisfy one of its many possible input formats, which can include:</p>
+<p>A <code>TextTensor</code> can be constructed from Python lists or sequences of string-like inputs. Every entry is transformed into a <code>Text</code> object, so each entry must satisfy one of its many possible input formats, which can include:</p>
 <ul>
 <li>Strings</li>
-<li>Tuples of the form <script type="math/tex">(\text{label, text})</script> representing text keys and values</li>
+<li>Tuples of the form <code>(label, text)</code> representing text keys and values</li>
 <li>Dictionaries of correctly ordered keys and values</li>
 <li>Sequences of any of the above</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Strings written with the f-string syntax (containing <code>{}</code> characters) will be parsed to enable formatting. Read more about parsing <a href="../parsing">here</a>.</p>
+</div>
 <h3 id="construction">Construction</h3>
-<p>You can construct a <code>TextTensor</code>, similar to <code>torch.tensor</code>, where the input sequence can be shapes into  nested lists or a numpy array:</p>
+<p>You can construct a <code>TextTensor</code>, similar to <code>torch.tensor</code>, where the input sequence can be shaped into nested lists or a NumPy array:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextTensor</span>
 
 <span class="c1"># 0-d TextTensor</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;It&#39;s a single text or </span><span class="si">{prompt}</span><span class="s2"> </span><span class="si">{template}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1">## A completion dictionary is also just one entry</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="p">:</span> <span class="s2">&quot;value2&quot;</span><span class="p">}])</span>
 
 <span class="c1"># 1-d TextTensor</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;A list&quot;</span><span class="p">,</span> <span class="s2">&quot;of texts&quot;</span><span class="p">])</span>
 
 <span class="c1"># 2-d TextTensor, and so on</span>
-<span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;How are you?&quot;</span><span class="p">]])</span>
-
-<span class="c1"># With complex text entries</span>
-
-
-<span class="c1"># Text</span>
-
-<span class="n">TextTensor</span><span class="p">([{</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">}])</span>
+<span class="n">x4</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;A column of&quot;</span><span class="p">],</span> 
+                <span class="p">[</span><span class="s2">&quot; paragraphs&quot;</span><span class="p">]])</span>
 </code></pre></div>
-<p>TextTensors can be created with familiar operations:
+<p>Note that the first text tensor created in this example contains <code>{}</code> special characters, which allows <code>prompt</code> and <code>template</code> be replaced with values from another TextTensor, as if that entry was an f-string.</p>
+<p><code>TextTensors</code> can also be created with familiar operations:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># A tensor of empty strings</span>
 <span class="n">langtorch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">langtorch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
 
-<span class="c1"># A tensor with all </span>
-</code></pre></div></p>
+<span class="c1"># Tensor with identical entries</span>
+<span class="n">langtorch</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">text_entry</span><span class="p">)</span>
+<span class="n">langtorch</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">text_entry</span><span class="p">)</span>
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>TextTensors almost never get initialised from torch Tensors</p>
+<p><code>TextTensors</code> almost never get initialized from <code>torch.Tensor</code>s directly.</p>
+<p>Integer number entries are reserved for the order of formatting without keys, i.e. "Place {1} place {0}", which takes two elements.</p>
 </div>
 <h3 id="indexing-and-slicing">Indexing and Slicing</h3>
 <p>Access and modify the contents of a <code>TextTensor</code> using Python's indexing and slicing notation:</p>
-<div class="highlight"><pre><span></span><code><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;World&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;LangTorch&quot;</span><span class="p">,</span> <span class="s2">&quot;Framework&quot;</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tt</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Outputs: &quot;World&quot;</span>
-<span class="n">tt</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Welcome to&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tt</span><span class="p">)</span>  <span class="c1"># Outputs: TextTensor([[&quot;Hello&quot;, &quot;World&quot;], [&quot;Welcome to&quot;, &quot;Framework&quot;]])</span>
+<div class="highlight"><pre><span></span><code><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;World&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;Torch&quot;</span><span class="p">,</span> <span class="s2">&quot;Framework&quot;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tt</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Outputs: &quot;World&quot;</span>
+<span class="n">tt</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;LangTorch&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tt</span><span class="p">)</span>  <span class="c1"># Outputs: [[&quot;Hello&quot;, &quot;World&quot;], </span>
+<span class="c1">#                      [&quot;LangTorch&quot;, &quot;Framework&quot;]])</span>
 </code></pre></div>
-<p>Extract a single <code>Text</code> object from a <code>TextTensor</code>:</p>
+<p>To access a single entry from a one-element <code>TextTensor</code>  use the <code>item()</code> method:</p>
 <div class="highlight"><pre><span></span><code><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;Hello&quot;</span><span class="p">]])</span>
 <span class="n">single_text</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">single_text</span><span class="p">)</span>  <span class="c1"># Outputs: &quot;Hello&quot;</span>
 </code></pre></div>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="langtorch.tensors.TextTensor"></a>
-  <div class="doc doc-contents first">
-
-  
-      <p>TextTensor is a specialized subclass of torch.Tensor designed for handling and manipulating textual data within the LangTorch framework. Each entry in a TextTensor is a structured Text object, enabling complex text operations and transformations, including natural language processing tasks and interaction with large language models (LLMs).</p>
-<p>TextTensor supports standard tensor operations adapted for text, such as concatenation and reshaping, alongside unique text-specific operations like prompt formatting through multiplication. It seamlessly integrates with PyTorch, allowing developers to leverage familiar tensor operations while working with textual data.</p>
-
-
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor.ttype">ttype</span></code></td>
-          <td>
-                <code>Class</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Specifies the text type for entries in the TextTensor, ttype should be a subclass of the Text class.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor._embedding_model">_embedding_model</span></code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[str, <span title="langtorch.tt.TextModule">TextModule</span>]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Name of an OpenAI embedding model or TextModule to convert TextTensor entries to embeddings.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor._tokenizer">_tokenizer</span></code></td>
-          <td>
-                <code>Tokenizer</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Tokenizer for converting TextTensor entries to tokens suitable for LLMs.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor.parse">parse</span></code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Controls automatic parsing of text entries. Default is 'auto', which decides based on context.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-<details class="special-operations" open>
-  <summary>Special Operations</summary>
-  <ul>
-<li>Addition (<code>+</code>): Concatenates text entries.</li>
-<li>Multiplication (<code>*</code>): Formats prompt templates with values from another TextTensor or dictionary.</li>
-</ul>
-</details>
-
-
-  <p><strong>Other Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>content</code></td>
-          <td>
-                <code>(str, <span title="langtorch.texts.Text">Text</span>, list, dict)</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Initial content for the TextTensor. Can be a single string, a Text object, a list of strings or Text objects, or a dictionary for named entries.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>embedding</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="torch.Tensor">Tensor</span>, <span title="typing.List">List</span>[float], <span title="numpy.ndarray">ndarray</span>, bool]]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Optional embedding for the TextTensor. If True, computes embeddings for text entries automatically.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>metadata</code></td>
-          <td>
-                <code>dict</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Additional metadata for the TextTensor.
-requires_grad (bool, optional): Indicates whether the tensor should track gradients.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>is_gradient</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Marks the tensor as a gradient tensor.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>is_param</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Marks the tensor as a parameter tensor.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>**kwargs</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Additional keyword arguments passed to the underlying torch.Tensor.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-<p><strong>Examples:</strong></p>
-    <p>Creating a TextTensor with prompt templates:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt</span> <span class="o">*</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;World&quot;</span><span class="p">})</span>
-<span class="go">TextTensor([&quot;Hello, World!&quot;])</span>
-</code></pre></div>
-    <p>Concatenating TextTensors:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tt1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;, World!&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt1</span> <span class="o">+</span> <span class="n">tt2</span>
-<span class="go">TextTensor([&quot;Hello, World!&quot;])</span>
-</code></pre></div>
-
-<details class="note" open>
-  <summary>Note</summary>
-  <ul>
-<li>Ensure proper key matching when performing operations that rely on named entries.</li>
-<li>Consider setting <code>requires_grad</code> appropriately for training LLMs or gradient-based operations.</li>
-</ul>
-</details>
-<details class="warning" open>
-  <summary>Warning</summary>
-  <ul>
-<li>Incorrect usage of keys or mismatched shapes during operations may lead to unexpected results.</li>
-</ul>
-</details>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="langtorch.tensors.TextTensor.item" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">item</span><span class="p">()</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-
-  </div>
-
-</div>
-
-
-
-  </div>
-
-  </div>
-
-
-</div><h3 id="key-assignment">Key Assignment</h3>
-<p>Explicitly assign or change keys in a <code>TextTensor</code> using the <code>set_key()</code> method:</p>
-<div class="highlight"><pre><span></span><code><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;This is a sentence.&quot;</span><span class="p">])</span>
-<span class="n">tt</span><span class="o">.</span><span class="n">set_key</span><span class="p">(</span><span class="s2">&quot;sentence&quot;</span><span class="p">)</span>
-</code></pre></div>
-<p>For comprehensive details on creating and manipulating <code>TextTensors</code>, refer to the LangTorch documentation on <code>TextTensor</code> operations.</p>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="langtorch.tensors.TextTensor"></a>
-  <div class="doc doc-contents first">
-
-  
-      <p>TextTensor is a specialized subclass of torch.Tensor designed for handling and manipulating textual data within the LangTorch framework. Each entry in a TextTensor is a structured Text object, enabling complex text operations and transformations, including natural language processing tasks and interaction with large language models (LLMs).</p>
-<p>TextTensor supports standard tensor operations adapted for text, such as concatenation and reshaping, alongside unique text-specific operations like prompt formatting through multiplication. It seamlessly integrates with PyTorch, allowing developers to leverage familiar tensor operations while working with textual data.</p>
-
-
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor.ttype">ttype</span></code></td>
-          <td>
-                <code>Class</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Specifies the text type for entries in the TextTensor, ttype should be a subclass of the Text class.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor._embedding_model">_embedding_model</span></code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[str, <span title="langtorch.tt.TextModule">TextModule</span>]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Name of an OpenAI embedding model or TextModule to convert TextTensor entries to embeddings.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor._tokenizer">_tokenizer</span></code></td>
-          <td>
-                <code>Tokenizer</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Tokenizer for converting TextTensor entries to tokens suitable for LLMs.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor.parse">parse</span></code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Controls automatic parsing of text entries. Default is 'auto', which decides based on context.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-<details class="special-operations" open>
-  <summary>Special Operations</summary>
-  <ul>
-<li>Addition (<code>+</code>): Concatenates text entries.</li>
-<li>Multiplication (<code>*</code>): Formats prompt templates with values from another TextTensor or dictionary.</li>
-</ul>
-</details>
-
-
-  <p><strong>Other Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>content</code></td>
-          <td>
-                <code>(str, <span title="langtorch.texts.Text">Text</span>, list, dict)</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Initial content for the TextTensor. Can be a single string, a Text object, a list of strings or Text objects, or a dictionary for named entries.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>embedding</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="torch.Tensor">Tensor</span>, <span title="typing.List">List</span>[float], <span title="numpy.ndarray">ndarray</span>, bool]]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Optional embedding for the TextTensor. If True, computes embeddings for text entries automatically.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>metadata</code></td>
-          <td>
-                <code>dict</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Additional metadata for the TextTensor.
-requires_grad (bool, optional): Indicates whether the tensor should track gradients.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>is_gradient</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Marks the tensor as a gradient tensor.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>is_param</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Marks the tensor as a parameter tensor.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>**kwargs</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Additional keyword arguments passed to the underlying torch.Tensor.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-<p><strong>Examples:</strong></p>
-    <p>Creating a TextTensor with prompt templates:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt</span> <span class="o">*</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;World&quot;</span><span class="p">})</span>
-<span class="go">TextTensor([&quot;Hello, World!&quot;])</span>
-</code></pre></div>
-    <p>Concatenating TextTensors:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tt1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;, World!&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt1</span> <span class="o">+</span> <span class="n">tt2</span>
-<span class="go">TextTensor([&quot;Hello, World!&quot;])</span>
-</code></pre></div>
-
-<details class="note" open>
-  <summary>Note</summary>
-  <ul>
-<li>Ensure proper key matching when performing operations that rely on named entries.</li>
-<li>Consider setting <code>requires_grad</code> appropriately for training LLMs or gradient-based operations.</li>
-</ul>
-</details>
-<details class="warning" open>
-  <summary>Warning</summary>
-  <ul>
-<li>Incorrect usage of keys or mismatched shapes during operations may lead to unexpected results.</li>
-</ul>
-</details>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="langtorch.tensors.TextTensor.set_key" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">set_key</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="langtorch.tensors.TextTensor.item" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">item</span><span class="p">()</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-
-  </div>
-
-</div>
-
-
-
-  </div>
-
-  </div>
-
-
-</div><h2 id="warnings-and-notes">Warnings and Notes</h2>
+<h2 id="basic-features">Basic Features</h2>
 <ul>
-<li>Operations involving keys require accurate matching between the template and data.</li>
-<li><code>TextTensors</code> support a variety of operations for modifying and generating new <code>TextTensors</code>.</li>
-<li>For advanced text processing with LLMs, utilize <code>TextModule</code> along with <code>TextTensors</code>.</li>
+<li>Supports standard tensor operations listed <a href="../langtorch">here</a>.</li>
+<li>Enables TextTensor addition and multiplication, which respectively perform concatenation and prompt formatting. Learn more about how multiplication works <a href="../multiplication">here</a>.</li>
+<li>Seamlessly integrates with PyTorch, supports autograd, being assigned as a Parameter in a Module and so on.</li>
 </ul>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="langtorch.tensors.TextTensor"></a>
-  <div class="doc doc-contents first">
-
-  
-      <p>TextTensor is a specialized subclass of torch.Tensor designed for handling and manipulating textual data within the LangTorch framework. Each entry in a TextTensor is a structured Text object, enabling complex text operations and transformations, including natural language processing tasks and interaction with large language models (LLMs).</p>
-<p>TextTensor supports standard tensor operations adapted for text, such as concatenation and reshaping, alongside unique text-specific operations like prompt formatting through multiplication. It seamlessly integrates with PyTorch, allowing developers to leverage familiar tensor operations while working with textual data.</p>
-
-
-
-  <p><strong>Attributes:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor.ttype">ttype</span></code></td>
-          <td>
-                <code>Class</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Specifies the text type for entries in the TextTensor, ttype should be a subclass of the Text class.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor._embedding_model">_embedding_model</span></code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[str, <span title="langtorch.tt.TextModule">TextModule</span>]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Name of an OpenAI embedding model or TextModule to convert TextTensor entries to embeddings.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor._tokenizer">_tokenizer</span></code></td>
-          <td>
-                <code>Tokenizer</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Tokenizer for converting TextTensor entries to tokens suitable for LLMs.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code><span title="langtorch.tensors.TextTensor.parse">parse</span></code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Controls automatic parsing of text entries. Default is 'auto', which decides based on context.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-<details class="special-operations" open>
-  <summary>Special Operations</summary>
-  <ul>
-<li>Addition (<code>+</code>): Concatenates text entries.</li>
-<li>Multiplication (<code>*</code>): Formats prompt templates with values from another TextTensor or dictionary.</li>
+<h2 id="special-operations">Special Operations</h2>
+<ul>
+<li>Addition (<code>+</code>): Concatenates text entries, paired up according to broadcasting rules.</li>
+<li>Multiplication (<code>*</code>): Formats prompt templates with values, where the left tensor entries are formatted with entries from the left <code>TextTensor</code>.</li>
 </ul>
-</details>
-
-
-  <p><strong>Other Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>content</code></td>
-          <td>
-                <code>(str, <span title="langtorch.texts.Text">Text</span>, list, dict)</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Initial content for the TextTensor. Can be a single string, a Text object, a list of strings or Text objects, or a dictionary for named entries.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>embedding</code></td>
-          <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="torch.Tensor">Tensor</span>, <span title="typing.List">List</span>[float], <span title="numpy.ndarray">ndarray</span>, bool]]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Optional embedding for the TextTensor. If True, computes embeddings for text entries automatically.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>metadata</code></td>
-          <td>
-                <code>dict</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Additional metadata for the TextTensor.
-requires_grad (bool, optional): Indicates whether the tensor should track gradients.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>is_gradient</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Marks the tensor as a gradient tensor.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>is_param</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Marks the tensor as a parameter tensor.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><code>**kwargs</code></td>
-          <td>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Additional keyword arguments passed to the underlying torch.Tensor.</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-<p><strong>Examples:</strong></p>
-    <p>Creating a TextTensor with prompt templates:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt</span> <span class="o">*</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;World&quot;</span><span class="p">})</span>
-<span class="go">TextTensor([&quot;Hello, World!&quot;])</span>
+<p>Both operations are inherited from the <code>Text</code> class that represents the tensor entries. To understand better how entries are structured and modified with both operations, see  <a href="text"><code>Text</code></a>.</p>
+<h2 id="methods">Methods</h2>
+<h3 id="reshapeshape"><code>reshape(*shape)</code></h3>
+<p>Returns a reshaped version of the TextTensor.
+position.</p>
+<h3 id="squeeze"><code>squeeze()</code></h3>
+<p>Returns a new TextTensor with all the dimensions of size 1 removed.</p>
+<h3 id="unsqueezedim0"><code>unsqueeze(dim=0)</code></h3>
+<p>Returns a new TextTensor with a dimension of size one inserted at the specified </p>
+<h3 id="embedmodeldefault"><code>embed(model=$default)</code></h3>
+<p>Embeds the TextTensor using the specified embedding model.</p>
+<h3 id="set_keykeysnone-inplacefalse"><code>set_key(keys=None, inplace=False)</code></h3>
+<p>Sets the top-level keys for the <code>Text</code> entries in the <code>TextTensor</code> (removing previous keys).</p>
+<h3 id="add_keykeysnone-inplacefalse"><code>add_key(keys=None, inplace=False)</code></h3>
+<p>Add a new top-level key, for the <code>Text</code> entries, preserving the previous structure:</p>
+<p>
+<script type="math/tex; mode=display">\text{new\_content = ("new\_key", old\_content)}</script>
+</p>
+<h3 id="applyfunc"><code>apply(func)</code></h3>
+<p>Applies a function to each <code>Text</code> entry in the <code>TextTensor</code>.</p>
+<h3 id="sumdimnone-keepdimfalse"><code>sum(dim=None, keepdim=False)</code></h3>
+<p>Reduces the input tensor over the specified dimensions, optionally keeping dimensions.</p>
+<h3 id="formatkwargs"><code>format(**kwargs)</code></h3>
+<p>Returns a version of the tensor with formatted entries as if multiplied with substitutions from <code>kwargs</code>.</p>
+<h2 id="examples">Examples</h2>
+<p>Creating a <code>TextTensor</code> with a prompt template and two completion dicts:</p>
+<div class="highlight"><pre><span></span><code><span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">)</span>
+<span class="n">tt</span> <span class="o">*</span> <span class="n">TextTensor</span><span class="p">([{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;World&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Tad&quot;</span><span class="p">}])</span>
+<span class="c1"># Output: TextTensor([&quot;Hello, World!&quot;, &quot;Hello, Tad!&quot;])</span>
 </code></pre></div>
-    <p>Concatenating TextTensors:</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">tt1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;, World!&quot;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tt1</span> <span class="o">+</span> <span class="n">tt2</span>
-<span class="go">TextTensor([&quot;Hello, World!&quot;])</span>
+<p>Concatenating <code>TextTensors</code>a with broadcasting:</p>
+<div class="highlight"><pre><span></span><code><span class="n">tt1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Go away&quot;</span><span class="p">])</span>
+<span class="n">tt2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;, World!&quot;</span><span class="p">])</span>
+<span class="n">tt1</span> <span class="o">+</span> <span class="n">tt2</span>
+<span class="c1"># Output: TextTensor([&quot;Hello, World!&quot;, &quot;Go away, World!])</span>
 </code></pre></div>
-
-<details class="note" open>
-  <summary>Note</summary>
-  <ul>
-<li>Ensure proper key matching when performing operations that rely on named entries.</li>
-<li>Consider setting <code>requires_grad</code> appropriately for training LLMs or gradient-based operations.</li>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Operations meant to format prompt templates require accurate matching between the entries of the template (left) and completion (right) tensor.</li>
+<li>Consider setting <code>requires_grad</code> or <code>is_param</code> in the init to track operations with autograd.</li>
+<li><code>TextTensors</code> support some operations like <code>apply</code> which break the autograd tracing.</li>
 </ul>
-</details>
-<details class="warning" open>
-  <summary>Warning</summary>
-  <ul>
-<li>Incorrect usage of keys or mismatched shapes during operations may lead to unexpected results.</li>
-</ul>
-</details>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="langtorch.tensors.TextTensor.split" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Return a new TextTensor, with an additional first dimension to split everything using sep as the delimiter.</p>
-<p>sep
-    The delimiter according which to split the bytearray.
-    None (the default value) means split on ASCII whitespace characters
-    (space, tab, return, newline, formfeed, vertical tab).</p>
-
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="langtorch.tensors.TextTensor.apply" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Applies a function to each entry of self.content.</p>
-
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="langtorch.tensors.TextTensor.backward" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">backward</span><span class="p">(</span><span class="n">tensors</span><span class="p">,</span> <span class="n">grad_tensors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retain_graph</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">grad_variables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>See. docs</p>
-
-  </div>
-
-</div>
-
-
-
-  </div>
-
-  </div>
-
-
-</div>
 
 
 

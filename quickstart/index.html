@@ -363,19 +363,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-building-a-retriever-and-rag-modules" class="md-nav__link">
+  <a href="#3-using-tensor-embeddings-to-build-retrievers" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Building a Retriever and RAG Modules
+      3. Using Tensor Embeddings to Build Retrievers
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Building a Retriever and RAG Modules">
+    <nav class="md-nav" aria-label="3. Using Tensor Embeddings to Build Retrievers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#working-with-embeddings" class="md-nav__link">
+  <a href="#build-custom-retriever-and-rag-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      Working with  embeddings
+      Build Custom Retriever and RAG modules
     </span>
   </a>
   
@@ -1108,19 +1108,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-building-a-retriever-and-rag-modules" class="md-nav__link">
+  <a href="#3-using-tensor-embeddings-to-build-retrievers" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Building a Retriever and RAG Modules
+      3. Using Tensor Embeddings to Build Retrievers
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Building a Retriever and RAG Modules">
+    <nav class="md-nav" aria-label="3. Using Tensor Embeddings to Build Retrievers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#working-with-embeddings" class="md-nav__link">
+  <a href="#build-custom-retriever-and-rag-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      Working with  embeddings
+      Build Custom Retriever and RAG modules
     </span>
   </a>
   
@@ -1187,12 +1187,15 @@
 <span class="c1"># We can run our task on any TextTensor input</span>
 <span class="n">output</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
 </code></pre></div>
+<p>Remember to set your API key e.g. with:</p>
+<div class="highlight"><pre><span></span><code><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+</code></pre></div>
 <h2 id="2-implementing-popular-methods">2. Implementing popular methods</h2>
 <h3 id="parallel-and-chained-calls-with-textmodules">Parallel and Chained calls with TextModules</h3>
 <p>LangTorch uses a custom implementation to speed up and cache api calls, that by default run in parallel for all TextTensor entries passed to an LLM activation. As such, running calls in parallel is done automatically if either multiple prompts, multiple input values or both are passed to an LLM. </p>
 <p>The simplest way to chain TextModule is to directly use <code>torch.nn.Sequential</code>. To create any complex chain you may, as in torch, define a module subclass that adds custom behavior or combines many submodules in one.  We will show these on examples of popular LLM methods.</p>
 <h3 id="chain-of-thought">Chain of Thought</h3>
-<p>Simplest example of a custom module are those that implement prompting methods like Chain of Thought, where all we need is to append a fixed string to the input. This can be done by creating a reusable  TextModule that we can chain with any task module:  </p>
+<p>The simplest example of a custom module are those that implement prompting methods like Chain of Thought, where all we need is to append a fixed string to the input. This can be done by creating a reusable  TextModule that we can chain with any task module:  </p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="c1"># Remember to add spaces or new line characters to the appended texts</span>
@@ -1217,20 +1220,36 @@
 </code></pre></div></p>
 <h3 id="ensemble-self-consistency">Ensemble / Self-consistency</h3>
 <p>Many benefits of being able to represent texts "geometrically" in a matrix / tensor comes from being able to create a meaningful structure, where e.g. a 2d matrix has columns representing different versions of the same text and subsequent entries represent subsequent paragraphs. Methods like ensemble voting and self-consistency require creating multiple completions for the same task, which can be representing by adding such a "version" dimension.</p>
-<p>In this example, we will build such a module that for each entry creates multiple answer entries and combines them back together to increase the overall performance. First, to add a new dimension with different answers given by the LLM we need only adjust the <code>n</code> parameter:</p>
+<p>In this example, we will build such a module that for each entry creates multiple answer entries and combines them back together to increase the overall performance. First, to add a new dimension with different answers given by the LLM we need only adjust the <code>n</code> parameter. Additionally, we can set the system message:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">OpenAI</span>
-<span class="n">ensemble_llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># 5 completions for each entry</span>
+<span class="n">ensemble_llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> 
+                      <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a rewriting bot that answers only with the revised text&quot;</span><span class="p">,</span> 
+                      <span class="n">T</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="c1"># High temperature to sample diverse completions</span>
+                      <span class="n">n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># 5 completions for each entry</span>
 </code></pre></div>
-<p>To use a concrete example we will write a module to use an ensemble to rewrite our manuscript. Assuming we have 15 paragraphs in a paragraphs TextTensor:</p>
-<div class="highlight"><pre><span></span><code><span class="n">rewrite</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Rewrite this paragraph to improve clarity: &quot;</span><span class="p">],</span> <span class="n">activation</span> <span class="o">=</span> <span class="n">ensemble_llm</span><span class="p">)</span> 
-<span class="n">ensemble_rewrite</span> <span class="o">=</span> <span class="n">rewrite</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
-<span class="c1"># To quickly combine completions we can use langtorch&#39;s &quot;semantic algebra&quot; to get one better &quot;average&quot; text along a dimension</span>
-<span class="n">rewritten_paragraphs</span> <span class="o">=</span> <span class="n">langtorch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ensemble_rewrite</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ensemble_rewrite</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">rewritten_paragraphs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="c1"># Outputs (15, 5), (15)</span>
+<p>To use a concrete example, we will write a module that uses an ensemble to compress a text paragraph by paragraph. The task description is inspired by the Chain of Density method. For now, let's assume <code>paragraphs</code> is defined as a TextTensor with 15 paragraph-entries:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rewrite</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">([</span><span class="s2">&quot;Compress all information from the paragraph into an entity-dense telegraphic summary: &quot;</span><span class="p">],</span> <span class="n">activation</span> <span class="o">=</span> <span class="n">ensemble_llm</span><span class="p">)</span> 
+<span class="n">ensemble_summaries</span> <span class="o">=</span> <span class="n">rewrite</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ensemble_summaries</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># Outputs (15, 5)</span>
 </code></pre></div>
+<p>The last dimension now identifies different summaries. To combine them we could:</p>
+<ul>
+<li>Add a separator to each entry and use<code>.sum(dim=-1)</code>to create 15 entries with texts to combine and pass them to a "create a combined text" module </li>
+<li>We can do this even quicker with langtorch's "<a href="../reference/langtorch">semantic algebra</a>", which has a <code>mean</code> function that creates a better "average" text from texts along a dimension.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">combined_summaries</span> <span class="o">=</span> <span class="n">langtorch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ensemble_summaries</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">combined_summaries</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># Outputs: (15)</span>
+
+<span class="c1"># We can even average again across paragraphs!</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">langtorch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">combined_summaries</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+<span class="c1"># Outputs: The discussion surrounding GPT-3&#39;s capabilities emphasizes its performance in the Turing Test, its tendency to prioritize plausibility over truth, and the societal implications of truth-related challenges (...)</span>
+</code></pre></div>
+<p>Similar approaches can be used for more complicated ensemble methods or combined with methods like chain of thought to increase accuracy with "self-consistency".</p>
 <h3 id="working-with-structured-documents">Working with structured documents</h3>
-<p>Instead of strings, each entry of a TextTensor is an instance of <a href="reference/text"><code>langtorch.Text</code></a>, which allows for more complex text processing. The <code>Text</code> class can load documents, parse most markup languages and provide a helpful interface for accessing and modifying their structured text segments. We will prepare data for the last task from a markdown file with a paper on the abilities of language models, available here <a download="paper.md" href="../static/paper.txt">paper.md</a>. As the text has headers and other text blocks, we need to select paragraphs:  </p>
+<p>Instead of strings, each entry of a TextTensor is an instance of <a href="reference/text"><code>langtorch.Text</code></a>, which allows for more complex text processing. The <code>Text</code> class can load documents, parse most markup languages and provide a helpful interface for accessing and modifying their structured text segments. We will prepare data for a rewrite task like before by parsing a markdown file of a paper on the abilities of language models, available here <a download="paper.md" href="../static/paper.txt">paper.md</a>. As the text has headers and other text blocks, we'll to select only paragraphs, which can be done with <code>iloc</code> and <code>loc</code> accessors:  </p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">Text</span>
 <span class="n">paper</span> <span class="o">=</span> <span class="n">Text</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;paper.md&quot;</span><span class="p">)</span>
 <span class="c1"># Text automatically parses markdown, encoding its text block structure to let us simply access and modify their content</span>
@@ -1238,21 +1257,21 @@
 <span class="c1"># To access the first block </span>
 <span class="n">first_block</span> <span class="o">=</span> <span class="n">paper</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="c1"># To filter block types we can take us that Text segments are have labels, accessible via:</span>
+<span class="c1"># To filter block types, we can take us that Text segments are have labels, accessible via:</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">paper</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 <span class="c1"># Outputs: {&#39;BlockQuote&#39;, &#39;Para&#39;, &#39;Header1&#39;, &#39;Header3&#39;, &#39;Header2&#39;}</span>
 
 <span class="c1"># To get all paragraphs</span>
 <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">paper</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Para&quot;</span><span class="p">]</span>
 
-<span class="c1"># ... Rewriting module as before</span>
+<span class="c1"># Some rewritting module</span>
+<span class="n">rewritten_paragraphs</span> <span class="o">=</span> <span class="n">rewrite</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
 
 <span class="c1"># We can easily edit the unfiltered text by setting rewritten paragraphs</span>
 <span class="n">paper</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Para&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rewritten_paragraphs</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">paper</span><span class="p">)</span> <span class="c1"># Outputs a string of the paper formatted in markdown with all rewritten paragraphs in their original places </span>
 </code></pre></div>
-<h2 id="3-building-a-retriever-and-rag-modules">3. Building a Retriever and RAG Modules</h2>
-<h3 id="working-with-embeddings">Working with  embeddings</h3>
+<h2 id="3-using-tensor-embeddings-to-build-retrievers">3. Using Tensor Embeddings to Build Retrievers</h2>
 <p>Using embeddings with TextTensors is extremely easy, as every TextTensor can generate its own embedding, as well as know to automatically act as if it was an embedding tensor when passed to torch functions like cosine similarity. These representations (available under the <code>.embedding</code> attribute) are moreover automatically created only right before they are needed (via a set embedding model, by default OpenAI's <code>text-embedding-3-small</code>). </p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>  
 
@@ -1261,7 +1280,8 @@
 
 <span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span><span class="n">tensor2</span><span class="p">)</span>
 </code></pre></div>
-<p>Using these properties of <code>TextTensor</code>, we can very compactly implement e.g. a retriever, which for each entry in the input finds in parallel <code>k</code> entries with the highest cosine similarity among the documents it holds:</p>
+<h3 id="build-custom-retriever-and-rag-modules">Build Custom Retriever and RAG modules</h3>
+<p>Using how <code>TextTensor</code>s can automatically act as a<code>Tensor</code> of it's embeddings, we can very compactly implement e.g. a retriever, which for each entry in the input finds in parallel <code>k</code> entries with the highest cosine similarity among the documents it holds:</p>
 <p><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Retriever</span><span class="p">(</span><span class="n">TextModule</span><span class="p">):</span>  
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="n">TextTensor</span><span class="p">):</span>  
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  
@@ -1271,7 +1291,7 @@
         <span class="n">cos_sim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="n">query</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">[</span><span class="n">cos_sim</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">retriever</span> <span class="o">=</span> <span class="n">Retriever</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;doc.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Usage:</span><pre><span></span><code><span class="n">retriever</span> <span class="o">=</span> <span class="n">Retriever</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;doc.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
 <span class="n">query</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;How to build a retriever?&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">retriever</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
@@ -1288,7 +1308,7 @@
         <span class="n">user_message</span> <span class="o">=</span> <span class="n">user_message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CONTEXT:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">retrieved_context</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">user_message</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">rag_chat</span> <span class="o">=</span> <span class="n">RAG</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">,</span>  
+<div class="highlight"><span class="filename">Usage:</span><pre><span></span><code><span class="n">rag_chat</span> <span class="o">=</span> <span class="n">RAG</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">,</span>  
                <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Use the context to answer the following user query: &quot;</span><span class="p">,</span>
                <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">)</span>
 

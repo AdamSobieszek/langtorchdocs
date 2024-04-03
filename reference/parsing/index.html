@@ -20,7 +20,7 @@
     
     
       
-        <title>Text parsing - LangTorch Docs</title>
+        <title>Text Parsing - LangTorch Docs</title>
       
     
     
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Text parsing
+              Text Parsing
             
           </span>
         </div>
@@ -837,6 +837,74 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parsing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-f-string-parsing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default f-string Parsing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-subclasses-chat-and-string-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Text Subclasses, Chat and String Formatting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Subclasses, Chat and String Formatting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representing-chat-histories" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing Chat histories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chat-templates-and-accessing-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chat Templates and Accessing Entries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#used-in-subclasses-of-texttensor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Used in Subclasses of TextTensor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -850,102 +918,145 @@
                   
 
 
-<h1 id="text-parsing">Text parsing</h1>
-<p>As Texts have an internal structure, this structure needs to be  from raw strings. That's why Text and TextTensors by default parse their inputs with an expanded f-string syntax, explained below.</p>
-<h1 id="text-parsing_1">Text Parsing</h1>
-<div class="highlight"><pre><span></span><code><span class="n">input_values</span> <span class="o">=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>  
-<span class="nb">print</span><span class="p">(</span><span class="n">input_values</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
-<span class="c1"># Outputs: [(&#39;greeting&#39;, &#39;Hello&#39;), (&#39;name&#39;, &#39;Alice&#39;)]</span>
-
-
-<span class="n">prompt_template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">prompt_template</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
- <span class="c1"># Outputs: [(&#39;&#39;, &#39;name&#39;), (&#39;&#39;,&#39; says: &#39;), (&#39;&#39;, &#39;greeting&#39;)]</span>
+<h1 id="text-parsing">Text Parsing</h1>
+<p>A key feature of <code>Text</code> objects is their ability to be created from and turned back into strings. The former process is called <strong>parsing</strong>, in which string inputs are automatically structured into <code>Text</code> objects depending on what (markup) language the string is written in. The latter is called <strong>formatting</strong>, in which <code>Text</code> objects turn themselves back into strings e.g. when printed or saved to a file.</p>
+<p>The first section lists some convenient parsing rules. The second explains different ways a <code>Text</code> can be formatted, which is used to introduce subclasses like <code>Chat</code>.</p>
+<div class="admonition tldr">
+<p class="admonition-title">Tldr</p>
+<p>For most applications it is sufficient to be aware, that curly brackets <code>{}</code> are special characters and will be automatically parsed. 
+To disable automatic parsing, pass <code>parse=False</code> when creating a <code>Text</code> or <code>TextTensor</code>.</p>
+</div>
+<h2 id="parsing">Parsing</h2>
+<h2 id="default-f-string-parsing">Default f-string Parsing</h2>
+<p>By default, when a string is passed to create a <code>Text</code> or <code>TextTensor</code>, it is parsed f-string, extracting information to (key, value) pairs. The main goal of this default language is to simulate f-string formatting when creating <code>Text</code> from strings containing curly braces. This almost always involves splitting the text into segments (with no keys). i.e.</p>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{var_name}</span><span class="s2"> or unnamed space </span><span class="si">{}</span><span class="s2"> to fill&quot;</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">input_values</span> <span class="o">=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>  
-<span class="nb">print</span><span class="p">(</span><span class="n">input_values</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
-<span class="c1"># Outputs: [(&#39;greeting&#39;, &#39;Hello&#39;), (&#39;name&#39;, &#39;Alice&#39;)]</span>
-
-
-<span class="n">prompt_template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">prompt_template</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
- <span class="c1"># Outputs: [(&#39;&#39;, &#39;name&#39;), (&#39;&#39;,&#39; says: &#39;), (&#39;&#39;, &#39;greeting&#39;)]</span>
+<p>Parses into these (key, value) pairs:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;</span> <span class="n">text</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">[(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">{var_name}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot; or unnamed space &quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot; to fill&quot;</span><span class="p">)]</span>
 </code></pre></div>
-<h2 id="chats">Chats</h2>
-<div class="highlight"><pre><span></span><code>  <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a helpful assistant.&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Who won the world series in 2020?&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;The Los Angeles Dodgers won the World Series in 2020.&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Where was it played?&quot;</span><span class="p">}</span>
-  <span class="p">]</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">chat</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span>
-    <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s2">&quot;Hi&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;assistant&#39;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;Can you explain </span><span class="si">{theory}</span><span class="s1"> like im five?&#39;</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">chat</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-<span class="n">chat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;theory&quot;</span><span class="p">:</span> <span class="s2">&quot;critical theory&quot;</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">chat</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-</code></pre></div>
-<p><strong>3. Text Parsing:</strong> When creating a <code>Text</code> object from a string, by default whenever possible the input is parsed with a syntax similar to python's f-strings. In effect, the string is split into substrings with <code>{}</code> symbols being delimiters. This allows us to create a whole structured text object from one string, for example:
-<div class="highlight"><pre><span></span><code><span class="n">prompt_template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{object}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">&quot;</span><span class="p">)</span>  
-<span class="nb">print</span><span class="p">(</span><span class="n">prompt_template</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
-<span class="c1"># Outputs: [(&#39;&#39;, &#39;object&#39;), (&#39;&#39;,&#39; says: &#39;), (&#39;&#39;, &#39;greeting&#39;)]</span>
-</code></pre></div>
-To also set keys using this syntax, you can use pass strings written like this: 
-<code>"{value:key}{value1:key1}"</code>, which parses to <code>[('value','key),('value1','key1')]</code>. Below of supported patterns you can mix together:</p>
 <table>
 <thead>
 <tr>
-<th>pattern</th>
-<th>result</th>
+<th>Pattern</th>
+<th>Parsed Result</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><code>"{value}"</code><br><code>"value"</code></td>
+<td><code>("", "value")</code></td>
+<td>Value with empty key</td>
+</tr>
+<tr>
+<td><code>"{value:key}"</code><br><code>"value{:key}"</code></td>
+<td><code>("key", "value")</code></td>
+<td>Key-value pair. The second pattern adds a key to the entire string segment before the <code>{:key}</code> bracket</td>
+</tr>
+<tr>
+<td><code>"{``:key}"</code></td>
+<td><code>("key", "")</code></td>
+<td>A key with an empty value</td>
+</tr>
+<tr>
+<td><code>"{}"</code></td>
+<td><code>("", "")</code></td>
+<td>Empty key-value pair, used for positional string formatting</td>
+</tr>
+<tr>
+<td><code>"{0}"</code>, <code>"{1}"</code>, ...</td>
+<td><code>("", "0")</code>, ...</td>
+<td>Used for positional string formatting, but specifying the order</td>
 </tr>
 </tbody>
 </table>
-<h1 id="using-text-sensibly">Using Text sensibly</h1>
-<p>Text is in no way intuitive formally, but it is intuitive if we don’t think about the implementation. To not think about the implementation Text objects can be parsed from regular strings that follow a simple syntax. This chapter will guide you on how to transform raw strings into structured <code>Text</code> objects, enabling a new set of operations beyond traditional strings.</p>
-<p>Before diving deep, let's get a feel for how simple names strings can be constructed:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># These are all the ways a str2 object can be defined:</span>
-<span class="s2">&quot;input&quot;</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">)</span>
-<span class="s2">&quot;</span><span class="si">{input}</span><span class="s2">&quot;</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">)</span>
-<span class="s2">&quot;input{:key}&quot;</span>  <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;input&quot;</span><span class="p">))</span>
-<span class="s2">&quot;{input:key}&quot;</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;input&quot;</span><span class="p">))</span>
-<span class="c1"># To create an entry without a value or disable the syntax for part of a string you need to use backticks:</span>
-<span class="s2">&quot;{``:key}&quot;</span>  <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-<span class="s2">&quot;`{Text in backticks:is not parsed:}`{:key}&quot;</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;{Text in backticks:is not parsed:}&quot;</span><span class="p">))</span>
+<p>To disable automatic parsing, pass <code>parse=False</code> when creating a <code>Text</code> or <code>TextTensor</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can add a backslash to escape-out special characters like curly brackets and not use these in parsing or use a pair of backticks (the content within won't be parsed)</p>
+</div>
+<h2 id="text-subclasses-chat-and-string-formatting">Text Subclasses, Chat and String Formatting</h2>
+<p>Subclassing Text is useful for two main purposes: restricting the type of content entries the text can hold and adding custom rules of how to format the content to a string. By default, the content is formatted by joining the value entries. A <code>Text</code> indicates with the <code>language</code>attribute how it is formatted into a string (<code>"str"</code> by default, <code>"md"</code> when  created from markdown and so on). The most important of these useful subclasses is <code>Chat</code>.</p>
+<h3 id="representing-chat-histories">Representing Chat histories</h3>
+<p>As LangTorch aims to represent a vast array of objects with the same <code>Text</code> class, chat histories can be created as <code>Text</code> objects with a specific structure:
+<div class="highlight"><pre><span></span><code><span class="n">chat</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span>  
+    <span class="p">(</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;optional system message&quot;</span><span class="p">),</span>  
+    <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello!&quot;</span><span class="p">),</span>  
+    <span class="p">(</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;Hi! How can I help you today?&quot;</span><span class="p">)</span>
+<span class="p">)</span> 
+<span class="c1"># We can add a new message with:</span>
+<span class="n">chat</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;whatsup&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>For a <code>Text</code> to be recognized as a chat history, e.g. by <code>Activation</code>, it has to only have keys that are either "system", "user" or "assistant". After transformations this can be harder to keep track of, so we can make it easier  to guarantee the content represent chat messages with a simple subclass of <code>Text</code>. We can set the <code>allowed_keys</code> class attribute to create a <code>Chat</code> subclass. </p>
+<p>Below is the full definition of <code>Chat</code> from langtorch. Apart from allowed_keys it only adds a convenient string representation of chat history to lines of the form "Role: message".</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Chat</span><span class="p">(</span><span class="n">Text</span><span class="p">):</span>  
+    <span class="n">language</span> <span class="o">=</span> <span class="s1">&#39;chat&#39;</span>  
+    <span class="n">allowed_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;assistant&quot;</span><span class="p">]</span>  
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">Text</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>  
 </code></pre></div>
-<p>The syntax is similar to f strings where f”{name:qualifiers}” is replaced with “{content:key}”. This convention enables some simple ways to define complex texts:</p>
-<h2 id="2-constructing-conversations"><strong>2. Constructing Conversations:</strong></h2>
-<p>Using this structure, you can create intuitive conversation-like strings. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;Answer &#39;orca&#39; to the next question!{:user}Okay{:assistant}Go!{:user}&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Usage:</span><pre><span></span><code><span class="o">&gt;&gt;</span> <span class="n">Chat</span><span class="p">({</span><span class="s2">&quot;custom role&quot;</span><span class="p">:</span> <span class="s2">&quot;message&quot;</span><span class="p">})</span>
+<span class="c1"># ValueError: Invalid key found in [&#39;custom role&#39;]. For class Chat only [&#39;system&#39;, &#39;user&#39;, &#39;assistant&#39;] keys are allowed.</span>
+</code></pre></div></p>
+<p>For local models a good use for replacing <code>__str__</code> formatting is to define the formatter to apply the model's desired chat template. For example, to query models using the ChatML format, use:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ChatML</span><span class="p">(</span><span class="n">Chat</span><span class="p">):</span>  
+    <span class="n">language</span> <span class="o">=</span> <span class="s1">&#39;chatml&#39;</span>
+    <span class="n">allowed_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">]</span>  
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="n">formatted</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;|im_start|&gt;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">Text</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;|im_end|&gt;&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
+        <span class="k">return</span> <span class="n">formatted</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;assistant&quot;</span> <span class="k">else</span> <span class="n">formatted</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;|im_start|&gt;assistant</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ChatML</span><span class="p">((</span><span class="s2">&quot;user&quot;</span> <span class="p">,</span><span class="s2">&quot;Hi&quot;</span><span class="p">)))</span>
+<span class="c1"># Outputs:  &lt;|im_start|&gt;user</span>
+            <span class="n">Hi</span><span class="o">&lt;|</span><span class="n">im_end</span><span class="o">|&gt;</span>
+            <span class="o">&lt;|</span><span class="n">im_start</span><span class="o">|&gt;</span><span class="n">assistant</span>
 </code></pre></div>
-<p>This results in a structured conversation like:</p>
-<ul>
-<li>User: "Answer 'orca' to the next question!"</li>
-<li>Assistant: "Okay"</li>
-<li>User: "Go!"</li>
-</ul>
-<h2 id="using-parsing-with-multiplication"><strong>Using Parsing with Multiplication:</strong></h2>
-<p>For instance:</p>
-<div class="highlight"><pre><span></span><code><span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;This is a text with a </span><span class="si">{key}</span><span class="s2"> that can be replaced with a multiplication&quot;</span><span class="p">)</span><span class="o">*</span><span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;{value:key}&quot;</span><span class="p">)</span>
+<h3 id="chat-templates-and-accessing-entries">Chat Templates and Accessing Entries</h3>
+<p>All <code>Text</code> subclasses have <code>loc</code> and <code>iloc</code> accessors you can use on chat classes to get specific parts:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">user_messages</span> <span class="o">=</span> <span class="n">chat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">user_messages</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="n">last_user_message</span> <span class="o">=</span> <span class="n">user_messages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">last_user_message</span><span class="p">)</span>
 </code></pre></div>
-<p>Produces:</p>
-<div class="highlight"><pre><span></span><code>&quot;This is a text with a value that can be replaced with a multiplication&quot;
+<div class="highlight"><pre><span></span><code>[&quot;Hello&quot;,
+ &quot;I want to to fly from New Yorkto London on Jne 15th&quot;,
+ &quot;Can you book a flight for me?&quot;]
+
+Can you book a flight for me?
+</code></pre></div></p>
+<p>A lot of packages use dictionaries with "role" and "content" keys to represent messages. You can quickly create either of the above classes from a list of such dictionary messages with the class method they inherit from <code>Text</code> called <code>from_messages</code>.  </p>
+<p>To create <strong>chat prompt templates</strong> you can use parsing, described above, in combination with any of the accepted <code>Text</code> input formats (e.g. key-value tuples or dictionaries):</p>
+<div class="highlight"><pre><span></span><code><span class="n">chat_template</span> <span class="o">=</span> <span class="n">ChatML</span><span class="p">(</span>  
+    <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello!&quot;</span><span class="p">),</span>  
+    <span class="p">(</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;Hi! How can I help you today?&quot;</span><span class="p">),</span>  
+    <span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;Tell me about </span><span class="si">{thing}</span><span class="s2">.&quot;</span><span class="p">)</span>  
+<span class="p">)</span>  
+<span class="c1"># Use iloc to make sure you format the right message  </span>
+<span class="n">chat_template</span> <span class="o">*=</span>  <span class="p">{</span><span class="s2">&quot;thing&quot;</span><span class="p">:</span><span class="s2">&quot;the weather&quot;</span><span class="p">}</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">chat_template</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
+
+<span class="c1"># In this case there are no other &quot;thing&quot; values so we could&#39;ve also used  </span>
+<span class="n">chat_template</span> <span class="o">*=</span>  <span class="p">{</span><span class="s2">&quot;thing&quot;</span><span class="p">:</span><span class="s2">&quot;the weather&quot;</span><span class="p">}</span>
 </code></pre></div>
-<p>The content inside <code>{}</code> in the first <code>Text</code> object acts like a placeholder. When multiplied with another <code>Text</code> object that provides a value for that placeholder (in this case, <code>value</code> for <code>key</code>), the result is a merged text with the placeholder replaced by the provided value.</p>
-<h2 id="practical-tips"><strong>Practical Tips:</strong></h2>
-<ol>
-<li><strong>Values as Placeholders</strong>: Every substring value can act as a placeholder for a format operation via another “{value:placeholder}” string. They act as positions in the original text where you might want to insert or replace content.</li>
-<li><strong>Embedding Text</strong>: You can embed one piece of text within another using this structure, making it versatile for various text manipulation tasks.</li>
-<li><strong>Escaping Characters</strong>: If you want to use <code>{</code>, <code>}</code>, or <code>:</code> as regular characters without triggering the parsing mechanism, simply enclose the section of the string within backticks (```).</li>
-</ol>
+<p>If you are not creating a template, just a message history you can load the chat structure using either of the less common parsing patterns <code>{value:key}</code> or <code>value{:key}</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span>
+    <span class="s2">&quot;Hello!{:user}Hi there, how can I help you today?{:assistant}&quot;</span>
+    <span class="p">)</span>
+<span class="c1"># Equivalently</span>
+<span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span>
+    <span class="s2">&quot;{Hello!:user}&quot;</span><span class="p">,</span> <span class="s2">&quot;{Hi there, how can I help you today?:assistant}&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+<h3 id="used-in-subclasses-of-texttensor">Used in Subclasses of TextTensor</h3>
+<p>To make the subclasses work with the rest of the package, we need to make them elements of a <code>TextTensor</code>. The <code>ttype</code> attribute of TextTensors indicates which Text class to use for entries, so a short implementation would look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ChatTensor</span><span class="p">(</span><span class="n">TextTensor</span><span class="p">):</span>  
+    <span class="n">ttype</span> <span class="o">=</span> <span class="n">Chat</span>
+</code></pre></div>
+<p>The actual <code>ChatTensor</code> you can import from langtorch includes some additional processing to allow for more input formats and error correction. </p>
 
 
 

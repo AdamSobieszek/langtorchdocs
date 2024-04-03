@@ -893,11 +893,10 @@
 <p>The <code>content</code> is always set, as this is what we initialize a <code>TextTensor</code> on.</p>
 <p>The <code>embedding</code> and <code>tokens</code> are not calculated upon initialization to save costs. They are automatically computed directly before an operation that requires them or can be invoked manually with <code>.embed()</code> and <code>.tokenize()</code> respectively.</p>
 <h2 id="texttensor-subclasses-and-text-attributes">TextTensor subclasses and Text attributes</h2>
-<p>By default, a <code>TextTensor</code> is a tensor with entries of type <code>Text</code>. We can get various benefits from using subclasses of <code>Text</code>, for example:</p>
+<p>By default, a <code>TextTensor</code> is a tensor with entries of type <code>Text</code>. We can get various benefits from using text tensor subclasses that set <code>ttype</code> to a subclass of <code>Text</code>, for example:</p>
 <ul>
-<li>Add a custom <code>__str__</code> method to automatically format content, e.g. <code>langtorch.Markdown</code></li>
+<li>A <code>Text</code> subclass can add a custom <code>__str__</code> method, e.g. <code>langtorch.Markdown</code>, which formats entries to a string differently (which is done e.g. when passint to an LLM )</li>
 <li>Set the <code>allowed_keys</code> attribute to require certain keys, e.g. <code>langtorch.Chat</code> which guarantees a correct chat history representation with only system, user or assistant keys</li>
-<li></li>
 </ul>
 
 

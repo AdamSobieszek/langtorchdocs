@@ -20,7 +20,7 @@
     
     
       
-        <title>LangTorch Utility Functions - LangTorch Docs</title>
+        <title>Index - LangTorch Docs</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#langtorch-utility-functions" class="md-skip">
+        <a href="#creation-ops" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LangTorch Utility Functions
+              Index
             
           </span>
         </div>
@@ -834,8 +834,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -867,7 +865,9 @@
                   
 
 
-<h1 id="langtorch-utility-functions">LangTorch Utility Functions</h1>
+  <h1>Index</h1>
+
+<p>LangTorch Utility Functions</p>
 <p>LangTorch implements many of the same utility functions one can use in Torch. To streamline usage, these are also automatically invoked if one passes TextTensor inputs to the analogous torch function. The exception are creation operations, which have to be imported from LangTorch.</p>
 <h3 id="creation-ops">Creation Ops</h3>
 <table>
@@ -957,15 +957,77 @@
 <td></td>
 </tr>
 <tr>
-<td>One of the benefits of representing information geometrically in tensors is that we can have meaningful dimensions that contain, for example, different features or, in LangTorch, different answers to the same query. In such cases, we often wish to perform some action along this dimension, such as averaging the features. As such operations make sense for both numerical and text tensors, we keep both functionalities by making these operations act differently depending on which package they are imported from. Passing a <code>TextTensor</code> to these operations imported from torch will automatically substitute text tensors with the tensors of its embeddings and invoke the regular PyTorch operation.</td>
+<td>One of the benefits of representing information geometrically in tensors is that we can have meaningful dimensions that contain, for example, different features or, in LangTorch, different answers to the same query. In such cases, we often wish to perform some action along this dimension, such as averaging the features. As such operations make sense for both numerical and text tensors, we keep both functionalities by making these operations act differently depending on which package they are imported from. Passing a <code>TextTensor</code> to these operations imported from torch will automatically substitute text tensors with the tensors of its embeddings and invoke the regular PyTorch operation</td>
 <td></td>
-</tr>
-<tr>
-<td>Operation</td>
-<td>Description</td>
 </tr>
 </tbody>
 </table>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="">torch.mean</a></td>
+<td>Returns the mean of the embeddings tensor in the given dimension for a given <code>TextTensor</code></td>
+</tr>
+<tr>
+<td><a href="">torch.max</a></td>
+<td>Returns the maximum value of the embeddings tensor in the given dimension for a given <code>TextTensor</code></td>
+</tr>
+<tr>
+<td><a href="">torch.min</a></td>
+<td>Analogous</td>
+</tr>
+</tbody>
+</table>
+<p>What would then be a mean or max on text entries? We often want to take the "average" of different answers or pick out the best one. What LangTorch proposes is that we may think of such operations as taking the (semantic) mean and max value along that dimension. These "semantic" functions send entries along a dimension to an LLM with task instructions (to leverage them or pick the best one). These functions have additional parameters, but by default:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="">langtorch.mean</a></td>
+<td>Returns a <code>TextTensor</code> with "average texts", that is entries that synthesize the important (and correct) information from the input  <code>TextTensor</code>  along dimension <code>dim</code>.</td>
+</tr>
+<tr>
+<td><a href="">langtorch.max</a></td>
+<td>Returns a <code>TextTensor</code> with "the best texts", that is an entry selected from the input  <code>TextTensor</code>  along dimension <code>dim</code> that stands out as the best and most relevant.</td>
+</tr>
+<tr>
+<td><a href="">langtorch.min</a></td>
+<td>Analogous</td>
+</tr>
+</tbody>
+</table>
+<p>As these functions call a language model with a custom prompt, they take additional arguments that allow us to modify the model or instructions for this task. A fast modification is to just supply the <code>definition</code>, but we can also modify the whole prompt:</p>
+<ul>
+<li><code>definition</code>: Text that defines what is meant by the "average" or "best" text in the specific context. This is inserted into the prompt template and can be used e.g. to pick the most verbose text by setting definition in <code>max</code> to be <code>""</code>.</li>
+<li><code>prompt</code>: The full prompt template sent to the language model. Should include the <code>{definition}</code> placeholder.</li>
+<li><code>model</code>: The name of the language model to use for the operation. Defaults to the model set in the current context.</li>
+<li><code>T</code>, <code>max_tokens</code>, etc.: Additional keyword arguments passed to the <code>Activation</code> constructor to control the model call, such as temperature, maximum tokens, etc.</li>
+</ul>
+<p>For example:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">langtorch</span> <span class="k">as</span> <span class="nn">lt</span>
+
+<span class="n">texts</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;The movie was great!&quot;</span><span class="p">,</span> 
+                       <span class="s2">&quot;The film was okay, but too long.&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;I didn&#39;t enjoy the movie much.&quot;</span><span class="p">])</span>
+
+<span class="n">avg_review</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> 
+                     <span class="n">definition</span><span class="o">=</span><span class="s2">&quot;a concise review that captures the overall sentiment&quot;</span><span class="p">,</span>
+                     <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> 
+                     <span class="n">T</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> 
+                     <span class="n">max_tokens</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></p>
+<p>This allows performing semantic algebra operations with fine-grained control over the language model call. The <code>definition</code> and <code>prompt</code> arguments make the intended operation clear to the model, while the remaining arguments configure the API call itself.</p>
 
 
 

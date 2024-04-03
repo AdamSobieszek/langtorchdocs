@@ -890,9 +890,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#initializing-a-text-instance" class="md-nav__link">
+  <a href="#initializing-a-text-with-parsing" class="md-nav__link">
     <span class="md-ellipsis">
-      Initializing a Text Instance
+      Initializing a Text with parsing
     </span>
   </a>
   
@@ -917,9 +917,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#accessing-attributes" class="md-nav__link">
+  <a href="#accessing-content" class="md-nav__link">
     <span class="md-ellipsis">
-      Accessing Attributes
+      Accessing content
     </span>
   </a>
   
@@ -984,6 +984,7 @@
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nestet_label1</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text</span><span class="nv"> </span><span class="s">1.&quot;</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">nestet_label2</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text</span><span class="nv"> </span><span class="s">2.&quot;</span>
 </code></pre></div>
+<p>As this structure is sometimes hard e.g. to iterate over, to access the content, the <code>.items()</code> method is much more convenient (along with <code>.values()</code> and <code>.keys()</code>). The output of <code>.items()</code> is always a list of key-value tuples. If a segment has no key (like in the first example) <code>items</code> represents it as <code>("", "Hello")</code>. </p>
 <h2 id="initialization">Initialization</h2>
 <p><code>Text</code> instances can be initialized on various inputs, including:</p>
 <ul>
@@ -999,15 +1000,15 @@
 </code></pre></div>
 <h2 id="attributes">Attributes</h2>
 <ul>
-<li><code>content</code>: Holds "named strings" or key-value pairs, enabling concatenation, formatting, and structured text manipulations.</li>
-<li><code>language</code>: Defines the language for content parsing and formatting. Defaults to <code>"str"</code>. Alterable to support diverse textual operations.</li>
-<li><code>allowed_keys</code>: Restricts to a list of permissible keys within a <code>Text</code> instance, enforcing schema via <code>ValueError</code> on deviation.</li>
+<li><code>content</code>: Holds "named strings" or key-value pairs, enabling concatenation, formatting, and structured text manipulations. </li>
+<li><code>language</code>: The same content can represent different text <strong>strings</strong> when formatted to a string; <code>language</code> indicates what language the Text will be written in when formatted to a string. Defaults to <code>"str"</code>.</li>
+<li><code>allowed_keys</code>: Restricts to a list of permissible keys within a <code>Text</code> instance, violations raise <code>ValueError</code>.</li>
 </ul>
 <h2 id="operations">Operations</h2>
 <p>The <code>Text</code> class supports various operations for manipulating and transforming the textual data:</p>
 <ul>
 <li><strong>Concatenation</strong>: <code>Text</code> instances can be concatenated with other <code>Text</code> instances or strings using the <code>+</code> operator.</li>
-<li><strong>Formatting</strong>: The <code>*</code> operation between two <code>Text</code> objects allows for text formatting, where the content of the right (second) text can replace matching segments of the left text. If a key of a segment doesn't match any value of segments from the left text that segment is appended (like with +). This enables dynamic substitution of values based on keys, prompt injections and more and is explained in a separate page <a href="multiplication">here</a>.</li>
+<li><strong>Formatting</strong>: The <code>*</code> operation between two <code>Text</code> objects allows for text formatting, where the content of the right (second) text can replace matching segments of the left text. If a key of a segment doesn't match any value of segments from the left text that segment is appended (like with +). This enables dynamic substitution of values based on keys, prompt injections and more and is explained in a separate page <a href="../multiplication">here</a>.</li>
 <li><strong>Indexing</strong>: <code>Text</code> supports pandas style indexing with <code>iloc</code> and <code>loc</code> properties providing index-based and key-based indexing, respectively. They allow accessing and modifying specific parts of the text using integer indices or string keys (may be buggy in early releases).</li>
 <li><strong>Splitting</strong>: The <code>split()</code> method allows splitting the text into smaller segments based on a specified separator.</li>
 <li><strong>Iteration</strong>: <code>Text</code> instances are iterable, allowing iteration over the individual segments.</li>
@@ -1037,11 +1038,11 @@
 <td>Returns a list of values from the <code>Text</code> instance's content.</td>
 </tr>
 <tr>
-<td><code>set_key(key, inplace=False)</code></td>
+<td><code>set_key(key, inplace=False)</code><br>inplace: <code>set_key_(key)</code></td>
 <td>Sets the top-level keys for the <code>Text</code> entries, removing previous keys. If <code>inplace</code> is <code>True</code>, it modifies the instance in-place; otherwise, it returns a new <code>Text</code> instance.</td>
 </tr>
 <tr>
-<td><code>add_key(key, inplace=False)</code></td>
+<td><code>add_key(key, inplace=False)</code><br>inplace: <code>add_key_(key)</code></td>
 <td>Adds a new top-level key for the <code>Text</code> entries, preserving the previous structure. If <code>inplace</code> is <code>True</code>, it modifies the instance in-place; otherwise, it returns a new <code>Text</code> instance.</td>
 </tr>
 <tr>
@@ -1083,36 +1084,40 @@
 </tbody>
 </table>
 <h2 id="examples">Examples</h2>
-<h4 id="initializing-a-text-instance">Initializing a Text Instance</h4>
-<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="c1"># Output: &quot;Hello, World!&quot;</span>
+<h4 id="initializing-a-text-with-parsing">Initializing a Text with parsing</h4>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{name}</span><span class="s2">!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="c1"># Output: [(&#39;&#39;,&#39;Hello&#39;), (&#39;&#39;, &#39;, &#39;),(&#39;&#39;, &#39;name&#39;), (&#39;&#39;, &#39;!&#39;)]</span>
 </code></pre></div>
+<p>Note that "name" is a value not a key, it would be a key in the completion dictionary</p>
 <h4 id="concatenating-text-instances">Concatenating Text Instances</h4>
 <div class="highlight"><pre><span></span><code><span class="n">greeting</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="n">combined</span> <span class="o">=</span> <span class="n">greeting</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">target</span>
+<span class="n">name_and_label</span> <span class="o">=</span> <span class="n">Text</span><span class="p">((</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;World&quot;</span><span class="p">))</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">greeting</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">name_and_label</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
 <span class="c1"># Output: &quot;Hello, World&quot;</span>
 </code></pre></div>
+<p>Remember to always add a trailing or prefix space when concatenating Texts that are supposed to be separate words / sentences. This sometimes also applies to multiplication, as in the example below.</p>
 <h4 id="formatting-text-instances">Formatting Text Instances</h4>
 <div class="highlight"><pre><span></span><code><span class="n">template</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Dear </span><span class="si">{title}</span><span class="s2"> </span><span class="si">{last_name}</span><span class="s2">,&quot;</span><span class="p">)</span>
-<span class="n">formatted</span> <span class="o">=</span> <span class="n">template</span> <span class="o">*</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Mr.&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">}</span>
+<span class="n">formatted</span> <span class="o">=</span> <span class="n">template</span> <span class="o">*</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Mr.&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;unmatched_key&quot;</span><span class="p">:</span><span class="s2">&quot;value&quot;</span><span class="p">}</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
-<span class="c1"># Output: &quot;Dear Mr. Doe,&quot;</span>
+<span class="c1"># Output: &quot;Dear Mr. Doe,value&quot;</span>
 </code></pre></div>
-<h4 id="accessing-attributes">Accessing Attributes</h4>
+<p>Remember that entries of the right text with unmatched keys will be appended to the result</p>
+<h4 id="accessing-content">Accessing content</h4>
 <p>The pairs that make up a text object can be accessed with its <code>.items()</code> method and we can edit these entries using indexing similar to pandas, which uses <code>.iloc</code> and <code>.loc</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">,</span> <span class="n">key1</span><span class="o">=</span><span class="s2">&quot;Value1&quot;</span><span class="p">,</span> <span class="n">key2</span><span class="o">=</span><span class="s2">&quot;Value2&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">({</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span><span class="s2">&quot;Value1&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="p">:</span><span class="s2">&quot;Value2&quot;</span><span class="p">})</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="c1"># Output: [&#39;key1&#39;, &#39;key2&#39;]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 <span class="c1"># Output: [(&#39;key1&#39;, &#39;Value1&#39;), (&#39;key2&#39;, &#39;Value2&#39;)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="c1"># Output: &quot;First&quot;</span>
+<span class="c1"># Output: (&#39;key1&#39;, &#39;Value1&#39;)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;key1&#39;</span><span class="p">])</span>
-<span class="c1"># Output: &quot;Value1&quot;</span>
+<span class="c1"># Output: &#39;Value1&#39;</span>
 </code></pre></div>
+<p>The content can have nested entries, e.g. when representing a chat history. To access them or format during muliplication use a dot between the keys, e.g. <code>[('key1',('key2', 'value'))]</code> can be accessed with <code>loc['key1.key2']</code></p>
 <h2 id="language-parsing">Language Parsing</h2>
 <p>The <code>Text</code> class supports parsing (constructing the content structure from just a string) from various markup languages, such as HTML, Markdown, and LaTeX and save them back to text files (potentially in a different language). By default, <code>Text</code> tries to parse an f-string syntax. Both parsing from and casting to strings is explained <a href="parsing">'here'</a>.</p>
 <h2 id="notes">Notes</h2>

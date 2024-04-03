@@ -948,14 +948,20 @@
 
 <h1 id="_1"><div style="text-align: center;"> <img src="./langtorch_banner2.png" alt="LangTorch Logo" style="max-width: 40rem; width: 70%; height: auto; vertical-align: middle;"> </div></h1>
 <p><strong>LangTorch</strong> is a framework that accelerates development of complex language model applications by leveraging familiar PyTorch concepts.</p>
-<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a system of simple rules that <strong>unifies working with texts, chats, markup languages, prompt templates and techniques, tokens, embeddings, LLM calls and tools</strong> with seamless parallelization working with OpenAI APIs and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.</p>
+<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a text tensor system governed by simple rules that <strong>unify working with texts, chats, markup languages, prompt templates and prompting techniques, tokens, embeddings, LLM calls and tools</strong> with seamless parallelization working with OpenAI APIs and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.</p>
+<div style="display: flex; justify-content: right; align-items: right;">
+    <a style="margin-top: 0.4ch" class="github-button" href="https://github.com/AdamSobieszek/langtorch" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicons-arrow-right-24" data-size="large" data-show-count="False" aria-label="LangTorch on GitHub">LangTorch on GitHub</a>
+</div>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
 <h2 id="the-langtorch-framework">The LangTorch Framework</h2>
-<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces key objects that, while governed by a few simple rules, enable all kinds of text formatting and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users who want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
+<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces flexible objects that, while governed by simple rules, enable all kinds of text formatting, templating and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users who want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
 <blockquote>
 <p><strong>Note</strong> the package is early in its development and some features may be unstable or unfinished! 
 Use for research rather than production purposes</p>
 </blockquote>
-<p>The framework is centered around these objects and utilities (to skip to results see how compact a full Retriever and RAG implementations are <a href="quickstart/#building-a-retriever-and-rag-modules">here</a>):</p>
+<p>The framework is centered around these objects and utilities (to skip to results, see how compact full <a href="quickstart/#build-custom-retriever-and-rag-modules">Retriever and RAG</a> implementations are):</p>
 <div></div>
 <div class="container-fluid" style=>
   <div class="row">
@@ -966,7 +972,7 @@ Use for research rather than production purposes</p>
 </div>
 </h3> 
 
-    inherits functionalities from <b><code>torch.Tensor</code></b>, but holds structured text as entries. <a href="reference/texttensor"><code>TextTensors</code></a> allow us to structure text information geometrically and dynamically inject this data into LLM calls.<br><br>The utility of Tensors, as used in Torch, relies on their ability to calculate simultaneously products of several weights. The corresponding feature in TextTorch allows several prompts to be formatted on several inputs, by defining the product of <code>text1</code> and <code>text2</code> similarly to <code>text1.format(text2)</code>.
+    inherits functionalities from <b><code>torch.Tensor</code></b>, but holds structured text as entries. <a href="reference/texttensor"><code>TextTensors</code></a> allow us to structure text information geometrically and dynamically inject this data into LLM calls.<br><br>The utility of Tensors, as used in Torch, relies on their ability to calculate simultaneously products of several weights. The corresponding feature in LangTorch allows several prompts to be formatted on several inputs, by defining the product of <code>text1*text2</code> similarly to <code>text1.format(**text2)</code>.
 
     </div>
     <div class="col-md-6">
@@ -1023,7 +1029,7 @@ Use for research rather than production purposes</p>
   <b style="z-index: 1;">TextModules</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; z-index: -1; margin-left: 0.5ch; margin-top: 0.4ch">
 </div> </h3> 
 
-are the compositional building blocks. A subclass of <b><code>torch.nn.Module</code></b>, <a href="reference/textmodule"><code>TextModules</code></a>  are reusable "layers", whose weights are <code>TextTensors</code>, and which instead of an activation function can include the activation of an LLM call on the dynamically created text inputs.<br>Instead of many clunky retrievers, chains, chats or agent, all can be defined as TextModules with different forward calls. These can then be easily included as submodules in complex modules that in the forward pass perform any parts of common architectures, like operations on embeddings, retrieval, parallel LLM API calls, batched local LLM inference, actions and so on.
+are the compositional building blocks. A subclass of <b><code>torch.nn.Module</code></b>, <a href="reference/textmodule"><code>TextModules</code></a> are reusable "layers", whose weights are <a href="reference/texttensor"><code>TextTensors</code></a>, and which instead of an activation function can include the activation of an LLM call on the dynamically created text inputs.<br>Instead of many clunky retrievers, chains, chats or agents, all can be defined as <a href="reference/textmodule"><code>TextModules</code></a> with different forward calls. These can then be easily included as submodules in complex modules that in the forward pass perform any parts of common architectures, like operations on embeddings, retrieval, parallel LLM API calls, batched local LLM inference, actions and so on.
     </div>
   </div>
 </div>
@@ -1127,7 +1133,7 @@ x3:
 
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>  
 
-<span class="n">tensor1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]]])</span>  
+<span class="n">tensor1</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;Yes&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">]])</span>  
 <span class="n">tensor2</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="s2">&quot;Yeah&quot;</span><span class="p">,</span> <span class="s2">&quot;Nope&quot;</span><span class="p">,</span> <span class="s2">&quot;Yup&quot;</span><span class="p">,</span> <span class="s2">&quot;Non&quot;</span><span class="p">])</span>  
 
 <span class="n">torch</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tensor1</span><span class="p">,</span> <span class="n">tensor2</span><span class="p">)</span>
@@ -1146,7 +1152,7 @@ x3:
 <h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
   <b style="z-index: 1;">Text, Tokens and Embeddings</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; z-index: -1; margin-left: 0.5ch; margin-top: 0.4ch">
 </div></h3> 
-Apart from streamlining work on texts, <code>TextTensors</code> can  <b>hold multiple types of representations of the same text </b> and automatically switch between acting <i>as strings</i> when printed, <i>as embeddings</i> when inputted into <code>torch.cosine_similarity</code> and <i>as tokens</i> when passed to a local LLM. 
+Apart from streamlining work on texts, <a href="reference/texttensor"><code>TextTensors</code></a> can <b>hold multiple types of representations of the same text </b> and automatically switch between acting <i>as strings</i> when printed, <i>as embeddings</i> when inputted into <code>torch.cosine_similarity</code> and <i>as tokens</i> when passed to a local LLM. 
     </div>
   </div>
 </div>
@@ -1158,9 +1164,9 @@ Apart from streamlining work on texts, <code>TextTensors</code> can  <b>hold mul
 <h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
   <b style="z-index: 1;">Richer text representations</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; left: 0; top: 0; z-index: -1; margin-left: -2ch; margin-top: 0.35ch">
 </div> </h3> 
-Every <code>Text</code>  entry of a  <code>TextTensor</code>  is structured , such that they can be constructed from and formatted into any markup language. This unified structure allows for a systematic treatment of diverse objects like chat histories, chunked documents, document stores, dictionaries, text meta-data, extracted named entities and code. 
+Every <a href="reference/text"><code>Text</code></a> entry of a <a href="reference/texttensor"><code>TextTensor</code></a> is structured, such that they can be constructed from and formatted into any markup language. This unified structure allows for a systematic treatment of diverse objects like chat histories, chunked documents, document stores, dictionaries, text meta-data, extracted named entities and code. 
 
-The  example illustrates how a  <code>Text</code> can be chunked into segments that occupy seperate entries of the created TextTensor, which allows us to quickly transform each paragraph separately.
+The  example illustrates how a  <code>Text</code> can be chunked into segments that occupy separate entries of the created TextTensor, which allows us to quickly transform each paragraph separately.
     </div>
 
 
@@ -1219,7 +1225,8 @@ The  example illustrates how a  <code>Text</code> can be chunked into segments t
 </li>
 </ul>
 </div>
-<p>Join us in improving the LLM application dev experience!</p>
+<p>Join us in improving the LLM application dev 
+experience!</p>
 <hr />
 <h2 id="about">About</h2>
 <blockquote>
