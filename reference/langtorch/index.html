@@ -850,6 +850,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#indexing-slicing-joining-mutating-ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indexing, Slicing, Joining, Mutating Ops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semantic-algebra-vs-tensor-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Semantic Algebra vs Tensor Algebra
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -894,16 +912,10 @@
 <td><a href="">full_like</a></td>
 <td>Returns a text tensor with the same size as input filled the given Text (fill_value).</td>
 </tr>
-<tr>
-<td>### Indexing, Slicing, Joining, Mutating Ops</td>
-<td></td>
-</tr>
-<tr>
-<td>Functions that take in TextTensors and output TextTensors (note, functions like <code>reshape</code> are also TextTensor methods):</td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<h3 id="indexing-slicing-joining-mutating-ops">Indexing, Slicing, Joining, Mutating Ops</h3>
+<p>Functions that take in TextTensors and output TextTensors (note, functions like <code>reshape</code> are also TextTensor methods):</p>
 <table>
 <thead>
 <tr>
@@ -952,16 +964,10 @@
 <td><a href="">unsqueeze</a></td>
 <td>Returns a TextTensor with a dimension of size one inserted at the specified position.</td>
 </tr>
-<tr>
-<td>### Semantic Algebra vs Tensor Algebra</td>
-<td></td>
-</tr>
-<tr>
-<td>One of the benefits of representing information geometrically in tensors is that we can have meaningful dimensions that contain, for example, different features or, in LangTorch, different answers to the same query. In such cases, we often wish to perform some action along this dimension, such as averaging the features. As such operations make sense for both numerical and text tensors, we keep both functionalities by making these operations act differently depending on which package they are imported from. Passing a <code>TextTensor</code> to these operations imported from torch will automatically substitute text tensors with the tensors of its embeddings and invoke the regular PyTorch operation</td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<h3 id="semantic-algebra-vs-tensor-algebra">Semantic Algebra vs Tensor Algebra</h3>
+<p>One of the benefits of representing information geometrically in tensors is that we can have meaningful dimensions that contain, for example, different features or, in LangTorch, different answers to the same query. In such cases, we often wish to perform some action along this dimension, such as averaging the features. As such operations make sense for both numerical and text tensors, we keep both functionalities by making these operations act differently depending on which package they are imported from. Passing a <code>TextTensor</code> to these operations imported from torch will automatically substitute text tensors with the tensors of its embeddings and invoke the regular PyTorch operation</p>
 <table>
 <thead>
 <tr>
