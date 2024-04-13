@@ -1153,7 +1153,7 @@
 </code></pre></div>
 <h2 id="1-simple-chains">1. Simple chains</h2>
 <h3 id="getting-tensor-text-data">Getting tensor text data</h3>
-<p><code>TextTensors</code> are designed to simplify simultaneous handling of text data. They inherit most functionality from PyTorch's <code>torch.Tensor</code> but hold textual data, which you may provide from any source.</p>
+<p><code>TextTensors</code> are designed to simplify simultaneous handling of text data. They inherit most functionality from PyTorch's <code>torch.Tensor</code> but hold textual data, which you may create from documents, prompt templates, completion dictionaries and more.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextTensor</span>
 
 <span class="n">tt</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;prompt1&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;prompt2&quot;</span><span class="p">]])</span>
@@ -1177,7 +1177,7 @@
 <p>A useful informal definition for the multiplication operation is that when two entries are multiplied, the right Text acts like a format operation: replacing keys with values (here, {name} with Luciano) or appending if there is nothing to replace. For a more in depth look, see <a href="../reference/multiplication">TextTensor Multiplication</a>.</p>
 <h3 id="performing-a-task-with-textmodules">Performing a task with TextModules</h3>
 <p>TextModules like <code>nn.Module</code> implement a forward method that works on (text) tensors. By default, they can be initialized by passing a TextTensor of prompts, that in the forward pass will be formatted using the input TextTensor (just like in the example above).  </p>
-<p>To achieve interesting behavior, an nn.Module layer usually ends with passing the multiplied tensors to an "activation function". By analogy, TextModules usually end with an activation of an LLM call on the formatted prompts (for more on this parallel see. <a href="reference/tt">langtorch.tt</a>). LangTorch activation like <code>OpenAI</code> execute their LLM calls on each entry of the input TextTensor in parallel.</p>
+<p>To achieve interesting behavior, an nn.Module layer usually ends with passing the multiplied tensors to an "activation function". By analogy, TextModules usually end with an activation of an LLM call on the formatted prompts (for more on this parallel see. <a href="../reference/tt">langtorch.tt</a>). LangTorch activation like <code>OpenAI</code> execute their LLM calls on each entry of the input TextTensor in parallel.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span><span class="p">,</span> <span class="n">OpenAI</span>
 
 <span class="n">llm</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="s2">&quot;gpt4&quot;</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="c1"># Pass any API kwargs here to customize the call </span>
@@ -1195,8 +1195,9 @@
 <p>LangTorch uses a custom implementation to speed up and cache api calls, that by default run in parallel for all TextTensor entries passed to an LLM activation. As such, running calls in parallel is done automatically if either multiple prompts, multiple input values or both are passed to an LLM. </p>
 <p>The simplest way to chain TextModule is to directly use <code>torch.nn.Sequential</code>. To create any complex chain you may, as in torch, define a module subclass that adds custom behavior or combines many submodules in one.  We will show these on examples of popular LLM methods.</p>
 <h3 id="chain-of-thought">Chain of Thought</h3>
-<p>The simplest example of a custom module are those that implement prompting methods like Chain of Thought, where all we need is to append a fixed string to the input. This can be done by creating a reusable  TextModule that we can chain with any task module:  </p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<p>The simplest example of a custom module are those that implement prompting methods like Chain of Thought, where all we need is to append a fixed string to the input. This can be done by creating a reusable TextModule that we can chain with any task module:  </p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span><span class="p">,</span> <span class="n">OpenAI</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="c1"># Remember to add spaces or new line characters to the appended texts</span>
 <span class="n">chain_of_thought</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="s2">&quot; Let&#39;s think step by step.&quot;</span><span class="p">)</span>  

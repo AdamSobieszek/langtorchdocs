@@ -913,14 +913,14 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">input_values</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
 <span class="c1"># Outputs: [(&#39;greeting&#39;, &#39;Hello&#39;), (&#39;name&#39;, &#39;Alice&#39;)]</span>
 </code></pre></div>
-<p><strong>Combining Multiple Operations:</strong> We can chain multiplication <code>t1*t2*t3</code> to replace or append multiple values. In the example we also use the completion <code>TextTensors</code> to route different entries to different prompts:
+<p><strong>Combining Multiple Operations:</strong> We can chain multiplication <code>t1*t2*t3</code> to replace or append multiple values. In the example, we also use the completion <code>TextTensors</code> to route different entries to different prompts:
 <div class="highlight"><pre><span></span><code><span class="err">`</span><span class="c1"># Two prompts with two completions needed</span>
 <span class="n">conversation_template</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> says: </span><span class="si">{greeting}</span><span class="s2">.&quot;</span><span class="p">],</span>
                                     <span class="p">[</span><span class="s2">&quot;</span><span class="si">{name}</span><span class="s2"> replies: </span><span class="si">{reply}</span><span class="s2">&quot;</span><span class="p">]])</span> 
 
-<span class="n">shared_completion</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:,</span><span class="s2">&quot;Bob&quot;</span><span class="p">})</span>
-<span class="n">unique_completion</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[(</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">)],</span> 
-                                <span class="p">[(</span><span class="s2">&quot;reply&quot;</span><span class="p">,</span> <span class="s2">&quot;Hi there!&quot;</span><span class="p">)]])</span>
+<span class="n">shared_completion</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Bob&quot;</span><span class="p">})</span>
+<span class="n">unique_completion</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([[{</span><span class="s2">&quot;greeting&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">}],</span> 
+                                <span class="p">[{</span><span class="s2">&quot;reply&quot;</span><span class="p">:</span> <span class="s2">&quot;Hi there!&quot;</span><span class="p">}]])</span>
 
 <span class="n">formatted_conversation</span> <span class="o">=</span> <span class="n">conversation_template</span> <span class="o">*</span> <span class="n">shared_completion</span> <span class="o">*</span> <span class="n">unique_completion</span> 
 <span class="nb">print</span><span class="p">(</span><span class="n">formatted_conversation</span><span class="p">)</span> 

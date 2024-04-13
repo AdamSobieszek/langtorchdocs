@@ -927,9 +927,58 @@
 <td><code>tools</code></td>
 <td>List of tools described by JSON schema or Python functions. The schema is generated based on the function's docstring and argument type hints.</td>
 </tr>
+<tr>
+<td><code>tool_choice</code></td>
+<td><code>none</code> means the model will not call a function and instead generates a message. <code>auto</code> means the model can pick between generating a message or calling a function. Specifying a particular function via <code>{"type": "function", "function": {"name": "my_function"}}</code> forces the model to call that function.</td>
+</tr>
+<tr>
+<td><code>frequency_penalty</code></td>
+<td>Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency, decreasing the likelihood of repeating the same line verbatim.</td>
+</tr>
+<tr>
+<td><code>presence_penalty</code></td>
+<td>Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.</td>
+</tr>
 </tbody>
 </table>
-<p>For a full list of parameters, refer to the OpenAI API documentation.</p>
+<p>For a full list of parameters, refer to the <a href="https://platform.openai.com/docs/api-reference/chat">OpenAI API documentation</a>.</p>
+<div class="admonition using function calls">
+<p class="admonition-title">Using</p>
+<p>When creating an <code>Activation</code> with tools, if the model decides to use that tool, the output JSON representing the tool input will be an entry of the form {"tool_call": JSON}. The example below shows creating an Activation with a tool from the tool's JSON schema and how the reponse encodes the tool input:</p>
+<div class="highlight"><pre><span></span><code><span class="n">llm</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>  
+                  <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>  
+                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_current_weather&quot;</span><span class="p">,</span>  
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather in a given location&quot;</span><span class="p">,</span>  
+                    <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>  
+                      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>  
+                      <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>  
+                        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>  
+                          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>  
+                          <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The city and state, e.g. San Francisco, CA&quot;</span>  
+                        <span class="p">},</span>  
+                        <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="p">{</span>  
+                          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>  
+                          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;fahrenheit&quot;</span><span class="p">]</span>  
+                        <span class="p">}</span>  
+                      <span class="p">},</span>  
+                      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span>  
+                    <span class="p">}}}],</span> <span class="n">tool_choice</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">TextTensor</span><span class="p">(</span><span class="s2">&quot;What is the current weather in San Francisco?&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  
+<span class="c1"># Outputs: [(&#39;assistant&#39;, (&#39;tool_call&#39;, &#39;{&quot;id&quot;: &quot;call_6bII1dQHLYWiar5W1eSRDCQu&quot;, &quot;type&quot;: &quot;function&quot;, &quot;function&quot;: {&quot;name&quot;: &quot;get_current_weather&quot;, &quot;arguments&quot;: &quot;{\\&quot;location\\&quot;:\\&quot;San Francisco\\&quot;}&quot;}}&#39;))]</span>
+
+<span class="c1"># Example code to handle both tool calls and message answers</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;tool_call&quot;</span><span class="p">:</span>  
+        <span class="n">tool_call</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  
+        <span class="n">name</span> <span class="o">=</span> <span class="n">tool_call</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>  
+        <span class="n">arguments</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tool_call</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">][</span><span class="s2">&quot;arguments&quot;</span><span class="p">])</span>  
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool Call: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">, Arguments: </span><span class="si">{</span><span class="n">arguments</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># Chat Message Case</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assistant Response: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
 
 
 
