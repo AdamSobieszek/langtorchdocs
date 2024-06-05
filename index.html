@@ -202,17 +202,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Introduction
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -222,52 +211,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-langtorch-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      The LangTorch Framework
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dive-in-and-get-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dive In and Get Started
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#about" class="md-nav__link">
-    <span class="md-ellipsis">
-      About
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -898,41 +841,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-langtorch-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      The LangTorch Framework
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dive-in-and-get-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dive In and Get Started
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#about" class="md-nav__link">
-    <span class="md-ellipsis">
-      About
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -948,14 +856,15 @@
 
 <h1 id="_1"><div style="text-align: center;"> <img src="./langtorch_banner2.png" alt="LangTorch Logo" style="max-width: 40rem; width: 70%; height: auto; vertical-align: middle;"> </div></h1>
 <p><strong>LangTorch</strong> is a framework that accelerates development of complex language model applications by leveraging familiar PyTorch concepts.</p>
-<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a text tensor system governed by simple rules that <strong>unify working with texts, chats, markup languages, prompt templates and prompting techniques, tokens, embeddings, LLM calls and tools</strong> with seamless parallelization working with OpenAI APIs and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.</p>
-<div style="display: flex; justify-content: right; align-items: right;">
-    <a style="margin-top: 0.4ch" class="github-button" href="https://github.com/AdamSobieszek/langtorch" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicons-arrow-right-24" data-size="large" data-show-count="False" aria-label="LangTorch on GitHub">LangTorch on GitHub</a>
+<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a text tensor system governed by simple rules that <strong>unify working with texts, chats, markup languages, prompt templates and prompting techniques, tokens, embeddings, LLM calls and tools</strong> under seamless parallelization and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.
+    <!-- Place this tag in your head or just before your close body tag. --></p>
+<div style="display: flex; justify-content: left; align-items: left;">
+    <b>Star LangTorch on</b>:  <a style="margin-top: 0.4ch" class="github-button" href="https://github.com/AdamSobieszek/langtorch" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicons-arrow-right-24" data-size="large" data-show-count=True aria-label="LangTorch on GitHub">Github</a>
 </div>
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 
-<h2 id="the-langtorch-framework">The LangTorch Framework</h2>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<p><strong>Quickstart guide</strong>:  <a href="https://colab.research.google.com/github/AdamSobieszek/langtorch/blob/main/quickstart.ipynb"><img align="center" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<h1 id="the-langtorch-framework">The LangTorch Framework</h1>
 <p>Instead of providing wrapper classes for users to memorize, LangTorch introduces flexible objects that, while governed by simple rules, enable all kinds of text formatting, templating and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users who want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
 <blockquote>
 <p><strong>Note</strong> the package is early in its development and some features may be unstable or unfinished! 
@@ -1006,9 +915,9 @@ Use for research rather than production purposes</p>
 <br>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langtorch</span> <span class="kn">import</span> <span class="n">TextModule</span>
 
-<span class="n">prompts</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Summarize this text: &quot;</span><span class="p">],</span>  
-           <span class="p">[</span><span class="s2">&quot;Simplify this text: &quot;</span> <span class="p">]]</span>
-<span class="n">parallel_tasks</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+<span class="n">prompts</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Summarize this text: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">],</span>  
+           <span class="p">[</span><span class="s2">&quot;Simplify this text: </span><span class="si">{}</span><span class="s2">&quot;</span> <span class="p">]]</span>
+<span class="n">parallel_tasks</span> <span class="o">=</span> <span class="n">TextModule</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">)</span>
 
 <span class="c1"># Do multiple tasks on multiple inputs</span>
 <span class="n">inputs</span> <span class="o">=</span> <span class="n">TextTensor</span><span class="p">([</span><span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">])</span>
