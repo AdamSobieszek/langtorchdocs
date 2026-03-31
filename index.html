@@ -853,10 +853,20 @@
                 
                   
 
-
 <h1 id="_1"><div style="text-align: center;"> <img src="./langtorch_banner2.png" alt="LangTorch Logo" style="max-width: 40rem; width: 70%; height: auto; vertical-align: middle;"> </div></h1>
-<p><strong>LangTorch</strong> is a framework that accelerates development of complex language model applications by leveraging familiar PyTorch concepts.</p>
-<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a text tensor system governed by simple rules that <strong>unify working with texts, chats, markup languages, prompt templates and prompting techniques, tokens, embeddings, LLM calls and tools</strong> under seamless parallelization and integrated with PyTorch. The result? Less code, faster development and more intricate LLM applications.
+
+<div style="border-left: 4px solid #999; padding: 0.8rem 1rem; margin: 1rem 0 1.2rem 0; background: #f8f8f8;">
+  <p style="margin: 0;">
+    <strong>Project support.</strong> LangTorch was developed as part of a project supported by
+    <strong>Perły Nauki II</strong> of the Polish Ministry of Science and Higher Education.
+    The software is being developed as open-source research infrastructure for building and testing
+    large-scale simulations and psychological experiments using language models.
+  </p>
+</div>
+
+<p><strong>LangTorch</strong> is an open-source Python framework for developing complex language model applications, with a particular focus on research workflows, large-scale simulations and experiment pipelines, by leveraging familiar PyTorch concepts.</p>
+
+<p>While existing frameworks focus on connecting language models to other services, LangTorch aims to change the way you approach creating LLM applications by introducing a text tensor system governed by simple rules that <strong>unify working with texts, chats, markup languages, prompt templates and prompting techniques, tokens, embeddings, LLM calls and tools</strong> under seamless parallelization and integrated with PyTorch. This makes it especially useful for researchers developing custom simulation environments, experimental procedures and new language-model-based architectures. The result? Less code, faster development and more intricate LLM applications.
     <!-- Place this tag in your head or just before your close body tag. --></p>
 <div style="display: flex; justify-content: left; align-items: left;">
     <b>Star LangTorch on</b>:  <a style="margin-top: 0.4ch" class="github-button" href="https://github.com/AdamSobieszek/langtorch" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicons-arrow-right-24" data-size="large" data-show-count=True aria-label="LangTorch on GitHub">Github</a>
@@ -864,12 +874,15 @@
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <p><strong>Quickstart guide</strong>:  <a href="https://colab.research.google.com/github/AdamSobieszek/langtorch/blob/main/quickstart.ipynb"><img align="center" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+
 <h1 id="the-langtorch-framework">The LangTorch Framework</h1>
-<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces flexible objects that, while governed by simple rules, enable all kinds of text formatting, templating and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users who want to test and create new architectures or methods that increase the utility of LLMs, rather than streamlining the most common chat and RAG architectures.</p>
+<p>Instead of providing wrapper classes for users to memorize, LangTorch introduces flexible objects that, while governed by simple rules, enable all kinds of text formatting, templating and LLM operations. This lets developers think about what they want to build, instead of how the classes were named. LangTorch components subclass their numerical PyTorch counterparts, which lets users apply their existing coding skills to building novel LLM app architectures. The design of the package is geared towards users who want to test and create new architectures or methods that increase the utility of LLMs, especially in research settings involving simulations, automated text-based experimental procedures and model-based analyses, rather than only streamlining the most common chat and RAG architectures.</p>
+
 <blockquote>
 <p><strong>Note</strong> the package is early in its development and some features may be unstable or unfinished! 
 Use for research rather than production purposes</p>
 </blockquote>
+
 <p>The framework is centered around these objects and utilities (to skip to results, see how compact full <a href="quickstart/#build-custom-retriever-and-rag-modules">Retriever and RAG</a> implementations are):</p>
 <div></div>
 <div class="container-fluid" style=>
@@ -1061,7 +1074,7 @@ x3:
 <h3 style="margin: 0.8rem 0 0.8rem"><div style="text-align: left; position: relative;">
   <b style="z-index: 1;">Text, Tokens and Embeddings</b>  <img src="../langtorch_dot_up.png" alt="LangTorch Dot" style="position: absolute; max-width: 1rem; width: 100%; height: auto; z-index: -1; margin-left: 0.5ch; margin-top: 0.4ch">
 </div></h3> 
-Apart from streamlining work on texts, <a href="reference/texttensor"><code>TextTensors</code></a> can <b>hold multiple types of representations of the same text </b> and automatically switch between acting <i>as strings</i> when printed, <i>as embeddings</i> when inputted into <code>torch.cosine_similarity</code> and <i>as tokens</i> when passed to a local LLM. 
+Apart from streamlining work on texts, <a href="reference/texttensor"><code>TextTensors</code></a> can <b>hold multiple types of representations of the same text </b> and automatically switch between acting <i>as strings</i> when printed, <i>as embeddings</i> when inputted into <code>torch.cosine_similarity</code> and <i>as tokens</i> when passed to a local LLM. This is useful for workflows that combine prompting, retrieval, semantic comparison and automated analysis within a single simulation or experimental pipeline.
     </div>
   </div>
 </div>
@@ -1112,13 +1125,13 @@ The  example illustrates how a  <code>Text</code> can be chunked into segments t
 <p><a href="quickstart"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Getting started</a></p>
 </li>
 <li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16h160v80c0 17.7 14.3 32 32 32h80v288c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3l-90.6-90.5C262.7 6.7 246.5 0 229.5 0H64zm97 289c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L79 303c-9.4 9.4-9.4 24.6 0 33.9l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-31-31 31-31zm96-34c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l31 31-31 31c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l48-48c9.4-9.4 9.4-24.6 0-33.9l-48-48z"/></svg></span> <strong>Reference</strong></p>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16h160v80c0 17.7 14.3 32 32 32h80v288c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3l-90.6-90.5C262.7 6.7 246.5 0 229.5 0H64zm97 289c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L79 303c-9.4 9.4-9.4 24.6 0 33.9l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-31-31 31-31zm96-34c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l31 31-31 31c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l48-48c9.4-9.4 9.4-24.6 0-33.9l-48-48z"/></svg></span> <strong>Reference</strong></p>
 <hr />
 <p>Learn how to use <a href="reference/text"><code>Text</code></a> objects, <a href="reference/texttensor"><code>TextTensors</code></a>, <a href="reference/textmodule"><code>TextModules</code></a>, <a href="reference/activation"><code>Activations</code></a>  and <a href="reference/langtorch"><code>torch</code></a> functions with LangTorch</p>
 <p><a href="https://langtorch.org/reference/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Reference</a>.</p>
 </li>
 <li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg></span> <strong>Discord</strong></p>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg></span> <strong>Discord</strong></p>
 <hr />
 <p>Join the Discord community to for fast bug fixes and support!</p>
 <p><a href="https://discord.gg/jkreqtCCkv"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Discord</a></p>
@@ -1142,11 +1155,9 @@ experience!</p>
 <p><strong>LangTorch</strong> is an open source python package by Adam Sobieszek (University of Warsaw; Jutro Medical). Contributions, comments and issue submissions are very much welcomed.</p>
 <p><strong>Contact:</strong>
 contact@langtorch.org</p>
-<p>I'd like to thank Tadeusz Price, Hubert Plisiecki, Jakub Podolak and Mikołaj Boroński for their help in testing and explaining the package, as well as the University of Warsaw and Jutro Medical for supporting early development.</p>
+<p>I'd like to thank the University of Warsaw and Ministry of Science and Higher Education for financial support in developing the software. As well as Tadeusz Price, Hubert Plisiecki, Jakub Podolak and Mikołaj Boroński for their help in testing.</p>
 </blockquote>
 <hr />
-
-
 
 
 
